@@ -1391,6 +1391,408 @@ header{background:var(--navy);position:sticky;top:0;z-index:300;box-shadow:0 2px
 }
 .disclaimer-close:hover{background:rgba(255,255,255,.25);color:#fff;}
 
+
+/* ══════════════════════════════════════════
+   KJEDE-SPILL
+══════════════════════════════════════════ */
+:root{
+  --kj-teal:#0F4C5C;
+  --kj-teal-l:#E0F2F7;
+  --kj-teal-m:#1A6B80;
+  --kj-amber:#E8810A;
+  --kj-amber-l:#FEF3E2;
+  --kj-done:#059669;
+  --kj-done-l:#D1FAE5;
+}
+
+/* ── Spill-grid: velg kjede ── */
+.kj-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:14px;
+  padding:4px 0 20px;
+}
+.kj-card{
+  background:#fff;
+  border:1.5px solid var(--border);
+  border-radius:var(--r-lg);
+  padding:18px 16px 14px;
+  cursor:pointer;
+  transition:transform .18s var(--ease), border-color .18s, box-shadow .18s;
+  position:relative;
+}
+.kj-card:hover{
+  transform:translateY(-3px);
+  border-color:var(--kj-teal);
+  box-shadow:0 6px 20px rgba(15,76,92,.15);
+}
+.kj-card.done{
+  border-color:var(--kj-done);
+  background:var(--kj-done-l);
+}
+.kj-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px;}
+.kj-card-nr{
+  font-size:var(--ts-xs);font-weight:700;
+  color:var(--kj-teal);
+  background:var(--kj-teal-l);
+  border-radius:20px;padding:2px 9px;
+  white-space:nowrap;flex-shrink:0;
+}
+.kj-card.done .kj-card-nr{background:var(--kj-done-l);color:var(--kj-done);}
+.kj-card-title{
+  font-size:var(--ts-base);font-weight:700;
+  color:var(--navy);line-height:1.3;margin-bottom:5px;
+}
+.kj-card-meta{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  margin-bottom:10px;
+}
+.kj-card-kap{
+  font-size:var(--ts-xs);color:var(--muted);
+  background:var(--off);padding:2px 8px;border-radius:20px;
+}
+.kj-vanskelighet{display:flex;gap:3px;}
+.kj-dot{width:7px;height:7px;border-radius:50%;background:var(--border);}
+.kj-dot.on{background:var(--kj-amber);}
+.kj-ledd-preview{
+  font-size:var(--ts-xs);color:var(--muted);
+  border-top:1px solid var(--border);padding-top:8px;
+  line-height:1.5;
+}
+.kj-done-badge{
+  position:absolute;top:12px;right:12px;
+  font-size:.9rem;
+}
+
+/* ── Spill-panel ── */
+#kj-game-view{display:none;}
+#kj-game-view.active{display:block;}
+
+.kj-game-hdr{
+  background:var(--kj-teal);
+  border-radius:var(--r-md);
+  padding:14px 18px;
+  margin-bottom:18px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:10px;
+}
+.kj-game-hdr-left h3{
+  color:#fff;font-size:var(--ts-lg);font-weight:800;
+  letter-spacing:-.02em;margin-bottom:3px;
+}
+.kj-game-hdr-left .kj-game-sub{
+  color:rgba(255,255,255,.55);font-size:var(--ts-xs);
+}
+.kj-step-indicator{
+  display:flex;gap:6px;align-items:center;
+  flex-shrink:0;
+}
+.kj-step{
+  width:28px;height:28px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:var(--ts-xs);font-weight:700;
+  border:2px solid rgba(255,255,255,.25);
+  color:rgba(255,255,255,.4);
+  transition:all .3s;
+}
+.kj-step.active{
+  background:#fff;color:var(--kj-teal);border-color:#fff;
+}
+.kj-step.done{
+  background:var(--kj-amber);color:#fff;border-color:var(--kj-amber);
+}
+
+/* ── Forklaring (hint) ── */
+.kj-forklaring{
+  background:var(--kj-amber-l);
+  border:1.5px solid var(--kj-amber);
+  border-radius:var(--r-md);
+  padding:14px 16px;
+  margin-bottom:16px;
+  display:none;
+  animation:panelFadeIn .25s ease;
+}
+.kj-forklaring.vis{display:block;}
+.kj-forklaring-label{
+  font-size:var(--ts-xs);font-weight:700;
+  color:var(--kj-amber);margin-bottom:6px;
+  display:flex;align-items:center;gap:5px;
+}
+.kj-forklaring-tekst{
+  font-size:var(--ts-sm);color:var(--text);line-height:1.65;
+}
+
+/* ── Sorterings-arena ── */
+.kj-sort-label{
+  font-size:var(--ts-xs);font-weight:700;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.06em;
+  margin-bottom:8px;margin-top:4px;
+}
+.kj-sort-list{
+  display:flex;flex-direction:column;gap:8px;
+  margin-bottom:18px;
+  min-height:60px;
+}
+.kj-ledd{
+  background:#fff;
+  border:1.5px solid var(--border);
+  border-radius:var(--r-md);
+  padding:12px 14px 12px 44px;
+  font-size:var(--ts-sm);color:var(--text);
+  line-height:1.5;
+  cursor:grab;
+  position:relative;
+  transition:border-color .18s, box-shadow .18s, transform .15s;
+  user-select:none;
+  -webkit-user-select:none;
+}
+.kj-ledd:active{cursor:grabbing;}
+.kj-ledd.dragging{
+  opacity:.45;
+  border-color:var(--kj-teal);
+  box-shadow:0 6px 20px rgba(15,76,92,.2);
+  transform:scale(.98);
+}
+.kj-ledd.drag-over{
+  border-color:var(--kj-amber);
+  background:var(--kj-amber-l);
+}
+.kj-ledd-num{
+  position:absolute;left:12px;top:50%;
+  transform:translateY(-50%);
+  width:22px;height:22px;
+  border-radius:50%;
+  background:var(--off);
+  color:var(--muted);
+  font-size:var(--ts-xs);font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.kj-ledd.correct-ledd{
+  border-color:var(--kj-done);background:var(--kj-done-l);
+}
+.kj-ledd.correct-ledd .kj-ledd-num{background:var(--kj-done);color:#fff;}
+.kj-ledd.wrong-ledd{
+  border-color:var(--err);background:var(--err-bg);
+}
+.kj-handle{
+  position:absolute;right:12px;top:50%;
+  transform:translateY(-50%);
+  color:var(--border);font-size:.9rem;
+}
+
+/* Pil mellom ledd */
+.kj-arrow{
+  text-align:center;color:var(--kj-amber);
+  font-size:.9rem;margin:-3px 0;
+  pointer-events:none;
+}
+
+/* ── Knapper ── */
+.kj-btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;}
+.kj-btn-sjekk{
+  background:var(--kj-teal);color:#fff;border:none;
+  border-radius:var(--r-md);padding:11px 24px;
+  font-family:var(--font);font-size:var(--ts-sm);font-weight:700;
+  cursor:pointer;transition:background .18s;
+}
+.kj-btn-sjekk:hover{background:var(--kj-teal-m);}
+.kj-btn-hint{
+  background:var(--kj-amber-l);color:var(--kj-amber);
+  border:1.5px solid var(--kj-amber);
+  border-radius:var(--r-md);padding:10px 18px;
+  font-family:var(--font);font-size:var(--ts-sm);font-weight:600;
+  cursor:pointer;transition:all .18s;
+}
+.kj-btn-hint:hover{background:var(--kj-amber);color:#fff;}
+.kj-btn-neste{
+  background:var(--navy);color:#fff;border:none;
+  border-radius:var(--r-md);padding:11px 24px;
+  font-family:var(--font);font-size:var(--ts-sm);font-weight:700;
+  cursor:pointer;display:none;transition:background .18s;
+}
+.kj-btn-neste.vis{display:inline-block;}
+.kj-btn-neste:hover{background:var(--kj-teal);}
+
+/* ── Feedback ── */
+.kj-feedback{
+  border-radius:var(--r-md);padding:12px 16px;
+  margin-top:12px;display:none;
+  font-size:var(--ts-sm);line-height:1.6;
+  animation:panelFadeIn .25s ease;
+}
+.kj-feedback.vis{display:block;}
+.kj-feedback.ok{background:var(--ok-bg);border:1px solid var(--ok-b);color:var(--ok);}
+.kj-feedback.feil{background:var(--err-bg);border:1px solid var(--err-b);color:var(--err);}
+
+/* ── Fasit-visning ── */
+.kj-fasit{display:none;margin-top:14px;}
+.kj-fasit.vis{display:block;animation:panelFadeIn .3s ease;}
+.kj-fasit-tittel{
+  font-size:var(--ts-xs);font-weight:700;
+  color:var(--muted);margin-bottom:8px;
+  text-transform:uppercase;letter-spacing:.05em;
+}
+.kj-fasit-ledd{
+  display:flex;flex-direction:column;gap:6px;
+  margin-bottom:14px;
+}
+.kj-fasit-item{
+  display:flex;align-items:flex-start;gap:10px;
+  background:#fff;border:1px solid var(--border);
+  border-radius:var(--r-md);padding:10px 14px;
+}
+.kj-fasit-nr{
+  width:24px;height:24px;border-radius:50%;
+  background:var(--kj-teal);color:#fff;
+  font-size:var(--ts-xs);font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-top:1px;
+}
+.kj-fasit-tekst{font-size:var(--ts-sm);color:var(--text);line-height:1.5;}
+.kj-fasit-arrow{
+  text-align:center;color:var(--kj-amber);
+  font-size:.85rem;margin:-1px 0;padding-left:34px;
+  pointer-events:none;
+}
+
+/* ── Resultat-skjerm ── */
+.kj-result-wrap{
+  text-align:center;
+  padding:32px 20px 24px;
+  animation:panelFadeIn .35s ease;
+}
+.kj-result-icon{font-size:3rem;margin-bottom:12px;}
+.kj-result-title{
+  font-size:var(--ts-xl);font-weight:800;color:var(--navy);
+  letter-spacing:-.03em;margin-bottom:8px;
+}
+.kj-result-sub{font-size:var(--ts-sm);color:var(--muted);margin-bottom:20px;line-height:1.6;}
+.kj-result-stats{
+  display:flex;justify-content:center;gap:16px;
+  margin-bottom:24px;flex-wrap:wrap;
+}
+.kj-rstat{
+  background:var(--off);border:1px solid var(--border);
+  border-radius:var(--r-md);padding:10px 20px;text-align:center;
+}
+.kj-rstat-v{font-size:1.6rem;font-weight:800;color:var(--kj-teal);line-height:1;}
+.kj-rstat-l{font-size:var(--ts-xs);color:var(--muted);margin-top:3px;}
+.kj-result-btn{
+  background:var(--kj-teal);color:#fff;border:none;
+  border-radius:var(--r-md);padding:12px 32px;
+  font-family:var(--font);font-size:var(--ts-base);font-weight:700;
+  cursor:pointer;transition:background .18s;
+}
+.kj-result-btn:hover{background:var(--kj-teal-m);}
+
+/* ── Progress-bar i grid ── */
+.kj-grid-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:14px;
+}
+.kj-grid-title{
+  font-size:var(--ts-lg);font-weight:800;color:var(--navy);
+}
+.kj-grid-prog{
+  font-size:var(--ts-xs);color:var(--muted);font-weight:600;
+}
+
+@media(max-width:500px){
+  .kj-grid{grid-template-columns:1fr;}
+  .kj-ledd{padding:10px 12px 10px 38px;}
+  .kj-btn-row{flex-direction:column;}
+  .kj-btn-sjekk,.kj-btn-hint,.kj-btn-neste{width:100%;text-align:center;}
+}
+
+
+/* ── AUTO-PROGRESS BUTTON ── */
+.btn-auto-progress{
+  position:relative;overflow:hidden;
+  background:var(--ok) !important;
+  cursor:pointer !important;
+  opacity:1 !important;
+}
+.auto-prog-fill{
+  position:absolute;left:0;bottom:0;height:3px;
+  background:rgba(255,255,255,.5);
+  width:0%;
+  animation:autoProgBar 1.1s linear forwards;
+}
+@keyframes autoProgBar{from{width:0%;}to{width:100%;}}
+
+/* ── RIKTIG SVAR: grønn border-flash ── */
+@keyframes correctFlash{
+  0%{box-shadow:0 0 0 0 rgba(21,128,61,.6);}
+  50%{box-shadow:0 0 0 8px rgba(21,128,61,0);}
+  100%{box-shadow:0 0 0 0 rgba(21,128,61,0);}
+}
+.correct-flash{animation:correctFlash .6s ease forwards;}
+
+
+/* ── SPILL STREAK-PILL ── */
+.game-streak-pill{
+  display:inline-flex;align-items:center;
+  background:rgba(244,200,66,.15);
+  border:1px solid rgba(244,200,66,.4);
+  color:var(--gold);
+  font-size:var(--ts-xs);font-weight:700;
+  padding:2px 8px;border-radius:20px;
+  animation:streakPop .3s var(--ease);
+}
+@keyframes streakPop{from{transform:scale(.8);}to{transform:scale(1);}}
+
+
+/* ── BG DRAG MOBILRESPONSIV ── */
+@media(max-width:480px){
+  .drag-grid{
+    grid-template-columns:1fr !important;
+    gap:6px !important;
+  }
+  .drag-term-col, .drag-def-col{width:100% !important;}
+  .drag-def-zone{min-height:44px;font-size:var(--ts-xs);}
+  .drag-chip{font-size:var(--ts-xs);padding:6px 10px;}
+}
+
+
+/* ── NESTE-KNAPP GRØNN VED RIKTIG ── */
+#bg-btn-next:not(:disabled){
+  background:var(--ok);color:#fff;
+  border-color:var(--ok);
+}
+#bg-btn-next:not(:disabled):hover{background:var(--ok-bg);color:var(--ok);}
+#tf-btn-next:not(:disabled){
+  background:var(--ok);color:#fff;
+}
+#tf-btn-next:not(:disabled):hover{filter:brightness(.9);}
+
+/* ── BG NESTE TEMA BTN ── */
+.bg-next-tema-btn{
+  margin-top:10px;
+  background:var(--mid);color:#fff;border:none;
+  border-radius:var(--r-md);padding:9px 20px;
+  font-family:var(--font);font-size:var(--ts-sm);
+  font-weight:700;cursor:pointer;
+  transition:background .18s;display:block;width:100%;
+}
+.bg-next-tema-btn:hover{background:var(--blue);}
+
+
+/* ── TF TOPIC CARD MED TEMA-FARGE ── */
+.topic-grid-card{
+  border-left:4px solid var(--tc, var(--mid)) !important;
+  transition:transform .18s var(--ease), box-shadow .18s, border-color .18s;
+}
+.topic-grid-card.active{
+  background:color-mix(in srgb, var(--tc, var(--mid)) 8%, white);
+  border-color:var(--tc, var(--mid)) !important;
+  box-shadow:0 0 0 2px color-mix(in srgb, var(--tc, var(--mid)) 25%, transparent);
+}
+.topic-grid-card:hover{
+  transform:translateY(-2px);
+  box-shadow:var(--shadow-lg);
+}
+
 </style>
 </head>
 <body>
@@ -2200,7 +2602,7 @@ CHAPTERS = [
 // ═══════════════════════════════════════════════
 let G={}, CS={}, dragCur=null, dragSortEl=null, dailyInt=null, tc=null, teacherOK=false;
 
-function defG(){return{xp:0,streak:0,maxStreak:0,totalAns:0,chapRead:0,perfectCtrl:0,dailyDone:0,chapDone:0,timerWins:0,earned:[],dailySec:0,dailyDate:'',tfTopicDone:{},tfTopicStars:{},bgThemeDone:{},exDone:0};}
+function defG(){return{xp:0,streak:0,maxStreak:0,totalAns:0,chapRead:0,perfectCtrl:0,dailyDone:0,chapDone:0,timerWins:0,earned:[],dailySec:0,dailyDate:'',tfTopicDone:{},tfTopicStars:{},bgThemeDone:{},exDone:0,kjDone:{}}}
 function defCS(){return{phase:'reading',ctrlAns:{},ctrlScore:0,exAns:{},exScore:0};}
 
 function loadAll(){
@@ -2444,6 +2846,15 @@ function renderChapGrid(){
   bgCard.innerHTML='<span class="cc-icon">&#128218;</span><div class="cc-num">Bonus</div><div class="cc-title">Begrepsspill</div><div class="cc-prog"><div class="cc-prog-fill" style="width:'+bgPct+'%"></div></div><span class="cc-prog-lbl">'+( bgDone>0?bgDone+"/5 temaer":"50 begreper!")+'</span>';
   bgCard.onclick=function(){openBG();};
   wrap.appendChild(bgCard);
+  // KJEDE-kort
+  const kjCard=document.createElement('div');
+  kjCard.className='chap-card bonus-card kj-bonus';
+  const kjDoneCount=Object.keys(G.kjDone||{}).length;
+  kjCard.innerHTML=`<div class="chap-icon">🔗</div>
+    <div class="chap-title">Hendelseskjeder</div>
+    <div class="chap-sub">${kjDoneCount}/10 fullført</div>`;
+  kjCard.onclick=openKjede;
+  wrap.appendChild(kjCard);
 }
 
 // ═══════════════════════════════════════════════
@@ -3079,6 +3490,7 @@ const TOPICS = [
   {id:'bev', name:'Bevegelighet', icon:'🤸', color:'#059669'},
   {id:'spe', name:'Spensttrening', icon:'🦘', color:'#D97706'},
   {id:'hur', name:'Hurtighet', icon:'⚡', color:'#DC2626'},
+  {id:'all', name:'Blanding', icon:'🎲', color:'#6D28D9'},
 ];
 
 const ALL_Q = [
@@ -3358,7 +3770,6 @@ function tfBuildTopicGrid(){
 }
 function tfSelectTopic(id){
   session.topic=id;
-  // If game is running, return to start view
   var gv=document.getElementById('tf-game-view');
   var sv=document.getElementById('tf-start-view');
   var ev=document.getElementById('tf-end-view');
@@ -3366,12 +3777,24 @@ function tfSelectTopic(id){
     gv.style.display='none';
     if(ev)ev.style.display='none';
     if(sv)sv.style.display='block';
-    // Reset session
     session.qs=[];session.idx=0;session.score=0;
     session.wrong=[];session.answered=false;
   }
   tfCheckStartReady();
   tfBuildTopicGrid();
+  // Scroll til vanskelighetsvalg etter kort delay
+  setTimeout(function(){
+    var dw=document.getElementById('tf-diff-wrap');
+    if(dw){
+      dw.style.animation='none';void dw.offsetWidth;
+      dw.style.animation='panelFadeIn .25s ease';
+      var so=document.getElementById('spill-overlay');
+      if(so){
+        var top=dw.getBoundingClientRect().top+so.scrollTop-80;
+        so.scrollTo({top:Math.max(0,top),behavior:'smooth'});
+      }
+    }
+  },80);
 }
 function tfSetDiff(d){
   session.diff=d;
@@ -3391,7 +3814,10 @@ function tfCheckStartReady(){
 // GAME FLOW
 // ═══════════════════════════════════════════════════════════
 function tfStartGame(){
-  const qs=tfShuffle(ALL_Q.filter(q=>q.topic===session.topic&&q.diff===session.diff));
+  var qPool=session.topic==='all'
+    ? ALL_Q.filter(q=>q.diff===session.diff)
+    : ALL_Q.filter(q=>q.topic===session.topic&&q.diff===session.diff);
+  const qs=tfShuffle(qPool).slice(0,session.topic==='all'?20:qPool.length);
   if(!qs.length){alert('Ingen spørsmål for dette valget.');return;}
   session.qs=qs;session.idx=0;session.score=0;session.wrong=[];session.answered=false;
   document.getElementById('tf-start-view').style.display='none';
@@ -3408,6 +3834,12 @@ function renderQ(){
   document.getElementById('tf-q-cur').textContent=cur;
   document.getElementById('tf-q-prog-fill').style.width=Math.round((session.idx/tot)*100)+'%';
   document.getElementById('tf-q-score-badge').textContent=session.score+' riktige';
+  var _tsp=document.getElementById('tf-streak-pill');
+  if(_tsp){
+    var _tstr=G&&G.streak>1?('🔥 '+G.streak):'-';
+    _tsp.textContent=_tstr;
+    _tsp.style.display=G&&G.streak>1?'inline-flex':'none';
+  }
   const topic=TOPICS.find(t=>t.id===q.topic);
   const diffLabel={easy:'🟢 Lett',medium:'🟡 Middels',hard:'🔴 Vanskelig'};
   let html=`<div class="q-card" id="qcard">
@@ -3596,12 +4028,29 @@ function handleAnswer(ok, q, el, extraMsg){
 function tfShowFb(msg,ok,warn){
   const fb=document.getElementById('tf-fb');if(!fb)return;
   fb.className='tf-fb-cls show '+(warn?'err':ok?'ok':'err');
+  if(ok && !warn){
+    // Auto-progress etter 1.1 sek
+    var _nb2=document.getElementById('tf-btn-next');
+    if(_nb2){
+      _nb2.disabled=false;_nb2.classList.add('btn-auto-progress');
+      var _pf2=document.createElement('div');_pf2.className='auto-prog-fill';
+      _nb2.appendChild(_pf2);
+      session._autoT=setTimeout(function(){
+        _nb2.classList.remove('btn-auto-progress');
+        if(_pf2.parentNode)_pf2.parentNode.removeChild(_pf2);
+        tfNextQ();
+      },1100);
+    }
+  }
   const q=session.qs[session.idx];
   const labels={uth:'Utholdenhetstabell',sty:'Styrketreningstabell',bev:'Bevegelighetstabell',spe:'Spensttabell',hur:'Hurtighetstabeller'};
   fb.innerHTML=msg+(q?'<br><button class="fb-table-link" onclick="openRefModal(\'' +q.topic+ '\')">📖 Se '+( labels[q.topic]||'tabellen')+' →</button>':'');
 }
 
 function tfNextQ(){
+  if(session._autoT){clearTimeout(session._autoT);session._autoT=null;}
+  var nb=document.getElementById('tf-btn-next');
+  if(nb){nb.classList.remove('btn-auto-progress');var pf=nb.querySelector('.auto-prog-fill');if(pf)pf.remove();}
   session.idx++;
   if(session.idx>=session.qs.length){endGame();return;}
   renderQ();
@@ -3617,6 +4066,9 @@ function endGame(){
   const tot=session.qs.length, sc=session.score;
   const pct=Math.round(sc/tot*100);
   const stars=pct===100?'⭐⭐⭐':pct>=75?'⭐⭐':pct>=50?'⭐':'';
+  const isNewRecord=(pct===100);
+  var recEl2=document.getElementById('tf-rc-record');
+  if(recEl2)recEl2.style.display=isNewRecord?'block':'none';
   // Save progress
   if(!TF_G.topicDone[session.topic])TF_G.topicDone[session.topic]={};
   TF_G.topicDone[session.topic][session.diff]=true;
@@ -3841,7 +4293,7 @@ function bgUpdatePanelProg(){
 }
 
 // CONFIG
-// BG_LEVELS removed – using main LEVELS system
+const BG_LEVELS = typeof LEVELS !== "undefined" ? LEVELS : [{name:"Nybegynner",min:0},{name:"Lærling",min:100},{name:"Utøver",min:300},{name:"Ekspert",min:700},{name:"Mester",min:1200}];
 const BG_THEMES=[
   {id:"kropp", name:"Kropp \u0026 fysiologi",          icon:"\u{1FAC0}", kap:"Kap. 1, 2, 9"},
   {id:"plan",  name:"Planlegging \u0026 prinsipper",    icon:"\u{1F4CB}", kap:"Kap. 3, 4"},
@@ -3997,6 +4449,12 @@ function bgRenderQ(){
   document.getElementById("bg-q-cur").textContent=cur;
   document.getElementById("bg-q-prog-bar").style.width=Math.round((bgSess.idx/tot)*100)+"%";
   document.getElementById("bg-q-score-pill").textContent=bgSess.score+" riktige";
+  var _bsp=document.getElementById("bg-streak-pill");
+  if(_bsp){
+    var _str=G&&G.streak>1?("🔥 "+G.streak):"-";
+    _bsp.textContent=_str;
+    _bsp.style.display=G&&G.streak>1?"inline-flex":"none";
+  }
   var _rv=document.getElementById("bg-result-view");if(_rv)_rv.style.display="none";
   const th=BG_THEMES.find(t=>t.id===c.t)||{icon:"",name:""};
   const typeLbl={mc:"Flervalg",fill:"Fyll inn",drag:"Koble par"};
@@ -4142,9 +4600,22 @@ function bgCheckDrag(){
 
 // HANDLE ANSWER
 function bgHandle(ok,c,el,extra){
-  const xpMap={mc:6,fill:9,drag:5};
+  const xpMap={mc:5,fill:9,drag:8};
   const pts=xpMap[bgSess.qs[bgSess.idx].type]||6;
-  if(ok){bgSess.score++;bgIncStreak(true);bgAddXP(pts,el);bgShowFb("&#10003; Riktig! "+(extra||""),true);}
+  if(ok){
+    bgSess.score++;bgIncStreak(true);bgAddXP(pts,el);
+    bgShowFb("&#10003; Riktig! "+(extra||""),true);
+    // Auto-progress etter 1.1 sek
+    var _nb=document.getElementById("bg-btn-next");
+    if(_nb){
+      _nb.disabled=false;_nb.classList.add("btn-auto-progress");
+      var _pf=document.createElement("div");_pf.className="auto-prog-fill";
+      _nb.appendChild(_pf);
+      bgSess._autoT=setTimeout(function(){
+        bgNext();
+      },1100);
+    }
+  }
   else{bgIncStreak(false);bgShowFb("&#10007; Feil. Riktig: "+c.term+" &#8211; "+c.def.slice(0,80),false);bgSess.wrong.push({term:c.term,def:c.def});}
   const card=document.getElementById("bgcard");
   if(card)card.classList.add(ok?"pok":"shk");
@@ -4157,6 +4628,9 @@ function bgShowFb(msg,ok){
   fb.className="fb fbshow "+(ok?"fb-ok":"fb-err");fb.innerHTML=msg;
 }
 function bgNext(){
+  if(bgSess._autoT){clearTimeout(bgSess._autoT);bgSess._autoT=null;}
+  var nb=document.getElementById("bg-btn-next");
+  if(nb){nb.classList.remove("btn-auto-progress");var pf=nb.querySelector('.auto-prog-fill');if(pf)pf.remove();}
   bgSess.idx++;
   if(bgSess.idx>=bgSess.qs.length){bgEndGame();return;}
   bgRenderQ();
@@ -4167,6 +4641,14 @@ function bgSkip(){
 }
 
 // END GAME
+function bgNextQ(){
+  if(bgSess._autoT){clearTimeout(bgSess._autoT);bgSess._autoT=null;}
+  var nb=document.getElementById("bg-btn-next");
+  if(nb){nb.classList.remove("btn-auto-progress");var pf=nb.querySelector('.auto-prog-fill');if(pf)pf.remove();}
+  bgSess.idx++;
+  if(bgSess.idx>=bgSess.qs.length){bgEndGame();return;}
+  bgRenderQ();
+}
 function bgEndGame(){
   const tot=bgSess.qs.length,sc=bgSess.score,pct=Math.round(sc/tot*100);
   const stars=pct===100?"&#11088;&#11088;&#11088;":pct>=75?"&#11088;&#11088;":pct>=50?"&#11088;":"";
@@ -4175,6 +4657,27 @@ function bgEndGame(){
   document.getElementById("bg-rc-stars").innerHTML=stars||"&#128170;";
   document.getElementById("bg-rc-big").textContent=sc+"/"+tot;
   document.getElementById("bg-rc-sub").textContent=pct+"% riktig";
+  // Personlig rekord
+  var isNewRecord=pct===100;
+  var recEl=document.getElementById("bg-rc-record");
+  if(recEl)recEl.style.display=isNewRecord?"block":"none";
+  // Neste tema-knapp
+  var themes=["uth","sty","bev","spe","hur","all"];
+  var curIdx=themes.indexOf(bgSess.theme);
+  var nextTheme=themes[(curIdx+1)%themes.length];
+  var nextBtn=document.getElementById("bg-rc-next-tema");
+  if(nextBtn){
+    var nextObj=BG_THEMES.find(function(t){return t.id===nextTheme;})||{icon:"",name:"Alle temaer"};
+    nextBtn.textContent="→ "+nextObj.icon+" "+(nextTheme==="all"?"Alle temaer":nextObj.name);
+    nextBtn.onclick=function(){
+      bgSess={theme:nextTheme,mode:null,qs:[],idx:0,score:0,wrong:[],answered:false};
+      bgBuildGrid();
+      var rv=document.getElementById("bg-result-view");
+      if(rv)rv.style.display="none";
+      var sv=document.getElementById("bg-start-view");
+      if(sv)sv.style.display="block";
+    };
+  }
   document.getElementById("bg-rc-msg").textContent=pct===100?"&#127775; Perfekt! Du kan alle!":pct>=80?"&#9989; Veldig bra!":pct>=60?"&#128077; Bra innsats!":"&#128218; Les kapitlene p\u00e5 nytt";
   const wb=document.getElementById("bg-rc-wrong"),wi=document.getElementById("bg-rc-wrong-items");
   if(bgSess.wrong.length){
@@ -4448,10 +4951,10 @@ function goOversikt(){
 
 function closeSpillOverlay(){
   if(tc&&tc.tint) clearInterval(tc.tint);
-  // Hide both TF and BG panels
-  var tf=id('tf-panel-wrap'), bg=id('bg-panel-wrap');
+  var tf=id('tf-panel-wrap'), bg=id('bg-panel-wrap'), kj=id('kj-panel-wrap');
   if(tf) tf.style.display='none';
   if(bg) bg.style.display='none';
+  if(kj) kj.style.display='none';
   showOversikt();
   updateGlobalStats();
   renderChapGrid();
@@ -4472,6 +4975,410 @@ function dismissDisclaimer(){
     }
   }catch(e){}
 })();
+
+
+const KJEDER = [
+  {id:'kj1',tittel:'Oppvarming virker',
+    kapitler:['Kap. 2'],vanskelighet:1,
+    forklaring:'Når du varmer opp, stiger kjernetemperaturen til 38–39 °C. Høyere temperatur gjør at enzymene i muskelcellene jobber raskere, noe som betyr at ATP kan produseres raskere. Mer ATP per sekund gjør at musklene kan trekke seg sammen kraftigere og raskere – og risikoen for strekk og rifter i kaldt vev faller.',
+    ledd:['Du begynner å jogge rolig', 'Kjernetemperaturen stiger til 38–39 °C', 'Enzymer i muskelcellene jobber raskere', 'ATP produseres mer effektivt', 'Musklene kontraherer kraftigere og raskere', 'Prestasjon øker og skaderisiko reduseres']},
+  {id:'kj2',tittel:'Muskler vokser av styrketrening',
+    kapitler:['Kap. 5'],vanskelighet:1,
+    forklaring:'Tung styrketrening (70–85 % av 1RM) skaper mikroskopiske rifter i muskelfibrene. Kroppen reparerer disse med inflammasjon og økt proteinsyntese. Aktin- og myosinfilamentene bygges tykkere, muskeltverrsnittet øker – det vi kaller hypertrofi.',
+    ledd:['Trening med 75 % av 1RM i 3 serier à 8 reps', 'Mikroskopiske rifter oppstår i muskelfibrene', 'Inflammasjon setter i gang reparasjonsprosessen', 'Proteinsyntesen øker og aktin/myosin bygges tykkere', 'Muskeltverrsnittet øker (hypertrofi)', 'Muskelen kan utvikle mer kraft']},
+  {id:'kj3',tittel:'Det plyometriske hoppet',
+    kapitler:['Kap. 9'],vanskelighet:2,
+    forklaring:'I et plyometrisk hopp strekkes musklene eksentrisk ved landing og lagrer elastisk energi – som en fjær som presses sammen. Amortisasjonsfasen er overgangen mellom landing og fraspring. Jo kortere denne er, desto mer elastisk energi overføres til den konsentriske fasen, og desto mer eksplosivt blir frasprint.',
+    ledd:['Utøveren lander fra et hopp', 'Quadriceps og gluteus strekkes eksentrisk', 'Elastisk energi lagres i muskel-seneapparatet', 'Amortisasjonsfasen avsluttes raskt', 'Den elastiske energien frigjøres konsentrisk', 'Utøveren spretter opp med større kraft enn muskelarbeidet alene gir']},
+  {id:'kj4',tittel:'Hjertet tilpasser seg utholdenhetstrening',
+    kapitler:['Kap. 4', 'Kap. 1'],vanskelighet:2,
+    forklaring:'Langvarig utholdenhetstrening i I-sone 1–2 gir hjertet en vedvarende moderat belastning. Over tid utvides hjertekamrene (kardiomegali), slagvolumet øker, og hjertet pumper mer blod per slag uten å slå fortere. Resultatet er lavere hvilepuls og høyere VO₂maks.',
+    ledd:['Systematisk langkjøring i I-sone 1–2 over måneder', 'Hjertet utsettes for vedvarende moderat belastning', 'Hjertekamrene utvides og slagvolumet øker', 'Hjertet pumper mer blod per slag uten å øke frekvensen', 'Hvilepulsen synker', 'VO₂maks øker']},
+  {id:'kj5',tittel:'For rask økning → belastningsskade',
+    kapitler:['Kap. 12', 'Kap. 13'],vanskelighet:2,
+    forklaring:'Progresjonsprinsippet sier at belastningen skal økes gradvis. Bryter du dette og øker for raskt, akkumuleres mikroskopiske skader raskere enn kroppen reparerer dem. Vevet klarer ikke å holde tritt, og belastningsskade – som beinhinnebetennelse – er resultatet.',
+    ledd:['Utøver øker treningsmengden med 40 % på én uke', 'Progresjonsprinsippet brytes', 'Belastningen overstiger vevets toleransegrense', 'Mikroskadene akkumuleres raskere enn reparasjonen', 'Kronisk inflammasjon utvikler seg i sener og beinhinne', 'Beinhinnebetennelse oppstår – treningen må stoppes']},
+  {id:'kj6',tittel:'Lite søvn → dårlig trening',
+    kapitler:['Kap. 14', 'Kap. 5'],vanskelighet:2,
+    forklaring:'Under dyp søvn frigjøres veksthormon som styrer muskelreparasjon og glykogenoppbygging. Sover du for lite, uteblir denne hormonpulsen. Neste økt starter med uferdige muskler og reduserte energilagre – kraft og utholdenhet faller, skaderisikoen stiger.',
+    ledd:['Utøver sover 5 timer i stedet for 8', 'Veksthormonsekresjon i dyp søvn uteblir', 'Proteinsyntesen reduseres og muskelreparasjon er ufullstendig', 'Glykogenlagrene gjenoppbygges saktere', 'Neste økt starter med reduserte energilagre og uferdige muskler', 'Kraft og utholdenhet faller – skaderisikoen øker']},
+  {id:'kj7',tittel:'Fra nybegynner til ekspert – teknikkinnlæring',
+    kapitler:['Kap. 10', 'Kap. 7'],vanskelighet:3,
+    forklaring:'Teknikkinnlæring går gjennom tre stadier. I grovkoordineringsstadiet er bevegelsen usikker og energikrevende. Gjentatt trening danner motoriske programmer i nervesystemet. I finkoordineringsstadiet flyter bevegelsen, men er sårbar under press. Til slutt automatiseres bevegelsen – kognitiv kapasitet frigjøres til taktikk.',
+    ledd:['Nybegynner lærer et nytt kast – grovkoordineringsstadiet', 'Gjentatt trening former motoriske programmer i sentralnervesystemet', 'Finkoordineringsstadiet: bevegelsen flyter men er sårbar under press', 'Videre automatisering gjennom tusenvis av repetisjoner', 'Automatiseringsstadiet: kastet kjøres uten bevisst kontroll', 'Kognitiv kapasitet frigjøres til å lese spillet (taktikk)']},
+  {id:'kj8',tittel:'Glykogentømming under konkurranse',
+    kapitler:['Kap. 4', 'Kap. 14'],vanskelighet:3,
+    forklaring:'Ved høy intensitet bruker kroppen karbohydrater som primær energikilde. Etter 60–90 minutter er glykogenlagrene i muskler og lever tomme. Kroppen tvinges til fett som energikilde – men fett krever mer oksygen per ATP og forbrenner saktere. Tempoet kollapser – det vi kaller "hitting the wall".',
+    ledd:['Halvmaraton løpes på høy intensitet (I-sone 4–5)', 'Karbohydrater er primær energikilde – glykogen forbrukes raskt', 'Etter 60–90 min er glykogenlagrene tomme', 'Kroppen tvinges til å bruke fett som energikilde', 'Fett krever mer oksygen per ATP og forbrenner saktere', 'Løpstempoet kollapser – «hitting the wall»']},
+  {id:'kj9',tittel:'Teknikk bestemmer taktiske muligheter',
+    kapitler:['Kap. 10', 'Kap. 11'],vanskelighet:3,
+    forklaring:'Taktikk forutsetter teknikk – du kan bare velge løsninger du faktisk behersker. En basketballspiller under press kan bare velge mellom de alternativene hun har automatisert. Smalt teknisk repertoar = smale taktiske muligheter. Systematisk teknikktrening er derfor en investering i fremtidig taktisk frihet.',
+    ledd:['Basketballspiller er under press i angrep', 'Situasjonen krever et taktisk handlingsvalg', 'Dribling under press er ikke automatisert – ikke et reelt alternativ', 'Begrenset teknisk repertoar begrenser de taktiske valgene', 'Spilleren velger en enklere, men tryggere løsning', 'Systematisk teknikktrening utvider fremtidige taktiske muligheter']},
+  {id:'kj10',tittel:'Fra mål til forbedret prestasjon – hele kjeden',
+    kapitler:['Kap. 3', 'Kap. 4', 'Kap. 5', 'Kap. 12', 'Kap. 14'],vanskelighet:3,
+    forklaring:'Den store kjeden viser hvordan alle fagets elementer henger sammen: et mål definerer hva du trenger, analyser avdekker gapet, planlegging prioriterer innsatsen, ernæring og søvn gir grunnlaget for adaptasjon, og superkompensasjon er mekanismen som faktisk gjør deg bedre.',
+    ledd:['Utøver setter prosessmål om å forbedre 3000 m-tid', 'Arbeidskravsanalyse avdekker at laktatterskel er den kritiske faktoren', 'Treningsplanlegging: mesosyklus med terskeltrening (I-sone 4)', 'Ernæring: glykogenlagrene fylles optimalt mellom øktene', 'Søvn sikrer veksthormonsekresjon og muskelreparasjon', 'Superkompensasjon: kroppen bygger seg sterkere enn før', 'Laktatterskelen forskyves oppover – utøveren løper raskere']},
+];
+
+// ── Kjedesession ──
+var kjSess = {
+  current: null,   // current KJEDER object
+  shuffled: [],    // shuffled ledd display order
+  attempts: 0,     // attempts on this chain
+  hintShown: false,
+  done: {},        // {id: {firstTry: bool}}
+};
+
+function openKjede(){
+  var w = document.getElementById('kj-panel-wrap');
+  if(!w) return;
+  // Hide other panels
+  var tf = document.getElementById('tf-panel-wrap');
+  var bg = document.getElementById('bg-panel-wrap');
+  if(tf) tf.style.display = 'none';
+  if(bg) bg.style.display = 'none';
+  w.style.display = 'block';
+  // Reset to grid
+  kjTilGrid();
+  showSpillOverlay('🔗 Hendelseskjeder');
+}
+
+function kjTilGrid(){
+  document.getElementById('kj-start-view').style.display = 'block';
+  document.getElementById('kj-game-view').style.display = 'none';
+  document.getElementById('kj-result-view').style.display = 'none';
+  kjBuildGrid();
+}
+
+function kjBuildGrid(){
+  var grid = document.getElementById('kj-grid');
+  var prog = document.getElementById('kj-grid-prog');
+  if(!grid) return;
+  var doneCnt = Object.keys(kjSess.done).length;
+  if(prog) prog.textContent = doneCnt + '/10 fullført';
+  grid.innerHTML = '';
+  KJEDER.forEach(function(k){
+    var isDone = !!kjSess.done[k.id];
+    var dots = '';
+    for(var d=1;d<=3;d++) dots += '<div class="kj-dot'+(d<=k.vanskelighet?' on':'')+'"></div>';
+    var kapTags = k.kapitler.map(function(c){return '<span class="kj-card-kap">'+c+'</span>';}).join('');
+    var card = document.createElement('div');
+    card.className = 'kj-card' + (isDone?' done':'');
+    card.innerHTML =
+      '<div class="kj-card-header">' +
+        '<span class="kj-card-nr">' + k.id.replace('kj','Kjede ') + '</span>' +
+        (isDone ? '<span class="kj-done-badge">✅</span>' : '') +
+      '</div>' +
+      '<div class="kj-card-title">' + k.tittel + '</div>' +
+      '<div class="kj-card-meta">' + kapTags +
+        '<div class="kj-vanskelighet">' + dots + '</div>' +
+      '</div>' +
+      '<div class="kj-ledd-preview">' + k.ledd[0] + ' → … → ' + k.ledd[k.ledd.length-1] + '</div>';
+    card.onclick = (function(kjede){ return function(){ kjStart(kjede); }; })(k);
+    grid.appendChild(card);
+  });
+}
+
+function kjShuffle(arr){
+  var a = arr.slice();
+  for(var i=a.length-1;i>0;i--){
+    var j=Math.floor(Math.random()*(i+1));
+    var t=a[i];a[i]=a[j];a[j]=t;
+  }
+  return a;
+}
+
+function kjStart(kjede){
+  kjSess.current = kjede;
+  kjSess.shuffled = kjShuffle(kjede.ledd.slice());
+  kjSess.attempts = 0;
+  kjSess.hintShown = false;
+
+  // Reset UI
+  document.getElementById('kj-start-view').style.display = 'none';
+  document.getElementById('kj-result-view').style.display = 'none';
+  var gv = document.getElementById('kj-game-view');
+  gv.style.display = 'block';
+
+  document.getElementById('kj-game-tittel').textContent = kjede.tittel;
+  document.getElementById('kj-game-kap').textContent = kjede.kapitler.join(' · ');
+  document.getElementById('kj-forklaring').classList.remove('vis');
+  document.getElementById('kj-feedback').classList.remove('vis');
+  document.getElementById('kj-fasit').classList.remove('vis');
+
+  var nb = document.getElementById('kj-neste-btn');
+  if(nb) nb.classList.remove('vis');
+  var hb = document.getElementById('kj-hint-btn');
+  if(hb){ hb.style.display='inline-block'; hb.textContent='💡 Vis forklaring';}
+
+  // Steps
+  ['kj-step-1','kj-step-2','kj-step-3'].forEach(function(id,i){
+    var el=document.getElementById(id);
+    if(el){el.className='kj-step'+(i===0?' active':'');}
+  });
+
+  kjBuildSortList();
+  // Scroll to top of game view
+  setTimeout(function(){
+    var so = document.getElementById('spill-overlay');
+    if(so) so.scrollTop = 0;
+  }, 60);
+}
+
+function kjBuildSortList(){
+  var list = document.getElementById('kj-sort-list');
+  if(!list) return;
+  list.innerHTML = '';
+  kjSess.shuffled.forEach(function(tekst, i){
+    if(i > 0){
+      var arrow = document.createElement('div');
+      arrow.className = 'kj-arrow';
+      arrow.textContent = '↓';
+      list.appendChild(arrow);
+    }
+    var item = document.createElement('div');
+    item.className = 'kj-ledd';
+    item.draggable = true;
+    item.dataset.tekst = tekst;
+    item.innerHTML =
+      '<div class="kj-ledd-num">' + (i+1) + '</div>' +
+      tekst +
+      '<span class="kj-handle">⠿</span>';
+    // Drag events
+    item.addEventListener('dragstart', kjDragStart);
+    item.addEventListener('dragover', kjDragOver);
+    item.addEventListener('drop', kjDrop);
+    item.addEventListener('dragend', kjDragEnd);
+    // Touch events
+    item.addEventListener('touchstart', kjTouchStart, {passive:true});
+    item.addEventListener('touchmove', kjTouchMove, {passive:false});
+    item.addEventListener('touchend', kjTouchEnd);
+    list.appendChild(item);
+  });
+}
+
+// ── Drag-and-drop ──
+var kjDragEl = null;
+var kjDragOver_ = null;
+
+function kjDragStart(e){
+  kjDragEl = this;
+  this.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+}
+function kjDragOver(e){
+  e.preventDefault();
+  if(kjDragOver_ && kjDragOver_ !== this) kjDragOver_.classList.remove('drag-over');
+  if(this !== kjDragEl && !this.classList.contains('kj-arrow')){
+    this.classList.add('drag-over');
+    kjDragOver_ = this;
+  }
+}
+function kjDrop(e){
+  e.preventDefault();
+  if(this === kjDragEl || this.classList.contains('kj-arrow')) return;
+  var list = document.getElementById('kj-sort-list');
+  var items = Array.from(list.querySelectorAll('.kj-ledd'));
+  var fromIdx = items.indexOf(kjDragEl);
+  var toIdx = items.indexOf(this);
+  if(fromIdx < 0 || toIdx < 0) return;
+  // Reorder shuffled array
+  var moved = kjSess.shuffled.splice(fromIdx,1)[0];
+  kjSess.shuffled.splice(toIdx,0,moved);
+  kjBuildSortList();
+  kjDragOver_ = null;
+}
+function kjDragEnd(){
+  this.classList.remove('dragging');
+  document.querySelectorAll('.kj-ledd').forEach(function(el){el.classList.remove('drag-over');});
+  kjDragEl = null;
+}
+
+// ── Touch drag ──
+var kjTouch = {el:null, startY:0, startIdx:0, clone:null};
+function kjTouchStart(e){
+  kjTouch.el = this;
+  kjTouch.startY = e.touches[0].clientY;
+  var items = Array.from(document.querySelectorAll('.kj-ledd'));
+  kjTouch.startIdx = items.indexOf(this);
+}
+function kjTouchMove(e){
+  e.preventDefault();
+  if(!kjTouch.el) return;
+  var t = e.touches[0];
+  var els = Array.from(document.querySelectorAll('.kj-ledd'));
+  els.forEach(function(el){el.classList.remove('drag-over');});
+  var target = document.elementFromPoint(t.clientX, t.clientY);
+  if(target){
+    var ledd = target.closest ? target.closest('.kj-ledd') : null;
+    if(ledd && ledd !== kjTouch.el) ledd.classList.add('drag-over');
+  }
+}
+function kjTouchEnd(e){
+  if(!kjTouch.el) return;
+  var t = e.changedTouches[0];
+  var target = document.elementFromPoint(t.clientX, t.clientY);
+  if(target){
+    var ledd = target.closest ? target.closest('.kj-ledd') : null;
+    if(ledd && ledd !== kjTouch.el){
+      var items = Array.from(document.querySelectorAll('.kj-ledd'));
+      var fromIdx = items.indexOf(kjTouch.el);
+      var toIdx = items.indexOf(ledd);
+      if(fromIdx >= 0 && toIdx >= 0){
+        var moved = kjSess.shuffled.splice(fromIdx,1)[0];
+        kjSess.shuffled.splice(toIdx,0,moved);
+        kjBuildSortList();
+      }
+    }
+  }
+  document.querySelectorAll('.kj-ledd').forEach(function(el){el.classList.remove('drag-over');});
+  kjTouch.el = null;
+}
+
+// ── Sjekk svar ──
+function kjSjekk(){
+  var k = kjSess.current;
+  if(!k) return;
+  kjSess.attempts++;
+  var riktig = kjSess.shuffled.every(function(tekst,i){ return tekst === k.ledd[i]; });
+  var fb = document.getElementById('kj-feedback');
+
+  if(riktig){
+    // Riktig!
+    var firstTry = kjSess.attempts === 1 && !kjSess.hintShown;
+    kjSess.done[k.id] = {firstTry: firstTry};
+    // Save to G
+    if(!G.kjDone) G.kjDone = {};
+    G.kjDone[k.id] = {firstTry: firstTry};
+    var xpGain = firstTry ? 20 : kjSess.hintShown ? 8 : 12;
+    addXP(xpGain, document.getElementById('kj-game-view'));
+    saveAll();
+    // Mark ledd green
+    document.querySelectorAll('.kj-ledd').forEach(function(el){
+      el.classList.add('correct-ledd');
+      el.draggable = false;
+    });
+    fb.className = 'kj-feedback vis ok';
+    fb.textContent = firstTry
+      ? '✅ Perfekt! Du fikk riktig rekkefølge på første forsøk – ' + xpGain + ' XP!'
+      : '✅ Riktig rekkefølge! ' + xpGain + ' XP.';
+    // Step 3 done
+    kjSetStep(3);
+    // Show neste
+    var nb = document.getElementById('kj-neste-btn');
+    var idx = KJEDER.indexOf(k);
+    if(nb){
+      nb.classList.add('vis');
+      nb.textContent = idx < KJEDER.length-1 ? 'Neste kjede →' : 'Se resultater →';
+    }
+    // Hide hint btn
+    var hb = document.getElementById('kj-hint-btn');
+    if(hb) hb.style.display = 'none';
+    // Update grid prog
+    kjBuildGrid();
+    checkBadges();
+  } else {
+    fb.className = 'kj-feedback vis feil';
+    if(kjSess.attempts === 1){
+      fb.textContent = '✗ Ikke helt riktig. Prøv igjen – eller les forklaringen for et hint.';
+    } else if(kjSess.attempts === 2){
+      fb.textContent = '✗ Fortsatt ikke riktig. Bruk forklaringen og prøv én gang til.';
+      kjVisHint();
+    } else {
+      fb.textContent = '✗ Her er riktig rekkefølge:';
+      kjVisFasit();
+      // Auto-correct display
+      kjSess.shuffled = k.ledd.slice();
+      kjBuildSortList();
+      document.querySelectorAll('.kj-ledd').forEach(function(el){
+        el.classList.add('correct-ledd');el.draggable=false;
+      });
+      var nb = document.getElementById('kj-neste-btn');
+      var idx = KJEDER.indexOf(k);
+      if(nb){nb.classList.add('vis');nb.textContent=idx<KJEDER.length-1?'Neste kjede →':'Se resultater →';}
+      var hb=document.getElementById('kj-hint-btn');if(hb)hb.style.display='none';
+    }
+  }
+  // Scroll to feedback
+  var so=document.getElementById('spill-overlay');
+  if(so){
+    var fbTop=fb.getBoundingClientRect().top+so.scrollTop-120;
+    so.scrollTo({top:Math.max(0,fbTop),behavior:'smooth'});
+  }
+}
+
+function kjVisHint(){
+  var k = kjSess.current;if(!k)return;
+  kjSess.hintShown = true;
+  var fl = document.getElementById('kj-forklaring');
+  var ft = document.getElementById('kj-forklaring-tekst');
+  if(ft) ft.textContent = k.forklaring;
+  if(fl) fl.classList.add('vis');
+  kjSetStep(2);
+  var hb=document.getElementById('kj-hint-btn');
+  if(hb)hb.textContent='📖 Les igjen';
+  var so=document.getElementById('spill-overlay');
+  if(so){
+    var flTop=fl.getBoundingClientRect().top+so.scrollTop-80;
+    so.scrollTo({top:Math.max(0,flTop),behavior:'smooth'});
+  }
+}
+
+function kjVisFasit(){
+  var k=kjSess.current;if(!k)return;
+  kjSetStep(3);
+  var fasit=document.getElementById('kj-fasit');
+  var fasitLedd=document.getElementById('kj-fasit-ledd');
+  if(!fasit||!fasitLedd)return;
+  fasitLedd.innerHTML='';
+  k.ledd.forEach(function(tekst,i){
+    if(i>0){
+      var arr=document.createElement('div');
+      arr.className='kj-fasit-arrow';arr.textContent='↓ fordi...';
+      fasitLedd.appendChild(arr);
+    }
+    var item=document.createElement('div');
+    item.className='kj-fasit-item';
+    item.innerHTML='<div class="kj-fasit-nr">'+(i+1)+'</div>'+
+      '<div class="kj-fasit-tekst">'+tekst+'</div>';
+    fasitLedd.appendChild(item);
+  });
+  fasit.classList.add('vis');
+}
+
+function kjSetStep(n){
+  for(var i=1;i<=3;i++){
+    var el=document.getElementById('kj-step-'+i);
+    if(!el)continue;
+    if(i<n)el.className='kj-step done';
+    else if(i===n)el.className='kj-step active';
+    else el.className='kj-step';
+  }
+}
+
+function kjNeste(){
+  var k=kjSess.current;
+  var idx=KJEDER.indexOf(k);
+  if(idx<KJEDER.length-1){
+    kjStart(KJEDER[idx+1]);
+  } else {
+    kjVisResultat();
+  }
+}
+
+function kjVisResultat(){
+  document.getElementById('kj-game-view').style.display='none';
+  var rv=document.getElementById('kj-result-view');
+  if(rv)rv.style.display='block';
+  var firstTryCnt=Object.values(kjSess.done).filter(function(d){return d.firstTry;}).length;
+  var res=document.getElementById('kj-res-riktig');
+  if(res)res.textContent=firstTryCnt;
+  var sub=document.getElementById('kj-result-sub');
+  if(sub)sub.textContent=firstTryCnt>=8
+    ? 'Imponerende – du fikk '+firstTryCnt+' av 10 riktig på første forsøk!'
+    : 'Du fikk '+firstTryCnt+' av 10 riktig på første forsøk. Les forklaringene på nytt for å styrke forståelsen.';
+  var so=document.getElementById('spill-overlay');if(so)so.scrollTop=0;
+}
 
 </script>
 
@@ -4812,7 +5719,8 @@ function dismissDisclaimer(){
         <span class="rc-stars" id="tf-rc-stars">⭐</span>
         <div class="rc-score" id="tf-rc-score">–</div>
         <div class="rc-pct"   id="tf-rc-pct">–</div>
-        <div class="rc-msg"   id="tf-rc-msg">–</div>
+        <div class="rc-msg"   id="tf-rc-msg">
+  <div id="tf-rc-record" style="display:none;background:var(--gold);color:var(--navy);font-weight:800;padding:6px 16px;border-radius:20px;margin:8px 0;font-size:var(--ts-sm);">💥 Ny rekord – 100%!</div–</div>
         <div class="rc-xp"    id="tf-rc-xp">–</div>
         <div class="rc-wrong" id="tf-rc-wrong" style="display:none;">
           <div class="rc-wrong-title">❌ Du tok feil på:</div>
