@@ -6044,6 +6044,74 @@ function kjVisResultat(){
   </div><!-- /bg-panel-body -->
 </div><!-- /bg-panel -->
 </div><!-- /bg-panel-wrap -->
+
+<!-- ═══ HENDELSESKJEDER-PANEL ═══ -->
+<div id="kj-panel-wrap" style="display:none;">
+  <div id="kj-start-view">
+    <div class="kj-grid-header">
+      <div class="kj-grid-title">🔗 Hendelseskjeder</div>
+      <div class="kj-grid-prog" id="kj-grid-prog">0/10 fullført</div>
+    </div>
+    <p style="font-size:var(--ts-sm);color:var(--muted);margin-bottom:16px;line-height:1.6;">
+      Sett hendelsene i riktig rekkefølge. Forstå <em>hvorfor</em> ting henger sammen – på tvers av kapitler.
+    </p>
+    <div class="kj-grid" id="kj-grid"></div>
+  </div>
+
+  <div id="kj-game-view" style="display:none;">
+    <div class="kj-game-hdr">
+      <div class="kj-game-hdr-left">
+        <h3 id="kj-game-tittel">–</h3>
+        <div class="kj-game-sub" id="kj-game-kap">–</div>
+      </div>
+      <div class="kj-step-indicator">
+        <div class="kj-step active" id="kj-step-1">1</div>
+        <div class="kj-step" id="kj-step-2">2</div>
+        <div class="kj-step" id="kj-step-3">3</div>
+      </div>
+    </div>
+
+    <div class="kj-forklaring" id="kj-forklaring">
+      <div class="kj-forklaring-label">💡 Forstå kjeden</div>
+      <div class="kj-forklaring-tekst" id="kj-forklaring-tekst"></div>
+    </div>
+
+    <div class="kj-sort-label">Dra leddene i riktig rekkefølge ↕</div>
+    <div class="kj-sort-list" id="kj-sort-list"></div>
+
+    <div class="kj-btn-row">
+      <button class="kj-btn-sjekk" onclick="kjSjekk()">✓ Sjekk rekkefølgen</button>
+      <button class="kj-btn-hint" id="kj-hint-btn" onclick="kjVisHint()">💡 Forklaring</button>
+    </div>
+    <button class="kj-btn-neste" id="kj-neste-btn" onclick="kjNeste()">Neste kjede →</button>
+
+    <div class="kj-feedback" id="kj-feedback"></div>
+
+    <div class="kj-fasit" id="kj-fasit">
+      <div class="kj-fasit-tittel">Riktig rekkefølge</div>
+      <div class="kj-fasit-ledd" id="kj-fasit-ledd"></div>
+    </div>
+
+    <div style="margin-top:16px;">
+      <button onclick="kjTilGrid()" style="background:none;border:1px solid var(--border-s);border-radius:var(--r-md);padding:8px 18px;font-family:var(--font);font-size:var(--ts-sm);color:var(--muted);cursor:pointer;">
+        ← Alle kjeder
+      </button>
+    </div>
+  </div>
+
+  <div id="kj-result-view" style="display:none;">
+    <div class="kj-result-wrap">
+      <div class="kj-result-icon">🏆</div>
+      <div class="kj-result-title">Alle kjeder fullført!</div>
+      <div class="kj-result-sub" id="kj-result-sub">Du forstår nå sammenhengene i Treningslære 1.</div>
+      <div class="kj-result-stats">
+        <div class="kj-rstat"><div class="kj-rstat-v" id="kj-res-riktig">–</div><div class="kj-rstat-l">Riktig første gang</div></div>
+        <div class="kj-rstat"><div class="kj-rstat-v" id="kj-res-tot">10</div><div class="kj-rstat-l">Kjeder totalt</div></div>
+      </div>
+      <button class="kj-result-btn" onclick="kjTilGrid()">Se alle kjeder</button>
+    </div>
+  </div>
+</div>
 </div>
   </div>
 </div>
