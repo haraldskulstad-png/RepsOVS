@@ -2127,6 +2127,43 @@ header{background:var(--navy);position:sticky;top:0;z-index:300;box-shadow:0 2px
 .om-bonus .cc-icon{color:var(--om-green-m);}
 .om-prog-fill{background:linear-gradient(90deg,var(--om-green-m),#059669) !important;}
 
+
+/* ── TIMER-PILL I HEADER ── */
+.timer-pill-wrap{display:flex;align-items:center;}
+.timer-pill{
+  display:inline-flex;align-items:center;gap:5px;
+  background:rgba(79,195,247,.12);
+  border:1.5px solid rgba(79,195,247,.25);
+  color:var(--accent);
+  border-radius:20px;
+  padding:4px 12px;
+  font-size:var(--ts-xs);font-weight:700;
+  cursor:pointer;
+  transition:background .18s, border-color .18s, color .18s;
+  white-space:nowrap;
+  font-family:var(--font);
+}
+.timer-pill:hover{
+  background:rgba(79,195,247,.22);
+  border-color:rgba(79,195,247,.5);
+}
+.timer-pill.active{
+  background:rgba(79,195,247,.15);
+  border-color:var(--accent);
+  color:var(--accent);
+  animation:timerPulse 2s ease infinite;
+}
+.timer-pill.done{
+  background:rgba(21,128,61,.15);
+  border-color:var(--ok);
+  color:var(--ok);
+  animation:none;
+}
+@keyframes timerPulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(79,195,247,0);}
+  50%{box-shadow:0 0 0 5px rgba(79,195,247,.15);}
+}
+
 </style>
 </head>
 <body>
@@ -2221,12 +2258,20 @@ header{background:var(--navy);position:sticky;top:0;z-index:300;box-shadow:0 2px
         <button class="hdr-act-btn" onclick="openSkel()" title="Skjelett – fremgang">
           🦴<span class="skel-count" id="skel-header-btn" style="font-size:var(--ts-xs);margin-left:3px;color:var(--gold);">0/14</span>
         </button>
-        <button class="hdr-act-btn" onclick="openTimer()" title="Dagsmål">⏱</button>
+        <div class="timer-pill-wrap">
+        <span id="timer-pill" class="timer-pill" onclick="openTimer()" title="Dagsmål – trykk for detaljer">⏱ 5:00</span>
+      </div>
         <button class="hdr-act-btn" onclick="openTeacher()" title="Lærerpanel">⚙️</button>
       </div>
     </div>
   </div>
 </header>
+<!-- Skjult container for dagsmål-data (oppdateres av startDaily) -->
+<div style="display:none;">
+  <div id="daily-fill" style="width:0%"></div>
+  <span id="daily-pct">0%</span>
+  <span id="daily-label">⏱ Dagsmål</span>
+</div>
 
 <!-- MODALS -->
 <div class="overlay" id="teacher-modal">
@@ -2291,13 +2336,7 @@ header{background:var(--navy);position:sticky;top:0;z-index:300;box-shadow:0 2px
       <div class="hstat"><span class="hstat-v" id="st-streak">0</span><span class="hstat-l">Streak</span></div>
       <div class="hstat"><span class="hstat-v" id="st-q">–</span><span class="hstat-l">Oppgaver</span></div>
     </div>
-    <div class="daily-wrap">
-      <div class="daily-top">
-        <span class="daily-label" id="daily-label">⏱ Dagsmål</span>
-        <span class="daily-pct" id="daily-pct">0%</span>
-      </div>
-      <div class="daily-bar"><div class="daily-fill" id="daily-fill" style="width:0%"></div></div>
-    </div>
+
   </div>
 </div>
 <div class="chap-grid-section">
@@ -2999,13 +3038,12 @@ function startDaily(){
     const pill=id('timer-pill');
     const rem=Math.max(0,DAILY_GOAL-G.dailySec);
     if(G.dailySec>=DAILY_GOAL){
-      pill.textContent='✓ Mål nådd!'; pill.className='timer-pill done';
+      if(pill){pill.textContent='✓ Mål nådd!';pill.className='timer-pill done';}
       if(!G.earned.includes('b_daily')){G.dailyDone++;checkBadges();}
       clearInterval(dailyInt);dailyInt=null;
     } else {
       const m=Math.floor(rem/60),s=rem%60;
-      pill.textContent=`⏱ ${m}:${s.toString().padStart(2,'0')}`;
-      pill.className='timer-pill active';
+      if(pill){pill.textContent='⏱ '+m+':'+s.toString().padStart(2,'0');pill.className='timer-pill active';}
     }
     if(G.dailySec%10===0)saveAll();
   },1000);
@@ -3337,7 +3375,19 @@ function finishReading(cid){
     }
   }
   const cs=CS[cid];cs.phase='ctrl';G.chapRead++;G._readStart=null;
-  checkBadges();startDaily();saveAll();refreshPanel(cid);
+  checkBadges();startDaily();
+  // Init timer-pill med gjenværende tid
+  (function(){
+    var pill=id('timer-pill');
+    if(!pill)return;
+    var rem=Math.max(0,DAILY_GOAL-(G.dailySec||0));
+    if(G.dailySec>=DAILY_GOAL){
+      pill.textContent='✓ Mål nådd!';pill.className='timer-pill done';
+    } else {
+      var m=Math.floor(rem/60),s=rem%60;
+      pill.textContent='⏱ '+m+':'+s.toString().padStart(2,'0');
+    }
+  })();saveAll();refreshPanel(cid);
   addXP(15, id('panel-'+cid));
   setTimeout(function(){
     var p=id('panel-'+cid);
