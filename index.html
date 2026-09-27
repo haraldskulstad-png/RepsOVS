@@ -1828,6 +1828,305 @@ header{background:var(--navy);position:sticky;top:0;z-index:300;box-shadow:0 2px
   box-shadow:var(--shadow-lg);
 }
 
+
+/* ── KJEDE-KORT PROGRESS ── */
+.kj-bonus .cc-prog-fill,
+.kj-prog-fill{background:linear-gradient(90deg,var(--kj-teal),var(--kj-teal-m)) !important;}
+.kj-bonus{border-top:3px solid var(--kj-teal);}
+.kj-bonus .cc-icon{color:var(--kj-teal);}
+
+
+/* ── KJEDE FEEDBACK ANIMASJONER ── */
+@keyframes kjShake{
+  0%,100%{transform:translateX(0);}
+  15%{transform:translateX(-8px);}
+  30%{transform:translateX(7px);}
+  45%{transform:translateX(-6px);}
+  60%{transform:translateX(5px);}
+  75%{transform:translateX(-3px);}
+  90%{transform:translateX(2px);}
+}
+.kj-ledd-shake{
+  animation:kjShake .55s var(--ease);
+  border-color:var(--err) !important;
+  background:var(--err-bg) !important;
+}
+@keyframes kjHintPulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(232,129,10,0);}
+  40%{box-shadow:0 0 0 8px rgba(232,129,10,.3);}
+  70%{box-shadow:0 0 0 14px rgba(232,129,10,0);}
+}
+.kj-hint-pulse{
+  animation:kjHintPulse 1s ease 2;
+  border-color:var(--kj-amber) !important;
+  background:var(--kj-amber) !important;
+  color:#fff !important;
+}
+/* Grønn pulse på riktige ledd */
+@keyframes kjCorrectPulse{
+  0%{background:var(--kj-done-l);border-color:var(--kj-done);}
+  50%{background:#A7F3D0;border-color:var(--kj-done);}
+  100%{background:var(--kj-done-l);border-color:var(--kj-done);}
+}
+.kj-ledd.correct-ledd{
+  animation:kjCorrectPulse .6s ease;
+  border-color:var(--kj-done);
+  background:var(--kj-done-l);
+}
+.kj-ledd.correct-ledd .kj-ledd-num{
+  background:var(--kj-done);color:#fff;
+}
+
+
+/* ═══════════════════════════════════════
+   ØV MED BOKA
+═══════════════════════════════════════ */
+:root{
+  --om-green:#065F46;
+  --om-green-l:#D1FAE5;
+  --om-green-m:#059669;
+  --om-amber:#92400E;
+  --om-amber-l:#FEF3C7;
+  --om-amber-m:#D97706;
+}
+
+/* Hero */
+.om-hero{
+  display:flex;align-items:center;gap:14px;
+  background:linear-gradient(135deg,#064E3B,#065F46);
+  border-radius:var(--r-lg);padding:18px 20px;
+  margin-bottom:18px;
+}
+.om-hero-icon{font-size:2.2rem;flex-shrink:0;}
+.om-hero-title{color:#fff;font-size:var(--ts-xl);font-weight:800;
+  letter-spacing:-.03em;margin-bottom:3px;}
+.om-hero-sub{color:rgba(255,255,255,.6);font-size:var(--ts-sm);}
+
+/* Modus-valg */
+.om-mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;}
+@media(max-width:500px){.om-mode-grid{grid-template-columns:1fr;}}
+.om-mode-card{
+  background:#fff;border:1.5px solid var(--border);
+  border-radius:var(--r-lg);padding:18px 16px;
+  text-align:left;cursor:pointer;
+  transition:transform .18s var(--ease),border-color .18s,box-shadow .18s;
+  display:flex;flex-direction:column;gap:6px;
+}
+.om-mode-card:hover{
+  transform:translateY(-3px);border-color:var(--om-green-m);
+  box-shadow:0 6px 20px rgba(6,95,70,.15);
+}
+.om-mode-icon{font-size:1.8rem;}
+.om-mode-title{font-size:var(--ts-base);font-weight:800;color:var(--navy);}
+.om-mode-desc{font-size:var(--ts-xs);color:var(--muted);line-height:1.5;}
+.om-mode-badge{
+  display:inline-block;background:var(--om-green-l);
+  color:var(--om-green);font-size:var(--ts-xs);font-weight:700;
+  padding:2px 10px;border-radius:20px;margin-top:4px;
+}
+
+/* Header med timer */
+.om-finn-hdr{
+  background:linear-gradient(135deg,#064E3B,#065F46);
+  border-radius:var(--r-md);padding:12px 16px;
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:12px;
+}
+.om-finn-label{color:rgba(255,255,255,.65);font-size:var(--ts-xs);
+  font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;}
+.om-finn-prog{color:#fff;font-size:var(--ts-sm);font-weight:600;}
+
+/* Timer ring */
+.om-timer-wrap{flex-shrink:0;}
+.om-timer-ring{position:relative;width:48px;height:48px;}
+.om-timer-svg{width:100%;height:100%;}
+.om-timer-num{
+  position:absolute;inset:0;display:flex;align-items:center;
+  justify-content:center;color:#fff;font-size:.85rem;font-weight:800;
+}
+#om-timer-arc,#om-fags-timer-arc{
+  transition:stroke-dashoffset .9s linear,stroke .5s;
+  stroke-dasharray:100 100;
+}
+
+/* Score row */
+.om-score-row{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+.om-score-pill{
+  background:var(--om-green-l);color:var(--om-green);
+  font-size:var(--ts-xs);font-weight:700;
+  padding:3px 12px;border-radius:20px;
+}
+.om-bonus-pill{
+  background:var(--gold);color:var(--navy);
+  font-size:var(--ts-xs);font-weight:700;
+  padding:3px 12px;border-radius:20px;
+  animation:omBonusPop .4s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes omBonusPop{from{transform:scale(.7);opacity:0;}to{transform:scale(1);opacity:1;}}
+.om-kap-tag{
+  background:var(--off);color:var(--muted);
+  font-size:var(--ts-xs);font-weight:600;
+  padding:3px 12px;border-radius:20px;
+  border:1px solid var(--border);
+}
+
+/* Spørsmålskort */
+.om-q-card{
+  background:#fff;border:1.5px solid var(--border);
+  border-radius:var(--r-md);padding:16px;
+  margin-bottom:12px;
+  animation:panelFadeIn .2s ease;
+}
+.om-side-tag{
+  display:inline-block;background:var(--om-amber-l);
+  color:var(--om-amber);font-size:var(--ts-xs);font-weight:700;
+  padding:2px 10px;border-radius:20px;margin-bottom:8px;
+}
+.om-q-text{
+  font-size:var(--ts-base);color:var(--navy);
+  font-weight:600;line-height:1.55;
+}
+.om-hint-bar{
+  display:flex;align-items:flex-start;gap:6px;
+  background:var(--om-amber-l);border-radius:var(--r-sm);
+  padding:8px 10px;margin-top:10px;
+  font-size:var(--ts-xs);color:var(--om-amber);line-height:1.5;
+  animation:panelFadeIn .2s ease;
+}
+.om-hint-icon{flex-shrink:0;margin-top:1px;}
+
+/* Svar-input */
+.om-svar-input{
+  width:100%;border:1.5px solid var(--border);
+  border-radius:var(--r-md);padding:12px 14px;
+  font-family:var(--font);font-size:var(--ts-sm);
+  color:var(--text);resize:vertical;
+  transition:border-color .18s;
+  background:#fff;box-sizing:border-box;
+  margin-bottom:10px;
+}
+.om-svar-input:focus{
+  outline:none;border-color:var(--om-green-m);
+  box-shadow:0 0 0 3px rgba(6,95,70,.1);
+}
+
+/* Knapper */
+.om-btn-row{display:flex;gap:8px;margin-bottom:10px;}
+.om-btn-sjekk{
+  flex:1;background:var(--om-green-m);color:#fff;border:none;
+  border-radius:var(--r-md);padding:11px 0;
+  font-family:var(--font);font-size:var(--ts-sm);font-weight:800;
+  cursor:pointer;transition:background .18s;
+}
+.om-btn-sjekk:hover{background:var(--om-green);}
+.om-btn-hint-sm{
+  background:var(--om-amber-l);color:var(--om-amber);
+  border:1.5px solid var(--om-amber-m);
+  border-radius:var(--r-md);padding:10px 14px;
+  font-family:var(--font);font-size:var(--ts-sm);font-weight:600;
+  cursor:pointer;transition:all .18s;white-space:nowrap;
+}
+.om-btn-hint-sm:hover{background:var(--om-amber-m);color:#fff;}
+
+/* Feedback */
+.om-feedback{
+  border-radius:var(--r-md);padding:10px 14px;
+  font-size:var(--ts-sm);line-height:1.6;margin-bottom:8px;
+  animation:panelFadeIn .2s ease;
+}
+.om-feedback.ok{
+  background:var(--ok-bg);border:1px solid var(--ok-b);color:var(--ok);
+}
+.om-feedback.delvis{
+  background:#FEF9C3;border:1px solid #EAB308;color:#713F12;
+}
+.om-feedback.feil{
+  background:var(--err-bg);border:1px solid var(--err-b);color:var(--err);
+}
+
+/* Fasit */
+.om-fasit-bar{
+  background:var(--off);border:1px solid var(--border-s);
+  border-radius:var(--r-md);padding:12px 14px;
+  margin-bottom:8px;animation:panelFadeIn .25s ease;
+}
+.om-fasit-label{font-size:var(--ts-xs);font-weight:700;
+  color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em;}
+.om-fasit-tekst{font-size:var(--ts-sm);color:var(--text);line-height:1.6;}
+
+/* Neste-knapp */
+.om-neste-btn{
+  background:var(--navy);color:#fff;border:none;
+  border-radius:var(--r-md);padding:12px 0;width:100%;
+  font-family:var(--font);font-size:var(--ts-base);font-weight:800;
+  cursor:pointer;transition:background .18s;
+  animation:kjNestePop .35s cubic-bezier(.34,1.56,.64,1);
+}
+.om-neste-btn:hover{background:var(--om-green);}
+
+/* Kapittel-valg */
+.om-fags-hdr{
+  display:flex;align-items:center;gap:12px;margin-bottom:16px;
+}
+.om-fags-hdr h3{font-size:var(--ts-lg);font-weight:800;color:var(--navy);}
+.om-back-btn{
+  background:var(--off);border:1px solid var(--border);
+  border-radius:var(--r-sm);padding:6px 12px;
+  font-family:var(--font);font-size:var(--ts-sm);color:var(--muted);
+  cursor:pointer;transition:background .18s;white-space:nowrap;
+}
+.om-back-btn:hover{background:var(--border);}
+.om-kap-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:480px){.om-kap-grid{grid-template-columns:1fr;}}
+.om-kap-btn{
+  background:#fff;border:1.5px solid var(--border);
+  border-radius:var(--r-md);padding:14px 16px;
+  text-align:left;cursor:pointer;
+  transition:border-color .18s,box-shadow .18s,transform .18s;
+  display:flex;flex-direction:column;gap:3px;
+}
+.om-kap-btn:hover{
+  border-color:var(--om-green-m);
+  box-shadow:0 4px 14px rgba(6,95,70,.12);
+  transform:translateY(-2px);
+}
+.om-kap-btn-title{font-size:var(--ts-sm);font-weight:700;color:var(--navy);}
+.om-kap-btn-sub{font-size:var(--ts-xs);color:var(--muted);}
+.om-kap-btn.done{border-color:var(--om-green-m);background:var(--om-green-l);}
+
+/* Rekord + best */
+.om-best-wrap{margin-top:8px;}
+.om-best-row{
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--off);border:1px solid var(--border);
+  border-radius:var(--r-md);padding:10px 14px;margin-bottom:6px;
+  font-size:var(--ts-sm);
+}
+.om-best-label{color:var(--muted);font-weight:600;}
+.om-best-val{color:var(--navy);font-weight:800;}
+
+/* Resultat */
+.om-result-wrap{text-align:center;padding:28px 16px;}
+.om-result-icon{font-size:3rem;margin-bottom:12px;}
+.om-result-title{font-size:var(--ts-xl);font-weight:800;color:var(--navy);
+  letter-spacing:-.03em;margin-bottom:6px;}
+.om-result-score{font-size:2rem;font-weight:900;color:var(--om-green-m);margin-bottom:6px;}
+.om-result-sub{font-size:var(--ts-sm);color:var(--muted);margin-bottom:16px;line-height:1.6;}
+.om-result-stats{
+  display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:8px;
+}
+.om-rstat{
+  background:var(--off);border:1px solid var(--border);
+  border-radius:var(--r-md);padding:10px 18px;text-align:center;
+}
+.om-rstat-v{font-size:1.5rem;font-weight:800;color:var(--om-green-m);line-height:1;}
+.om-rstat-l{font-size:var(--ts-xs);color:var(--muted);margin-top:2px;}
+
+
+.om-bonus{border-top:3px solid var(--om-green-m);}
+.om-bonus .cc-icon{color:var(--om-green-m);}
+.om-prog-fill{background:linear-gradient(90deg,var(--om-green-m),#059669) !important;}
+
 </style>
 </head>
 <body>
@@ -2070,6 +2369,10 @@ const BADGES = [
   {id:'b_tf1',e:'🏋️',n:'Treningsekspert I',d:'Fullfør ett tema med ⭐⭐⭐',c:s=>Object.values(s.tfTopicStars||{}).some(v=>v==='⭐⭐⭐')},
   {id:'b_tf5',e:'🏅',n:'Treningsekspert V',d:'Fullfør alle 5 temaer',c:s=>Object.keys(s.tfTopicDone||{}).length>=5},
   {id:'b_timer',  e:'⏱', n:'Lynrask',       d:'Fullfør timer-utfordringen',    c:s=>s.timerWins>=1},
+  {id:'b_kj1',   e:'🔗',n:'Kjedemester I', d:'Fullfør din første hendelseskjede', c:s=>Object.keys(s.kjDone||{}).length>=1},
+  {id:'b_kj10',  e:'⛓️',n:'Kjedemester X', d:'Fullfør alle 10 hendelseskjeder',   c:s=>Object.keys(s.kjDone||{}).length>=10},
+  {id:'b_om1',   e:'📖',n:'Bokorm I',      d:'Fullfør Finn det i boka',            c:s=>(s.omBest||{}).finn>0},
+  {id:'b_om6',   e:'🎓',n:'Bokorm VI',     d:'Fullfør alle 6 fagkapitler i ØMB',   c:s=>Object.keys(s.omFagsDone||{}).length>=6},
 ];
 
 // ═══════════════════════════════════════════════
@@ -2637,7 +2940,7 @@ CHAPTERS = [
 // ═══════════════════════════════════════════════
 let G={}, CS={}, dragCur=null, dragSortEl=null, dailyInt=null, tc=null, teacherOK=false;
 
-function defG(){return{xp:0,streak:0,maxStreak:0,totalAns:0,chapRead:0,perfectCtrl:0,dailyDone:0,chapDone:0,timerWins:0,earned:[],dailySec:0,dailyDate:'',tfTopicDone:{},tfTopicStars:{},bgThemeDone:{},exDone:0,kjDone:{}}}
+function defG(){return{xp:0,streak:0,maxStreak:0,totalAns:0,chapRead:0,perfectCtrl:0,dailyDone:0,chapDone:0,timerWins:0,earned:[],dailySec:0,dailyDate:'',tfTopicDone:{},tfTopicStars:{},bgThemeDone:{},exDone:0,kjDone:{},omBest:{},omFagsDone:{}}}
 function defCS(){return{phase:'reading',ctrlAns:{},ctrlScore:0,exAns:{},exScore:0};}
 
 function loadAll(){
@@ -2885,11 +3188,26 @@ function renderChapGrid(){
   const kjCard=document.createElement('div');
   kjCard.className='chap-card bonus-card kj-bonus';
   const kjDoneCount=Object.keys(G.kjDone||{}).length;
-  kjCard.innerHTML=`<div class="chap-icon">🔗</div>
-    <div class="chap-title">Hendelseskjeder</div>
-    <div class="chap-sub">${kjDoneCount}/10 fullført</div>`;
+  const kjPct=Math.round(kjDoneCount/10*100);
+  kjCard.innerHTML='<span class="cc-icon">🔗</span>'+
+    '<div class="cc-num">Bonus</div>'+
+    '<div class="cc-title">Hendelseskjeder</div>'+
+    '<div class="cc-prog"><div class="cc-prog-fill kj-prog-fill" style="width:'+kjPct+'%"></div></div>'+
+    '<span class="cc-prog-lbl">'+(kjDoneCount>0?kjDoneCount+'/10 kjeder':' Forstå sammenhenger!')+'</span>';
   kjCard.onclick=openKjede;
   wrap.appendChild(kjCard);
+  // ØV MED BOKA-kort
+  var omCard=document.createElement('div');
+  omCard.className='chap-card bonus-card om-bonus';
+  var omFinnBest=(G.omBest||{}).finn||0;
+  var omFagsDone=Object.keys(G.omFagsDone||{}).length;
+  omCard.innerHTML='<span class="cc-icon">📖</span>'+
+    '<div class="cc-num">Bonus</div>'+
+    '<div class="cc-title">Øv med boka</div>'+
+    '<div class="cc-prog"><div class="cc-prog-fill om-prog-fill" style="width:'+Math.round(omFagsDone/6*100)+'%"></div></div>'+
+    '<span class="cc-prog-lbl">'+(omFagsDone>0?omFagsDone+'/6 kapitler':' Åpne boka!')+'</span>';
+  omCard.onclick=openOvMedBoka;
+  wrap.appendChild(omCard);
 }
 
 // ═══════════════════════════════════════════════
@@ -4063,6 +4381,7 @@ function handleAnswer(ok, q, el, extraMsg){
 function tfShowFb(msg,ok,warn){
   const fb=document.getElementById('tf-fb');if(!fb)return;
   fb.className='tf-fb-cls show '+(warn?'err':ok?'ok':'err');
+  if(ok&&!warn){addXP(XP_CORRECT,fb);}
   if(ok && !warn){
     // Auto-progress etter 1.1 sek
     var _nb2=document.getElementById('tf-btn-next');
@@ -4770,7 +5089,10 @@ const BONES = [
   {id:'underarm-h', name:'Underarm (høyre)',svg:'bone-underarm-h', badge:'b_tf5',    crit:'Alle 5 treningsformtemaer',         icon:'💪'},
   {id:'lar-v',      name:'Lårben (venstre)',svg:'bone-lar-v',      badge:'b_s3',     crit:'3 riktige svar på rad',            icon:'🦵'},
   {id:'lar-h',      name:'Lårben (høyre)', svg:'bone-lar-h',      badge:'b_s10',    crit:'10 riktige svar på rad',           icon:'🦵'},
-  {id:'legg-v',     name:'Leggben (venstre)',svg:'bone-legg-v',     badge:'b_bg5',    crit:'Alle 5 begrepstemaer fullført',    icon:'🦵'},
+  {id:'legg-v',     name:'Leggben (venstre)',svg:'bone-legg-v',     badge:'b_kj1',    crit:'Fullfør din første hendelseskjede',icon:'🦵'},
+  {id:'legg-h',     name:'Leggben (høyre)', svg:'bone-legg-h',     badge:'b_kj10',   crit:'Fullfør alle 10 hendelseskjeder',  icon:'🦵'},
+  {id:'fot-v',      name:'Fotknoklene (v)', svg:'bone-fot-v',      badge:'b_om1',    crit:'Fullfør Finn det i boka',          icon:'🦶'},
+  {id:'fot-h',      name:'Fotknoklene (h)', svg:'bone-fot-h',      badge:'b_om6',    crit:'Alle 6 ØMB-fagkapitler',           icon:'🦶'},
 ];
 
 function skelOverlayClick(e){if(e.target===e.currentTarget)closeSkel();}
@@ -4893,7 +5215,7 @@ function executeGlobalReset(){
   var keysToRemove = [];
   for(var i = 0; i < localStorage.length; i++){
     var k = localStorage.key(i);
-    if(k && k.startsWith('tl1_')){
+    if(k && (k.startsWith('tl1_') || k.startsWith('tf_') || k.startsWith('bg_') || k.startsWith('reps_'))){
       keysToRemove.push(k);
     }
   }
@@ -4990,6 +5312,7 @@ function closeSpillOverlay(){
   if(tf) tf.style.display='none';
   if(bg) bg.style.display='none';
   if(kj) kj.style.display='none';
+  var om=id('om-panel-wrap');if(om)om.style.display='none';
   showOversikt();
   updateGlobalStats();
   renderChapGrid();
@@ -5309,15 +5632,26 @@ function kjSjekk(){
     // Hide hint btn
     var hb = document.getElementById('kj-hint-btn');
     if(hb) hb.style.display = 'none';
-    // Update grid prog
-    kjBuildGrid();
     checkBadges();
+    // Update grid prog counter uten full rebuild
+    var gp=document.getElementById('kj-grid-prog');
+    if(gp)gp.textContent=Object.keys(kjSess.done).length+'/10 fullført';
   } else {
     fb.className = 'kj-feedback vis feil';
     if(kjSess.attempts === 1){
       fb.textContent = '✗ Ikke helt riktig. Prøv igjen – eller les forklaringen for et hint.';
+      // Shake feil-plasserte ledd
+      document.querySelectorAll('.kj-ledd').forEach(function(el,i){
+        if(el.dataset.tekst !== k.ledd[i]){
+          el.classList.add('kj-ledd-shake');
+          setTimeout(function(){el.classList.remove('kj-ledd-shake');},600);
+        }
+      });
+      // Puls på hint-knapp
+      var hb=document.getElementById('kj-hint-btn');
+      if(hb){hb.classList.add('kj-hint-pulse');setTimeout(function(){hb.classList.remove('kj-hint-pulse');},2000);}
     } else if(kjSess.attempts === 2){
-      fb.textContent = '✗ Fortsatt ikke riktig. Bruk forklaringen og prøv én gang til.';
+      fb.textContent = '✗ Fortsatt ikke riktig. Forklaringen hjelper deg – les og prøv igjen.';
       kjVisHint();
     } else {
       fb.textContent = '✗ Her er riktig rekkefølge:';
@@ -5334,12 +5668,12 @@ function kjSjekk(){
       var hb=document.getElementById('kj-hint-btn');if(hb)hb.style.display='none';
     }
   }
-  // Scroll to feedback
-  var so=document.getElementById('spill-overlay');
-  if(so){
-    var fbTop=fb.getBoundingClientRect().top+so.scrollTop-120;
-    so.scrollTo({top:Math.max(0,fbTop),behavior:'smooth'});
-  }
+  // Scroll feedback into view inside fixed overlay
+  setTimeout(function(){
+    if(fb&&fb.scrollIntoView){
+      fb.scrollIntoView({behavior:'smooth',block:'nearest'});
+    }
+  },60);
 }
 
 function kjVisHint(){
@@ -5413,6 +5747,427 @@ function kjVisResultat(){
     ? 'Imponerende – du fikk '+firstTryCnt+' av 10 riktig på første forsøk!'
     : 'Du fikk '+firstTryCnt+' av 10 riktig på første forsøk. Les forklaringene på nytt for å styrke forståelsen.';
   var so=document.getElementById('spill-overlay');if(so)so.scrollTop=0;
+}
+
+
+const OVMED_FINN = [
+  {id:'f1',side:63,q:'Slå opp på side 63. Hva er anbefalt intensitet (% av HFmaks) for I-sone 2?',hint:'Intensitetstabell for utholdenhet – se tabellkolonnen «% av HFmaks»',keywords:['72','82','72-82','72–82'],fasit:'72–82 % av HFmaks (I-sone 2: moderat aerob trening)'},
+  {id:'f2',side:105,q:'Slå opp på side 105. Hvor mange repetisjoner anbefales for trening for maksimal muskelvekst (hypertrofi)?',hint:'Metodetabell styrketrening – se rad for «Maks. muskelvekst»',keywords:['6','12','6-12','6–12'],fasit:'6–12 repetisjoner per serie ved 70–85 % av 1RM'},
+  {id:'f3',side:45,q:'Slå opp på side 45. Hva er den faglige definisjonen på laktatterskel ifølge boken?',hint:'Les avsnittet om laktatterskel – finn den eksakte definisjonen',keywords:['laktat','blod','produksjon','eliminasjon','stiger','terskel'],fasit:'Laktatterskel er intensiteten der laktatproduksjonen overstiger kroppens evne til å eliminere laktat, slik at konsentrasjonen i blodet stiger bratt.'},
+  {id:'f4',side:338,q:'Slå opp på side 338. Hva står de fem bokstavene i PRICE-prinsippet for?',hint:'Akuttbehandling av idrettsskader – finn PRICE-boksen eller avsnittet',keywords:['protection','rest','ice','compression','elevation'],fasit:'Protection (beskytt), Rest (hvile), Ice (is), Compression (bandasje), Elevation (hev opp)'},
+  {id:'f5',side:340,q:'Slå opp på side 340. Hva er den viktigste forskjellen mellom PRICE og POLICE?',hint:'Les avsnittet rett etter PRICE – hva har endret seg i nyere forskning?',keywords:['optimal','loading','belastning','hvile','aktiv'],fasit:'POLICE erstatter «Rest» med «Optimal Loading» – tidlig kontrollert belastning anbefales fremfor komplett hvile'},
+  {id:'f6',side:452,q:'Slå opp på side 452. Tegn eller beskriv superkompensasjonskurven med egne ord – hva skjer i de fire fasene?',hint:'Finn figuren eller teksten om superkompensasjon i treningsplanleggingskapittelet',keywords:['trening','utmatting','restitusjon','tilpasning','sterkere','superkompensasjon'],fasit:'1) Trening gir utmatting, 2) Prestasjon faller, 3) Restitusjon: kroppen bygger seg opp igjen, 4) Superkompensasjon: kroppen er sterkere enn før'},
+  {id:'f7',side:63,q:'Finn intensitetstabellen (s. 63). Hvilken I-sone tilsvarer anaerob terskel, og hva er HF-prosenten?',hint:'Se nederst i intensitetstabellen – hvilken sone er «over terskelen»?',keywords:['4','5','i-sone 4','i-sone 5','85','92','95','anaerob'],fasit:'I-sone 4 (anaerob terskel): 85–92 % av HFmaks. Over dette punktet stiger laktat bratt.'},
+  {id:'f8',side:105,q:'Slå opp på metodetabellen (s. 105). Hva er anbefalt pause mellom seriene ved trening for maksimal muskelstyrke?',hint:'Se kolonnen «Pause» i metodetabellen – rad for maks. styrke (>85 % av 1RM)',keywords:['2','5','2-5','2–5','minutter','min'],fasit:'2–5 minutters pause mellom seriene ved maksimal styrketrening (>85 % av 1RM)'},
+  {id:'f9',side:95,q:'Finn kapittel 9 i boken (Styrketrening). Les den første setningen i kapittelet – hva defineres som «styrke»?',hint:'Åpningsdefinisjon i styrketreningskapittelet',keywords:['kraft','muskel','kontraksjon','definisjon','styrke'],fasit:'Styrke defineres som muskelens evne til å utvikle kraft gjennom kontraksjon mot en motstand.'},
+  {id:'f10',side:63,q:'Slå opp på s. 63. Hvor mange I-soner opererer boken med, og hva er den roligste sonens HF-prosent?',hint:'Tell antall rader i intensitetstabellen',keywords:['5','soner','55','70','55-70','55–70','i-sone 1'],fasit:'Boken opererer med 5 I-soner. I-sone 1 (roligst): 55–70 % av HFmaks.'},
+  {id:'f11',side:105,q:'Finn s. 105. Hva er anbefalt antall serier og repetisjoner for muskulær utholdenhet?',hint:'Siste rad i metodetabellen for styrketrening',keywords:['15','20','2','4','utholdenhet','lav'],fasit:'2–4 serier med 15–60+ repetisjoner ved lav belastning (20–60 % av 1RM)'},
+  {id:'f12',side:450,q:'Finn avsnittet om søvn og restitusjon i ernæringskapittelet. Hva produseres under dyp søvn som er viktig for muskelvekst?',hint:'Se avsnittet «Søvn og restitusjon» – hvilket hormon nevnes?',keywords:['veksthormon','hormon','søvn','produseres'],fasit:'Veksthormon produseres under dyp søvn og er avgjørende for muskelvekst og reparasjon av vev.'},
+  {id:'f13',side:45,q:'Slå opp på s. 45. Hva er en typisk laktatterskel for en godt trent utøver (% av VO₂maks eller HFmaks)?',hint:'Les setningene etter definisjonen av laktatterskel',keywords:['75','85','80','prosent','godt trent','trent'],fasit:'Godt trente utøvere har laktatterskel ved 75–85 % av VO₂maks – betydelig høyere enn utrente (~50–60 %).'},
+  {id:'f14',side:340,q:'Finn s. 338 eller 340. Hvilken ny behandlingsfilosofi erstatter komplett hvile ved akutte skader?',hint:'POLICE-prinsippet – hva erstatter R (Rest) fra PRICE?',keywords:['optimal','loading','belastning','ol','aktiv','kontrollert'],fasit:'«Optimal Loading» (OL) – kontrollert og tilpasset belastning tidlig i helingsprosessen gir bedre resultater enn total hvile.'},
+  {id:'f15',side:105,q:'Slå opp på metodetabellen (s. 105). Hvilken treningsmetode bruker eksplosivt tempo og 50–80 % av 1RM?',hint:'Se kolonnen «Tempo» og «% av 1RM» i tabellen',keywords:['eksplosiv','eksplosivt','styrke','rfd','50','80'],fasit:'Eksplosiv styrketrening: 50–80 % av 1RM, eksplosivt tempo, 4–8 repetisjoner – trener rate of force development (RFD).'},
+];
+const OVMED_FAGS = {
+  'kap2': [
+    {q:'Hva er kjernetemperatur, og til hvilken temperatur bør den stige under oppvarming?',keywords:['37','38','39','grad','kjerne','temperatur'],fasit:'Kjernetemperaturen er temperaturen dypt i kroppen (normalt 37 °C). God oppvarming hever den til 38–39 °C.'},
+    {q:'Forklar forskjellen mellom generell og spesifikk oppvarming.',keywords:['generell','spesifikk','jogging','idrett','spesifik','bevegelse'],fasit:'Generell oppvarming hever kroppstemperaturen (jogging, sykkel). Spesifikk oppvarming imiterer idrettens bevegelser.'},
+    {q:'Hvorfor anbefales dynamisk tøyning i oppvarmingen fremfor statisk?',keywords:['dynamisk','statisk','kraft','eksplosiv','hemmer','bevegelse'],fasit:'Statisk tøyning kan hemme eksplosiv kraft. Dynamisk tøyning opprettholder muskeltemperatur og forbereder bevegelsesmønstre.'},
+    {q:'Nevn tre fysiologiske effekter av oppvarming på muskler og ledd.',keywords:['temperatur','synovial','elastisitet','blodgjennomstrømning','oksygen','enzymer'],fasit:'1) Økt muskeltemperatur, 2) Økt synovialvæske i ledd, 3) Bedre elastisitet i muskler og sener.'},
+    {q:'Hva menes med «psykisk oppvarming», og hvorfor er det relevant?',keywords:['konsentrasjon','fokus','mental','forberede','psykisk','innstille'],fasit:'Psykisk oppvarming handler om å mentalt forberede seg – øke konsentrasjon og fokus før belastning.'},
+  ],
+  'kap4': [
+    {q:'Definer VO₂maks og forklar hvorfor det er det beste målet på aerob kapasitet.',keywords:['maksimalt','oksygenopptak','ml','kg','min','aerob','kapasitet'],fasit:'VO₂maks er det maksimale oksygenopptaket kroppen kan utnytte per minutt (ml/kg/min). Det er det beste enkeltmålet på aerob kapasitet.'},
+    {q:'Hva er forskjellen på aerob og anaerob energifrigjøring?',keywords:['oksygen','uten','aerob','anaerob','laktat','ATP','mitokondrier'],fasit:'Aerob: med oksygen, i mitokondriene, langvarig. Anaerob: uten oksygen, produserer laktat, kortvarig men kraftfull.'},
+    {q:'Forklar hva langkjøring er og hvilken I-sone den gjennomføres i.',keywords:['i-sone 1','i-sone 2','55','82','lav','intensitet','lang'],fasit:'Langkjøring er rolig trening i I-sone 1–2 (55–82 % av HFmaks) over lang tid. Bygger aerob base.'},
+    {q:'Hva er utnyttingsgraden og hvorfor er den viktig for maratonprestasjon?',keywords:['utnyttingsgrad','andel','vo2maks','maks','over tid','maratonl'],fasit:'Utnyttingsgraden er andelen av VO₂maks man kan jobbe på over tid. Høy utnyttingsgrad = bedre maratonprestasjon selv med moderat VO₂maks.'},
+    {q:'Nevn to treningsadaptasjoner i hjertet etter langvarig utholdenhetstrening.',keywords:['slagvolum','hjerte','størrelse','hvilepuls','minuttvolum','kardiomegali'],fasit:'1) Økt slagvolum (hjertet pumper mer blod per slag). 2) Lavere hvilepuls. Begge gir høyere minuttvolum.'},
+  ],
+  'kap5': [
+    {q:'Hva betyr 1RM og hvordan brukes det i styrketrening?',keywords:['repetisjon','maksimum','maksimale','vekt','én gang','referanse'],fasit:'1RM = én repetisjon maksimum: den tyngste vekten du løfter én gang med korrekt teknikk. Brukes som referanse for å beregne treningsintensitet.'},
+    {q:'Forklar hva hypertrofi er og hvilke parametere som gir best muskelvekst.',keywords:['hypertrofi','muskelvekst','6','12','70','85','1rm','repetisjoner'],fasit:'Hypertrofi er økning i muskelmasse. Best muskelvekst: 6–12 reps, 70–85 % av 1RM, 3–5 serier, 1–3 min pause.'},
+    {q:'Hva er forskjellen på konsentrisk, eksentrisk og isometrisk muskelarbeid?',keywords:['konsentrisk','eksentrisk','isometrisk','forkorter','forlenger','bevegelse','stille'],fasit:'Konsentrisk: muskelen forkortes (løfter). Eksentrisk: muskelen forlenges under motstand (senker). Isometrisk: ingen bevegelse, muskelen holder.'},
+    {q:'Hva er nerveadaptasjon og når skjer den i et treningsforløp?',keywords:['nerve','adaptasjon','tidlig','4','6','uker','rekruttere','motorisk'],fasit:'Nerveadaptasjon skjer de første 4–6 ukene: nervesystemet lærer å rekruttere flere motoriske enheter. Ingen økt muskelmasse ennå.'},
+    {q:'Forklar begrepet «eksplosiv styrke» og nevn en idrett der det er kritisk.',keywords:['eksplosiv','rfd','rate','kraft','raskt','hopp','sprint','kast'],fasit:'Eksplosiv styrke er evnen til å utvikle kraft så raskt som mulig (høy RFD). Kritisk i hopp, sprint, kast og kampsport.'},
+  ],
+  'kap6': [
+    {q:'Hva er forskjellen på aktiv og passiv bevegelighet?',keywords:['aktiv','passiv','egne','muskler','ekstern','partner','kraft'],fasit:'Aktiv bevegelighet: oppnås med egne muskler. Passiv bevegelighet: oppnås med ekstern kraft (partner/tyngde). Passiv er alltid størst.'},
+    {q:'Definer «bevegelighetsreserven» og forklar hva den sier om treningspotensial.',keywords:['reserven','passiv','aktiv','differanse','potensial','forbedring'],fasit:'Bevegelighetsreserven = passiv minus aktiv bevegelighet. Jo større reserve, desto mer potensial for forbedring gjennom trening.'},
+    {q:'Hvorfor bør statisk tøyning legges etter trening og ikke i oppvarmingen?',keywords:['statisk','hemmer','kraft','eksplosiv','temperatur','etter','nedkjøling'],fasit:'Statisk tøyning kan hemme eksplosiv muskelkraft og er mest effektiv på varm muskel. Hører hjemme i nedkjøling, ikke oppvarming.'},
+    {q:'Nevn tre faktorer som påvirker bevegelighet i et ledd.',keywords:['ledd','sener','leddbånd','temperatur','tonus','elastisitet','muskel'],fasit:'1) Leddstruktur, 2) Muskel- og seneelastisitet, 3) Nervøs spenningstonus (muskeltonus). Temperatur påvirker alle tre.'},
+    {q:'Hva er dynamisk tøyning og i hvilken del av en treningsøkt passer det?',keywords:['dynamisk','svingøvelse','bevegelse','oppvarming','rom','kontrollert'],fasit:'Dynamisk tøyning er kontrollerte svingbevegelser gjennom bevegelsesutslaget. Passer i oppvarmingen, ikke statisk holdt.'},
+  ],
+  'kap13': [
+    {q:'Hva er den viktigste forskjellen mellom en akutt skade og en belastningsskade?',keywords:['akutt','plutselig','traume','belastning','gradvis','tid','akkumuler'],fasit:'Akutt: oppstår plutselig ved ett traume. Belastningsskade: utvikles gradvis over tid ved gjentatt overbelastning uten tilstrekkelig restitusjon.'},
+    {q:'Forklar POLICE-prinsippet og hva det har erstattet.',keywords:['protection','optimal','loading','ice','compression','elevation','price','hvile'],fasit:'POLICE: Protection, Optimal Loading, Ice, Compression, Elevation. Erstatter PRICE ved å bytte «Rest» med «Optimal Loading» – aktiv belastning tidlig.'},
+    {q:'Hva er inflammasjon og er det alltid negativt?',keywords:['inflammasjon','betennelse','naturlig','reparasjon','heling','nødvendig'],fasit:'Inflammasjon er kroppens naturlige reparasjonsrespons etter vevsskade. Det er ikke negativt – det er nødvendig for heling, selv om det gir smerte og hevelse.'},
+    {q:'Nevn tre tiltak som forebygger idrettsskader.',keywords:['oppvarming','progresjon','styrke','restitusjon','teknikk','belastning'],fasit:'1) God oppvarming, 2) Riktig progresjon (ikke øk for raskt), 3) Tilstrekkelig restitusjon mellom øktene.'},
+    {q:'Hva er beinhinnebetennelse og hva forårsaker den?',keywords:['beinhinne','periosten','løping','overbelastning','skinneben','betennelse'],fasit:'Beinhinnebetennelse (periostitt) er betennelse i beinhinna langs skinnebenet. Forårsakes av overbelastning, oftest hos løpere som øker mengden for raskt.'},
+  ],
+  'kap14': [
+    {q:'Hvilken makronæringsstoff er kroppens primære energikilde ved høy intensitet, og hvor lagres det?',keywords:['karbohydrat','glykogen','muskel','lever','intensitet','drivstoff'],fasit:'Karbohydrater er primær energikilde ved høy intensitet. Lagres som glykogen i muskler og lever.'},
+    {q:'Hva anbefaler boken om proteininntaket for aktive utøvere per kilo kroppsvekt?',keywords:['1,4','2,0','g/kg','gram','kilo','protein','dag'],fasit:'Aktive utøvere trenger 1,4–2,0 g protein per kg kroppsvekt per dag. Dette kan dekkes gjennom vanlig, variert kosthold.'},
+    {q:'Forklar hvorfor det er viktig å spise innen 30 minutter etter trening.',keywords:['vindu','30','glykogen','resyntese','protein','reparasjon','mottakelig'],fasit:'Musklene er særlig mottakelige for glykogenresyntese de første 30 minuttene etter trening. Kombinasjon av karbohydrater og proteiner optimaliserer restitusjon.'},
+    {q:'Hva skjer med glykogenoppbyggingen hvis man drikker alkohol etter trening?',keywords:['alkohol','glykogen','forstyrrer','hemmer','søvn','restitusjon'],fasit:'Alkohol forstyrrer glykogenoppbyggingen i lever og muskler, og forringer søvnkvaliteten – noe som hemmer veksthormonsekresjon og muskelvekst.'},
+    {q:'Hvorfor frarådes energidrikker for unge under 18 år ifølge boken?',keywords:['koffein','energidrikk','18','ung','anbefales','ikke'],fasit:'Energidrikker anbefales ikke for unge under 18 år på grunn av høyt koffeininnhold, som kan påvirke hjerterytme, søvn og nervesystem negativt.'},
+  ],
+};
+
+// ═══════════════════════════════════════════════════════════════
+// ØV MED BOKA – STATE OG LOGIKK
+// ═══════════════════════════════════════════════════════════════
+var omSess = {
+  mode: null,       // 'finn' | 'fags'
+  idx: 0,
+  score: 0,
+  correct: 0,
+  partial: 0,
+  questions: [],
+  timerSec: 90,
+  timerMax: 90,
+  timerInterval: null,
+  hintUsed: false,
+  answered: false,
+  kapId: null,
+};
+
+function openOvMedBoka(){
+  var tf=document.getElementById('tf-panel-wrap');
+  var bg=document.getElementById('bg-panel-wrap');
+  var kj=document.getElementById('kj-panel-wrap');
+  if(tf)tf.style.display='none';
+  if(bg)bg.style.display='none';
+  if(kj)kj.style.display='none';
+  var w=document.getElementById('om-panel-wrap');
+  if(w)w.style.display='block';
+  showSpillOverlay('📖 Øv med boka');
+  omTilStart();
+}
+
+function omTilStart(){
+  omStopTimer();
+  ['om-start-view','om-finn-view','om-fags-kap-view',
+   'om-fags-view','om-result-view'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el)el.style.display='none';
+  });
+  var sv=document.getElementById('om-start-view');
+  if(sv)sv.style.display='block';
+  omRenderBest();
+}
+
+function omRenderBest(){
+  var wrap=document.getElementById('om-best-wrap');
+  if(!wrap)return;
+  var best=G.omBest||{};
+  var rows='';
+  if(best.finn)rows+='<div class="om-best-row"><span class="om-best-label">🔍 Finn i boka – rekord</span><span class="om-best-val">'+best.finn+' poeng</span></div>';
+  if(best.fags)rows+='<div class="om-best-row"><span class="om-best-label">🎯 Fagspørsmål – rekord</span><span class="om-best-val">'+best.fags+' poeng</span></div>';
+  wrap.innerHTML=rows;
+}
+
+// ── MODUS 1: FINN DET I BOKA ────────────────────────────────────
+function omStartFinn(){
+  omSess.mode='finn';
+  omSess.idx=0;omSess.score=0;omSess.correct=0;omSess.partial=0;
+  omSess.questions=omShuffle(OVMED_FINN.slice());
+  omShowView('om-finn-view');
+  omFinnRenderQ();
+}
+
+function omFinnRenderQ(){
+  var q=omSess.questions[omSess.idx];
+  omSess.answered=false;omSess.hintUsed=false;
+  // Update UI
+  document.getElementById('om-finn-prog').textContent=
+    'Spørsmål '+(omSess.idx+1)+' / '+omSess.questions.length;
+  document.getElementById('om-finn-score').textContent=omSess.score+' poeng';
+  document.getElementById('om-side-tag').textContent='📄 Side '+q.side;
+  document.getElementById('om-finn-q').textContent=q.q;
+  document.getElementById('om-finn-svar').value='';
+  document.getElementById('om-finn-svar').disabled=false;
+  document.getElementById('om-finn-hint').style.display='none';
+  document.getElementById('om-finn-fb').style.display='none';
+  document.getElementById('om-finn-fasit').style.display='none';
+  document.getElementById('om-finn-neste').style.display='none';
+  document.getElementById('om-bonus-pill').style.display='none';
+  document.getElementById('om-finn-hint-btn').style.display='inline-block';
+  // Timer
+  omSess.timerSec=90;omSess.timerMax=90;
+  omStartTimer('om-timer-num','om-timer-arc',90,function(){ omFinnTidUt(); });
+  // Focus textarea
+  setTimeout(function(){
+    var ta=document.getElementById('om-finn-svar');
+    if(ta)ta.focus();
+  },100);
+}
+
+function omFinnHint(){
+  var q=omSess.questions[omSess.idx];
+  omSess.hintUsed=true;
+  document.getElementById('om-finn-hint-txt').textContent=q.hint;
+  document.getElementById('om-finn-hint').style.display='flex';
+  document.getElementById('om-finn-hint-btn').style.display='none';
+}
+
+function omFinnTidUt(){
+  if(omSess.answered)return;
+  omSess.answered=true;
+  omSess.timerSec=0;
+  omFinnVurder(true);
+}
+
+function omFinnSjekk(){
+  if(omSess.answered)return;
+  omSess.answered=true;
+  omStopTimer();
+  omFinnVurder(false);
+}
+
+function omFinnVurder(tidUt){
+  var q=omSess.questions[omSess.idx];
+  var svar=document.getElementById('om-finn-svar').value.toLowerCase().trim();
+  document.getElementById('om-finn-svar').disabled=true;
+  // Keyword matching
+  var treff=q.keywords.filter(function(kw){return svar.includes(kw.toLowerCase());}).length;
+  var pct=treff/q.keywords.length;
+  var ok=pct>=0.5;
+  var perfekt=pct>=0.8;
+  // Bonus for rask tid
+  var tidBonus=0;
+  if(!tidUt&&!omSess.hintUsed&&ok){
+    if(omSess.timerSec>60)tidBonus=10;
+    else if(omSess.timerSec>30)tidBonus=5;
+  }
+  var pts=tidUt?0:perfekt?20:ok?10:0;
+  var totalPts=pts+tidBonus;
+  omSess.score+=totalPts;
+  if(perfekt)omSess.correct++;
+  else if(ok)omSess.partial++;
+  // Feedback
+  var fb=document.getElementById('om-finn-fb');
+  if(tidUt){
+    fb.className='om-feedback feil';
+    fb.textContent='⏰ Tiden er ute! Se fasiten under.';
+  } else if(perfekt){
+    fb.className='om-feedback ok';
+    fb.textContent='✅ Riktig! '+pts+(tidBonus>0?' + '+tidBonus+' tidbonus':'')+' poeng.';
+  } else if(ok){
+    fb.className='om-feedback delvis';
+    fb.textContent='🟡 Delvis riktig – '+treff+' av '+q.keywords.length+' nøkkelord. '+pts+' poeng.';
+  } else {
+    fb.className='om-feedback feil';
+    fb.textContent='✗ Ingen nøkkelord truffet. Se fasiten under.';
+  }
+  fb.style.display='block';
+  // Tidbonus-animasjon
+  if(tidBonus>0){
+    var bp=document.getElementById('om-bonus-pill');
+    if(bp){bp.textContent='⚡ +'+tidBonus+' tidbonus!';bp.style.display='inline-block';}
+  }
+  // Vis fasit
+  document.getElementById('om-finn-fasit-txt').textContent=q.fasit;
+  document.getElementById('om-finn-fasit').style.display='block';
+  // Score oppdater
+  document.getElementById('om-finn-score').textContent=omSess.score+' poeng';
+  // Neste-knapp
+  var nb=document.getElementById('om-finn-neste');
+  if(nb){
+    nb.style.display='block';
+    nb.textContent=omSess.idx<omSess.questions.length-1?'Neste spørsmål →':'Se resultater →';
+  }
+  // Scroll til feedback
+  setTimeout(function(){if(fb&&fb.scrollIntoView)fb.scrollIntoView({behavior:'smooth',block:'nearest'});},80);
+}
+
+function omFinnNeste(){
+  omSess.idx++;
+  if(omSess.idx>=omSess.questions.length){
+    omVisResultat('finn');
+  } else {
+    omFinnRenderQ();
+    var so=document.getElementById('spill-overlay');
+    if(so)so.scrollTo({top:0,behavior:'smooth'});
+  }
+}
+
+// ── MODUS 2: FAGSPØRSMÅL ────────────────────────────────────────
+var OM_KAP_TITLER={
+  kap2:'Kap. 2 – Oppvarming',
+  kap4:'Kap. 4 – Utholdenhetstrening',
+  kap5:'Kap. 5 – Styrketrening',
+  kap6:'Kap. 6 – Bevegelighetstrening',
+  kap13:'Kap. 13 – Idrettsskader',
+  kap14:'Kap. 15 – Ernæring & restitusjon',
+};
+
+function omShowFagsKap(){
+  omShowView('om-fags-kap-view');
+  var grid=document.getElementById('om-kap-grid');
+  if(!grid)return;
+  grid.innerHTML='';
+  Object.keys(OVMED_FAGS).forEach(function(kap){
+    var title=OM_KAP_TITLER[kap]||kap;
+    var done=(G.omFagsDone||{})[kap];
+    var btn=document.createElement('button');
+    btn.className='om-kap-btn'+(done?' done':'');
+    btn.innerHTML='<div class="om-kap-btn-title">'+(done?'✅ ':'')+title+'</div>'+
+      '<div class="om-kap-btn-sub">'+OVMED_FAGS[kap].length+' spørsmål'+(done?' · fullført':'')+'</div>';
+    btn.onclick=(function(k){return function(){omStartFags(k);};})(kap);
+    grid.appendChild(btn);
+  });
+}
+
+function omStartFags(kapId){
+  omSess.mode='fags';omSess.kapId=kapId;
+  omSess.idx=0;omSess.score=0;omSess.correct=0;omSess.partial=0;
+  omSess.questions=omShuffle(OVMED_FAGS[kapId].slice());
+  omShowView('om-fags-view');
+  document.getElementById('om-fags-kap-tag').textContent=OM_KAP_TITLER[kapId]||kapId;
+  omFagsRenderQ();
+}
+
+function omFagsRenderQ(){
+  var q=omSess.questions[omSess.idx];
+  omSess.answered=false;
+  document.getElementById('om-fags-prog').textContent=
+    'Spørsmål '+(omSess.idx+1)+' / '+omSess.questions.length;
+  document.getElementById('om-fags-score').textContent=omSess.score+' poeng';
+  document.getElementById('om-fags-q').textContent=q.q;
+  document.getElementById('om-fags-svar').value='';
+  document.getElementById('om-fags-svar').disabled=false;
+  document.getElementById('om-fags-fb').style.display='none';
+  document.getElementById('om-fags-fasit').style.display='none';
+  document.getElementById('om-fags-neste').style.display='none';
+  omSess.timerSec=180;omSess.timerMax=180;
+  omStartTimer('om-fags-timer-num','om-fags-timer-arc',180,function(){omFagsTidUt();});
+  setTimeout(function(){
+    var ta=document.getElementById('om-fags-svar');
+    if(ta)ta.focus();
+  },100);
+}
+
+function omFagsTidUt(){
+  if(omSess.answered)return;
+  omSess.answered=true;omSess.timerSec=0;
+  omFagsVurder(true);
+}
+
+function omFagsSjekk(){
+  if(omSess.answered)return;
+  omSess.answered=true;omStopTimer();
+  omFagsVurder(false);
+}
+
+function omFagsVurder(tidUt){
+  var q=omSess.questions[omSess.idx];
+  var svar=document.getElementById('om-fags-svar').value.toLowerCase().trim();
+  document.getElementById('om-fags-svar').disabled=true;
+  var treff=q.keywords.filter(function(kw){return svar.includes(kw.toLowerCase());}).length;
+  var pct=treff/q.keywords.length;
+  var ok=pct>=0.4;var perfekt=pct>=0.7;
+  var pts=tidUt?0:perfekt?15:ok?8:0;
+  omSess.score+=pts;
+  if(perfekt)omSess.correct++;
+  else if(ok)omSess.partial++;
+  var fb=document.getElementById('om-fags-fb');
+  if(tidUt){
+    fb.className='om-feedback feil';fb.textContent='⏰ Tiden er ute! Se fasiten.';
+  } else if(perfekt){
+    fb.className='om-feedback ok';fb.textContent='✅ Bra svar! '+pts+' poeng.';
+  } else if(ok){
+    fb.className='om-feedback delvis';
+    fb.textContent='🟡 Delvis – '+treff+' av '+q.keywords.length+' nøkkelord. '+pts+' poeng.';
+  } else {
+    fb.className='om-feedback feil';fb.textContent='✗ Mangler nøkkelord. Se fasit under.';
+  }
+  fb.style.display='block';
+  document.getElementById('om-fags-fasit-txt').textContent=q.fasit;
+  document.getElementById('om-fags-fasit').style.display='block';
+  document.getElementById('om-fags-score').textContent=omSess.score+' poeng';
+  var nb=document.getElementById('om-fags-neste');
+  if(nb){nb.style.display='block';
+    nb.textContent=omSess.idx<omSess.questions.length-1?'Neste spørsmål →':'Se resultater →';}
+  setTimeout(function(){if(fb.scrollIntoView)fb.scrollIntoView({behavior:'smooth',block:'nearest'});},80);
+}
+
+function omFagsNeste(){
+  omSess.idx++;
+  if(omSess.idx>=omSess.questions.length){
+    // Marker kapittel som done
+    if(!G.omFagsDone)G.omFagsDone={};
+    G.omFagsDone[omSess.kapId]=true;
+    saveAll();
+    omVisResultat('fags');
+  } else {
+    omFagsRenderQ();
+    var so=document.getElementById('spill-overlay');
+    if(so)so.scrollTo({top:0,behavior:'smooth'});
+  }
+}
+
+// ── RESULTAT ────────────────────────────────────────────────────
+function omVisResultat(mode){
+  omStopTimer();
+  omShowView('om-result-view');
+  var tot=omSess.questions.length;
+  var ikon=omSess.correct>=tot*0.8?'🏆':omSess.correct>=tot*0.5?'⭐':'💪';
+  document.getElementById('om-result-icon').textContent=ikon;
+  document.getElementById('om-result-title').textContent=
+    mode==='finn'?'Finn i boka – ferdig!':'Fagspørsmål – ferdig!';
+  document.getElementById('om-result-score').textContent=omSess.score+' poeng';
+  document.getElementById('om-result-sub').textContent=
+    omSess.correct+' perfekte svar, '+omSess.partial+' delvise av '+tot+' spørsmål.';
+  document.getElementById('om-result-stats').innerHTML=
+    '<div class="om-rstat"><div class="om-rstat-v">'+omSess.correct+'</div><div class="om-rstat-l">Perfekte</div></div>'+
+    '<div class="om-rstat"><div class="om-rstat-v">'+omSess.partial+'</div><div class="om-rstat-l">Delvise</div></div>'+
+    '<div class="om-rstat"><div class="om-rstat-v">'+omSess.score+'</div><div class="om-rstat-l">Poeng</div></div>';
+  // Lagre rekord
+  if(!G.omBest)G.omBest={};
+  var key=mode==='finn'?'finn':'fags';
+  if(!G.omBest[key]||omSess.score>G.omBest[key]){
+    G.omBest[key]=omSess.score;
+    addXP(Math.round(omSess.score/2),document.getElementById('om-result-view'));
+  }
+  saveAll();
+}
+
+// ── TIMER ───────────────────────────────────────────────────────
+function omStartTimer(numId,arcId,sek,onDone){
+  omStopTimer();
+  omSess.timerSec=sek;omSess.timerMax=sek;
+  var numEl=document.getElementById(numId);
+  var arcEl=document.getElementById(arcId);
+  function tick(){
+    if(omSess.timerSec<=0){omStopTimer();onDone();return;}
+    omSess.timerSec--;
+    if(numEl)numEl.textContent=omSess.timerSec;
+    if(arcEl){
+      var pct=omSess.timerSec/omSess.timerMax*100;
+      arcEl.style.strokeDasharray=pct+' 100';
+      arcEl.style.stroke=omSess.timerSec<=10?'#EF4444':omSess.timerSec<=30?'#F59E0B':'#fff';
+    }
+  }
+  tick();
+  omSess.timerInterval=setInterval(tick,1000);
+}
+function omStopTimer(){
+  if(omSess.timerInterval){clearInterval(omSess.timerInterval);omSess.timerInterval=null;}
+}
+
+// ── HJELPER ─────────────────────────────────────────────────────
+function omShowView(id){
+  ['om-start-view','om-finn-view','om-fags-kap-view','om-fags-view','om-result-view']
+    .forEach(function(v){
+      var el=document.getElementById(v);
+      if(el)el.style.display=v===id?'block':'none';
+    });
+}
+function omShuffle(arr){
+  for(var i=arr.length-1;i>0;i--){
+    var j=Math.floor(Math.random()*(i+1));
+    var t=arr[i];arr[i]=arr[j];arr[j]=t;
+  }
+  return arr;
 }
 
 </script>
@@ -6114,6 +6869,151 @@ function kjVisResultat(){
 </div>
 </div>
   </div>
+</div>
+
+
+<!-- ═══ ØV MED BOKA-PANEL ═══ -->
+<div id="om-panel-wrap" style="display:none;">
+
+  <!-- STARTSKJERM: velg modus -->
+  <div id="om-start-view">
+    <div class="om-hero">
+      <div class="om-hero-icon">📖</div>
+      <div class="om-hero-text">
+        <h2 class="om-hero-title">Øv med boka</h2>
+        <p class="om-hero-sub">To spill – begge krever Gjerset «Treningslære» foran deg.</p>
+      </div>
+    </div>
+    <div class="om-mode-grid">
+      <button class="om-mode-card" onclick="omStartFinn()">
+        <div class="om-mode-icon">🔍</div>
+        <div class="om-mode-title">Finn det i boka</div>
+        <div class="om-mode-desc">15 spørsmål · naviger i boken under tidspress · bli kjent med strukturen</div>
+        <div class="om-mode-badge">90 sek / spørsmål</div>
+      </button>
+      <button class="om-mode-card" onclick="omShowFagsKap()">
+        <div class="om-mode-icon">🎯</div>
+        <div class="om-mode-title">Fagspørsmål per kapittel</div>
+        <div class="om-mode-desc">Velg kapittel · 5 spørsmål · skriv svaret · få poeng for nøkkelord</div>
+        <div class="om-mode-badge">3 min / spørsmål</div>
+      </button>
+    </div>
+    <div class="om-best-wrap" id="om-best-wrap"></div>
+  </div>
+
+  <!-- FINN: game view -->
+  <div id="om-finn-view" style="display:none;">
+    <div class="om-finn-hdr">
+      <div class="om-finn-hdr-left">
+        <div class="om-finn-label">🔍 Finn det i boka</div>
+        <div class="om-finn-prog" id="om-finn-prog">Spørsmål 1 / 15</div>
+      </div>
+      <div class="om-timer-wrap">
+        <div class="om-timer-ring">
+          <svg viewBox="0 0 36 36" class="om-timer-svg">
+            <circle cx="18" cy="18" r="15.9" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="2.5"/>
+            <circle cx="18" cy="18" r="15.9" fill="none" stroke="#fff" stroke-width="2.5"
+              stroke-dasharray="100 100" stroke-dashoffset="0"
+              id="om-timer-arc" stroke-linecap="round"
+              transform="rotate(-90 18 18)"/>
+          </svg>
+          <div class="om-timer-num" id="om-timer-num">90</div>
+        </div>
+      </div>
+    </div>
+    <div class="om-score-row">
+      <span class="om-score-pill" id="om-finn-score">0 poeng</span>
+      <span class="om-bonus-pill" id="om-bonus-pill" style="display:none;">⚡ Tidbonus!</span>
+    </div>
+    <div class="om-q-card" id="om-finn-card">
+      <div class="om-side-tag" id="om-side-tag">📄 Side –</div>
+      <div class="om-q-text" id="om-finn-q"></div>
+      <div class="om-hint-bar" id="om-finn-hint" style="display:none;">
+        <span class="om-hint-icon">💡</span>
+        <span id="om-finn-hint-txt"></span>
+      </div>
+    </div>
+    <textarea class="om-svar-input" id="om-finn-svar"
+      placeholder="Skriv svaret ditt her…" rows="3"></textarea>
+    <div class="om-btn-row">
+      <button class="om-btn-sjekk" onclick="omFinnSjekk()">✓ Sjekk svar</button>
+      <button class="om-btn-hint-sm" id="om-finn-hint-btn" onclick="omFinnHint()">💡 Hint</button>
+    </div>
+    <div class="om-feedback" id="om-finn-fb" style="display:none;"></div>
+    <div class="om-fasit-bar" id="om-finn-fasit" style="display:none;">
+      <div class="om-fasit-label">Fasit:</div>
+      <div class="om-fasit-tekst" id="om-finn-fasit-txt"></div>
+    </div>
+    <button class="om-neste-btn" id="om-finn-neste" onclick="omFinnNeste()" style="display:none;">
+      Neste spørsmål →
+    </button>
+  </div>
+
+  <!-- FAGS: velg kapittel -->
+  <div id="om-fags-kap-view" style="display:none;">
+    <div class="om-fags-hdr">
+      <button class="om-back-btn" onclick="omTilStart()">← Tilbake</button>
+      <h3>🎯 Velg kapittel</h3>
+    </div>
+    <div class="om-kap-grid" id="om-kap-grid"></div>
+  </div>
+
+  <!-- FAGS: game view -->
+  <div id="om-fags-view" style="display:none;">
+    <div class="om-finn-hdr om-fags-hdr-bar">
+      <div class="om-finn-hdr-left">
+        <div class="om-finn-label">🎯 Fagspørsmål</div>
+        <div class="om-finn-prog" id="om-fags-prog">Spørsmål 1 / 5</div>
+      </div>
+      <div class="om-timer-wrap">
+        <div class="om-timer-ring">
+          <svg viewBox="0 0 36 36" class="om-timer-svg">
+            <circle cx="18" cy="18" r="15.9" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="2.5"/>
+            <circle cx="18" cy="18" r="15.9" fill="none" stroke="#fff" stroke-width="2.5"
+              stroke-dasharray="100 100" stroke-dashoffset="0"
+              id="om-fags-timer-arc" stroke-linecap="round"
+              transform="rotate(-90 18 18)"/>
+          </svg>
+          <div class="om-timer-num" id="om-fags-timer-num">180</div>
+        </div>
+      </div>
+    </div>
+    <div class="om-score-row">
+      <span class="om-score-pill" id="om-fags-score">0 poeng</span>
+      <span class="om-kap-tag" id="om-fags-kap-tag">–</span>
+    </div>
+    <div class="om-q-card" id="om-fags-card">
+      <div class="om-q-text" id="om-fags-q"></div>
+    </div>
+    <textarea class="om-svar-input" id="om-fags-svar"
+      placeholder="Skriv svaret ditt her…" rows="4"></textarea>
+    <div class="om-btn-row">
+      <button class="om-btn-sjekk" onclick="omFagsSjekk()">✓ Sjekk svar</button>
+    </div>
+    <div class="om-feedback" id="om-fags-fb" style="display:none;"></div>
+    <div class="om-fasit-bar" id="om-fags-fasit" style="display:none;">
+      <div class="om-fasit-label">Fasit:</div>
+      <div class="om-fasit-tekst" id="om-fags-fasit-txt"></div>
+    </div>
+    <button class="om-neste-btn" id="om-fags-neste" onclick="omFagsNeste()" style="display:none;">
+      Neste spørsmål →
+    </button>
+  </div>
+
+  <!-- RESULTAT -->
+  <div id="om-result-view" style="display:none;">
+    <div class="om-result-wrap">
+      <div class="om-result-icon" id="om-result-icon">🏆</div>
+      <div class="om-result-title" id="om-result-title">Fullført!</div>
+      <div class="om-result-score" id="om-result-score">0 poeng</div>
+      <div class="om-result-sub" id="om-result-sub"></div>
+      <div class="om-result-stats" id="om-result-stats"></div>
+      <button class="om-neste-btn" onclick="omTilStart()" style="display:block;margin-top:16px;">
+        ← Spill igjen
+      </button>
+    </div>
+  </div>
+
 </div>
 
 </body>
