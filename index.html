@@ -2,6 +2,15 @@
 <html lang="no">
 <head>
 <meta charset="UTF-8">
+<meta name="theme-color" content="#0D1B3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230D1B3E'/%3E%3Ctext x='32' y='44' font-size='34' font-weight='800' text-anchor='middle' fill='%23F4C842' font-family='Arial,sans-serif'%3ER%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="REPS">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
 <meta name="description" content="REPS – læringsapp for Treningslære 1, Øvrebyen Idrettsfag">
 <meta property="og:title" content="REPS">
 <meta property="og:description" content="Treningslære 1 – les, øv og bygg skjelettet">
@@ -2603,6 +2612,24 @@ figure.dia figcaption{font-size:.78rem;color:var(--muted);line-height:1.5;margin
 .bone-crit{margin-top:9px;font-size:.82rem;color:#4FC3F7;line-height:1.4;}
 .bone-close{margin-top:14px;background:#F4C842;color:#0D1B3E;border:none;border-radius:99px;padding:10px 26px;font-weight:800;font-size:.9rem;cursor:pointer;}
 
+
+/* ═══ RETTELSER ═══ */
+body{overflow-x:hidden;overflow-x:clip;}
+.ph-step{min-width:0;}
+.ph-label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+@media(max-width:420px){.phase-nav{padding:14px 12px 0;}.ph-step{gap:5px;}.ph-label{font-size:.68rem;}}
+@media(max-width:340px){.hdr-act-btn{width:28px;height:28px;}.hdr-actions{gap:0;}.cc-title{font-size:.74rem;overflow-wrap:anywhere;hyphens:auto;}}
+.fagbegrep::after{max-width:min(240px,calc(100vw - 32px));}
+.skel-bone-row:not(.unlocked) .skel-bone-crit{color:rgba(255,255,255,.62);}
+.skel-bone-row:not(.unlocked) .skel-bone-name{color:rgba(255,255,255,.68);}
+.tf-chip.used{pointer-events:auto;cursor:grab;}
+.tf-dz.filled{cursor:pointer;}
+:focus-visible{outline:2px solid #F4C842;outline-offset:2px;}
+[role="button"]:focus-visible,.chap-card:focus-visible{outline:3px solid #1565C0;outline-offset:2px;}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important;}}
+.storage-warn{position:fixed;left:8px;right:8px;bottom:8px;z-index:9999;background:#7C2D12;color:#fff;padding:10px 14px;border-radius:12px;font-size:.82rem;line-height:1.4;box-shadow:0 6px 24px rgba(0,0,0,.35);}
+.storage-warn button{margin-left:8px;background:#fff;color:#7C2D12;border:0;border-radius:8px;padding:4px 10px;font-weight:700;cursor:pointer;}
+
 </style>
 </head>
 <body>
@@ -2686,7 +2713,7 @@ figure.dia figcaption{font-size:.78rem;color:var(--muted);line-height:1.5;margin
       <div class="hdr-actions">
         <button class="hdr-act-btn" onclick="openStats()" title="Min statistikk" aria-label="Min statistikk"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20V11M12 20V4M19 20v-6"/></svg></button>
         <button class="hdr-act-btn hdr-skel" id="skel-header-btn" onclick="openSkel()" title="Skjelett – fremgang" aria-label="Skjelett"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path transform="rotate(-45 12 12) translate(12 12) scale(1.1) translate(-12 -12)" stroke-width="1.65" d="M8.017 10.5H15.983A2.2 2.2 0 1 1 18.756 12A2.2 2.2 0 1 1 15.983 13.5H8.017A2.2 2.2 0 1 1 5.244 12A2.2 2.2 0 1 1 8.017 10.5Z"/></svg><span class="skel-count">0/17</span></button>
-        <button class="hdr-act-btn" onclick="openTeacher()" title="Innstillinger" aria-label="Innstillinger"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"/></svg></button>
+        <button class="hdr-act-btn" onclick="openTeacher()" title="Innstillinger" aria-label="Innstillinger"><svg class="ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg></button>
       </div>
     </div>
   </div>
@@ -2967,7 +2994,7 @@ const LEVELS = [
   {name:'Utøver',min:300},{name:'Ekspert',min:700},{name:'Mester',min:1200}
 ];
 const BADGES = [
-  {id:'b_first',  e:'⚡',n:'Første fem',    d:'Svar riktig på 5 spørsmål',     c:s=>s.totalAns>=5},
+  {id:'b_first',  e:'⚡',n:'Første fem',    d:'Svar på 5 spørsmål',     c:s=>s.totalAns>=5},
   {id:'b_s3',     e:'🔥',n:'3 på rad',      d:'3 riktige svar på rad',          c:s=>s.maxStreak>=3},
   {id:'b_s10',    e:'🌋',n:'10 på rad',     d:'10 riktige svar på rad',         c:s=>s.maxStreak>=10},
   {id:'b_read',   e:'📖',n:'Leser',         d:'Les gjennom 3 kapitler',         c:s=>s.chapRead>=3},
@@ -2980,8 +3007,8 @@ const BADGES = [
   {id:'b_ex14',   e:'📝',n:'Øvingsmester',  d:'Fullfør øvinger i alle kapitler',c:s=>(s.exDone||0)>=14},
       {id:'b_bg1',e:'📘',n:'Begrepsmester I',d:'Fullfør ett begrepstema',c:s=>Object.keys(s.bgThemeDone||{}).length>=1},
   {id:'b_bg5',e:'🎓',n:'Begrepsmester V', d:'Fullfør alle 5 begrepstemaer',c:s=>Object.keys(s.bgThemeDone||{}).length>=5},
-  {id:'b_tf1',e:'🏋️',n:'Treningsekspert I',d:'Fullfør ett tema med ⭐⭐⭐',c:s=>Object.values(s.tfTopicStars||{}).some(v=>v==='⭐⭐⭐')},
-  {id:'b_tf5',e:'🏅',n:'Treningsekspert V',d:'Fullfør alle 5 temaer',c:s=>Object.keys(s.tfTopicDone||{}).length>=5},
+  {id:'b_tf1',e:'🏋️',n:'Treningsekspert I',d:'Fullfør ett tema med ⭐⭐⭐',c:s=>Object.values(s.tfTopicStars||{}).some(v=>typeof v==='string'?v==='⭐⭐⭐':Object.values(v||{}).some(x=>x==='⭐⭐⭐'))},
+  {id:'b_tf5',e:'🏅',n:'Treningsekspert V',d:'Fullfør alle 5 temaer',c:s=>['uth','sty','bev','spe','hur'].every(t=>Object.values((s.tfTopicStars||{})[t]||{}).some(Boolean))},
   {id:'b_timer',  e:'⏱', n:'Lynrask',       d:'Fullfør timer-utfordringen',    c:s=>s.timerWins>=1},
   {id:'b_kj1',   e:'🔗',n:'Kjedemester I', d:'Fullfør din første hendelseskjede', c:s=>Object.keys(s.kjDone||{}).length>=1},
   {id:'b_kj10',  e:'⛓️',n:'Kjedemester', d:'Fullfør alle 14 hendelseskjeder',   c:s=>Object.keys(s.kjDone||{}).length>=14},
@@ -3657,6 +3684,7 @@ function showStreakLive(t){
 function startDaily(){
   if(dailyInt)return;
   dailyInt=setInterval(()=>{
+    if(document.visibilityState!=='visible'||(typeof ST!=='undefined'&&Date.now()-ST.last>60000))return;
     G.dailySec++;
     const pct=Math.min(100,Math.round(G.dailySec/DAILY_GOAL*100));
     id('daily-fill').style.width=pct+'%'; S('daily-pct',pct+'%');
@@ -4055,12 +4083,11 @@ function buildEx(ch,cs){
       const prevPct=prevTotal>0?prevDone/prevTotal:1;
       if(prevPct<0.5){
         // Count current qi offset before rendering locked section
-        ch.sections.slice(0,si).forEach(ps=>ps.qs.forEach(()=>qi++));
         h+=`<div class="sec-hdr"><div class="sec-icon">${sec.icon}</div><div><div class="sec-lbl">${sec.label}</div><div class="sec-title">${sec.title}</div></div></div>
         <div style="position:relative">
           <div class="sec-locked">`;
         sec.qs.forEach(q=>{qi++;h+=renderExQ(q,`${ch.id}_ex${qi}`,ch.id,qi,exTotal);});
-        h+=`</div><div class="sec-lock-overlay"><div class="sec-lock-pill">🔒 Fullfør Del 1 og Del 2 for å låse opp</div></div></div>`;
+        h+=`</div><div class="sec-lock-overlay"><div class="sec-lock-pill">🔒 Svar på minst halvparten av oppgavene over for å låse opp</div></div></div>`;
         return;
       }
     }
@@ -4080,10 +4107,11 @@ function buildEx(ch,cs){
   return h;
 }
 
+function exOrder(cid,qid,n){ var cs=CS[cid]; if(!cs.exShuffle)cs.exShuffle={}; if(!cs.exShuffle[qid]||cs.exShuffle[qid].length!==n)cs.exShuffle[qid]=shuffle([...Array(n).keys()]); return cs.exShuffle[qid]; }
 function renderExQ(q,qid,cid,num,total){
   const L=['A','B','C','D'];
   let h=`<div class="q-card" id="card-${qid}"><div class="q-num">Oppgave ${num} av ${total}</div><div class="q-km">${q.km}</div><div class="q-text">${q.q}</div>`;
-  if(q.type==='mc'){h+=`<div class="mc-opts">${q.opts.map((o,i)=>`<button class="mc-btn" id="mc-${qid}-${i}" data-qid="${qid}" data-i="${i}" data-cid="${cid}"><span class="mc-ltr">${L[i]}</span>${o}</button>`).join('')}</div>`;}
+  if(q.type==='mc'){h+=`<div class="mc-opts">${exOrder(cid,qid,q.opts.length).map((oi,pos)=>`<button class="mc-btn" id="mc-${qid}-${oi}" data-qid="${qid}" data-i="${oi}" data-cid="${cid}"><span class="mc-ltr">${L[pos]}</span>${q.opts[oi]}</button>`).join('')}</div>`;}
   if(q.type==='fill'){
     h+=`<div class="fill-row"><input class="fill-in" id="fi-${qid}" type="text" placeholder="Skriv svaret her…" autocomplete="off" data-attempts="0" data-cid="${cid}" data-qid="${qid}" onkeydown="if(event.key==='Enter')checkFill('${qid}','${cid}')"><button class="chk-btn" id="fib-${qid}" onclick="checkFill('${qid}','${cid}')">Sjekk</button></div>
     <div class="hint-row"><button class="hint-btn" id="hbtn-${qid}" onclick="showHint('${qid}')">💡 Hint</button></div>
@@ -4177,9 +4205,29 @@ function showCtrlResult(cid,scroll){
 }
 
 function levenshtein(a,b){const m=a.length,n=b.length;const dp=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>j===0?i:0));for(let j=1;j<=n;j++)dp[0][j]=j;for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);return dp[m][n];}
+function fillNorm(s){
+  return String(s).toLowerCase().trim().replace(/[–—−]/g,'-').replace(/(\d),(?=\d)/g,'$1.')
+    .replace(/\s*(prosent|%)\s*/g,'%').replace(/(\d)\s*til\s*(\d)/g,'$1-$2').replace(/\s+/g,'').replace(/\.+$/,'');
+}
+function fillCore(s){ var m=fillNorm(s).match(/\d+(?:\.\d+)?(?:-\d+(?:\.\d+)?)?/); return m?m[0]:null; }
+function fillText(s){ return String(s).toLowerCase().replace(/[.,;:!?()«»"]/g,' ').replace(/\s+/g,' ').trim(); }
 function fuzzyMatch(val,accepted){
-  const v=val.toLowerCase().replace(/[-\s]/g,'');
-  return accepted.some(a=>{const an=a.toLowerCase().replace(/[-\s]/g,'');if(v.includes(an)||an.includes(v))return true;const dist=levenshtein(v,an);return dist<=Math.max(1,Math.floor(an.length*0.2));});
+  var v=fillNorm(val); if(!v) return false;
+  return accepted.some(function(a){
+    var na=fillNorm(a); if(!na) return false;
+    if(v===na) return true;
+    if(/\d|[½¼¾]/.test(a)){
+      if(/\//.test(a)) return false;
+      var cv=fillCore(val), ca=fillCore(a);
+      if(!cv||!ca||cv!==ca) return false;
+      return !/\d/.test(v.replace(cv,''));
+    }
+    var tv=fillText(val), ta=fillText(a);
+    if(tv===ta) return true;
+    if((' '+tv+' ').indexOf(' '+ta+' ')>=0) return true;
+    var dv=tv.replace(/ /g,''), da=ta.replace(/ /g,''), lim=da.length>=9?2:(da.length>=5?1:0);
+    return lim>0&&levenshtein(dv,da)<=lim;
+  });
 }
 function checkFill(qid,cid){
   const cs=CS[cid];if(!cs||cs.exAns[qid])return;
@@ -4202,7 +4250,8 @@ function checkDrag(qid,cid){
   id('dchk-'+qid).disabled=true;
   const ok=cor===q.pairs.length;
   showFb(qid,ok,ok?q.okMsg:`${q.errMsg} (${cor}/${q.pairs.length} riktig)`);markCard(qid,ok);
-  cs.exAns[qid]={correct:ok,placements};
+  const _map={};zones.forEach(z=>{const c=z.querySelector('.chip');const l=z.parentElement.querySelector('.drop-lbl');if(l)_map[l.textContent]=c?c.dataset.val:null;});
+  cs.exAns[qid]={correct:ok,placements,map:_map};
   if(ok){cs.exScore=(cs.exScore||0)+1;addXP(XP_CORRECT);pulse('card-'+qid);}else shake('card-'+qid);
   incStreak(ok);G.totalAns++;updateExProg(cid);checkBadges();saveAll();updateGlobalStats();
 }
@@ -4233,6 +4282,7 @@ function updateExProg(cid){
   const pct=Math.round(done/total*100);
   const pt=id('pt-'+cid);const pf=id('pf-'+cid);
   if(pt)pt.textContent=done+' av '+total+' besvart';if(pf)pf.style.width=pct+'%';
+  try{ const _p=id('panel-'+cid); if(_p&&_p.querySelector('.sec-lock-overlay')){ const _last=ch.sections.length-1; let _n=0,_pt=0,_pd=0; ch.sections.forEach((sec,si)=>sec.qs.forEach(()=>{_n++;if(si<_last){_pt++;if(cs.exAns&&cs.exAns[cid+'_ex'+_n])_pd++;}})); if(_pt&&_pd/_pt>=0.5){ const _y=window.scrollY; refreshPanel(cid); window.scrollTo(0,_y); } } }catch(e){}
   const tab=id('tab-'+cid);if(tab){const sp=tab.querySelector('.tab-prog');if(sp)sp.textContent=pct+'%';}
 }
 function submitEx(cid){
@@ -4244,7 +4294,7 @@ function submitEx(cid){
   S('rm-'+cid,pct>=90?'🌟 Fremragende!':pct>=75?'✅ Bra jobbet!':pct>=55?'📖 Se gjennom de røde spørsmålene.':'💡 Gå gjennom kapitlet igjen!');
   rb && rb.scrollIntoView({behavior:'smooth'});
   cs.phase='done';
-  G.exDone = (G.exDone||0) + 1; // count chapters where exercises completed
+  G.exDone = CHAPTERS.filter(c=>CS[c.id]&&CS[c.id].phase==='done').length; // antall ulike kapitler
   // Progress toast
   const doneCount=CHAPTERS.filter(c=>CS[c.id]&&CS[c.id].phase==='done').length;
   const totalUnlocked=CHAPTERS.filter(c=>!isLocked(c.id)).length;
@@ -4268,13 +4318,41 @@ function restoreCtrl(cid,qid,a){
   if(fb&&q){fb.className='ctrl-fb '+(a.correct?'ok':'err')+' show';fb.textContent=a.correct?q.okMsg:q.errMsg;}
 }
 function restoreEx(cid,qid,a){
+  const q=findExQ(cid,qid);
   if(a.val!==undefined){
     const inp=id('fi-'+qid);if(!inp)return;
     inp.value=a.val;inp.disabled=true;inp.classList.add(a.correct?'correct':'wrong');
     id('fib-'+qid).disabled=true;
-    const q=findExQ(cid,qid);
     showFb(qid,a.correct,a.correct?(q && q.okMsg):`${(q && q.errMsg)} Fasit: «${(q && q.answer)}».`);
-    markCard(qid,a.correct);
+    markCard(qid,a.correct);return;
+  }
+  if(!q)return;
+  if(q.type==='mc'&&a.chosen!==undefined){
+    document.querySelectorAll('[data-qid="'+qid+'"]').forEach(b=>{b.disabled=true;});
+    const mb=id('mc-'+qid+'-'+a.chosen);if(mb)mb.classList.add(a.correct?'correct':'wrong');
+    if(!a.correct){const d=id('mc-'+qid+'-'+q.correct);if(d)d.classList.add('show-correct');}
+    showFb(qid,a.correct,a.correct?q.okMsg:q.errMsg);markCard(qid,a.correct);return;
+  }
+  if(q.type==='drag'){
+    const bank=id('bank-'+qid);if(!bank)return;
+    document.querySelectorAll('#targets-'+qid+' .drop-zone').forEach(z=>{
+      const lbl=z.parentElement.querySelector('.drop-lbl');
+      const want=(a.map&&lbl&&a.map[lbl.textContent]!==undefined)?a.map[lbl.textContent]:z.dataset.ans;
+      if(want==null)return;
+      const src=[...bank.querySelectorAll('.chip')].filter(c=>c.dataset.val===want&&!c.classList.contains('used'))[0];if(!src)return;
+      z.textContent='';const c2=src.cloneNode(true);c2.style.opacity='1';c2.draggable=false;z.appendChild(c2);src.classList.add('used');
+      z.classList.add(want===z.dataset.ans?'ok-drop':'err-drop');
+    });
+    bank.querySelectorAll('.chip').forEach(c=>{c.draggable=false;c.style.opacity='.3';});
+    const bt=id('dchk-'+qid);if(bt)bt.disabled=true;
+    showFb(qid,a.correct,a.correct?q.okMsg:q.errMsg);markCard(qid,a.correct);return;
+  }
+  if(q.type==='sort'){
+    const l=id('sort-'+qid);
+    if(l&&a.userOrder)a.userOrder.forEach(t=>{const it=[...l.children].filter(x=>x.dataset.text===t)[0];if(it)l.appendChild(it);});
+    if(l)l.querySelectorAll('.sort-item').forEach(i=>{i.draggable=false;});
+    const sb=id('schk-'+qid);if(sb)sb.disabled=true;
+    showFb(qid,a.correct,a.correct?q.okMsg:q.errMsg);markCard(qid,a.correct);
   }
 }
 function refreshPanel(cid){
@@ -4815,18 +4893,20 @@ function renderQ(){
 // ── MC ──────────────────────────────────────────────────────
 function renderMC(q){
   const L=['A','B','C','D'];
-  return `<div class="mc-opts">${q.opts.map((o,i)=>`<button class="mc-btn" onclick="answerMC(${i})" data-i="${i}">
-    <span class="mc-ltr">${L[i]}</span>${o}</button>`).join('')}</div>`;
+  const order=tfShuffle(q.opts.map((_,i)=>i));
+  return `<div class="mc-opts">${order.map((oi,pos)=>`<button class="mc-btn" onclick="answerMC(${oi})" data-i="${oi}">
+    <span class="mc-ltr">${L[pos]}</span>${q.opts[oi]}</button>`).join('')}</div>`;
 }
 function answerMC(i){
   if(session.answered)return;
   session.answered=true;
   const q=session.qs[session.idx];
   const ok=i===q.correct;
-  document.querySelectorAll('.mc-btn').forEach((b,idx)=>{
+  document.querySelectorAll('.mc-btn').forEach(b=>{
+    const oi=parseInt(b.dataset.i);
     b.disabled=true;
-    if(idx===q.correct)b.classList.add('correct');
-    if(idx===i&&!ok)b.classList.add('wrong');
+    if(oi===q.correct)b.classList.add('correct');
+    if(oi===i&&!ok)b.classList.add('wrong');
   });
   handleAnswer(ok, q, document.querySelector('.mc-btn'));
 }
@@ -4847,10 +4927,7 @@ function answerFill(){
   const q=session.qs[session.idx];
   const val=document.getElementById('fill-inp').value.trim();
   if(!val)return;
-  // Fuzzy match
-  function lev(a,b){const m=a.length,n=b.length;const dp=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>j===0?i:0));for(let j=1;j<=n;j++)dp[0][j]=j;for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);return dp[m][n];}
-  const norm=s=>s.toLowerCase().replace(/[%\s\-–]/g,'');
-  const ok=q.accepted.some(a=>{const nv=norm(val),na=norm(a);return nv===na||nv.includes(na)||na.includes(nv)||lev(nv,na)<=Math.max(1,Math.floor(na.length*.2));});
+  const ok=fuzzyMatch(val,q.accepted.concat([q.answer]));
   session.answered=true;
   const inp=document.getElementById('fill-inp');
   inp.disabled=true;inp.classList.add(ok?'correct':'wrong');
@@ -4863,7 +4940,7 @@ function renderDrag(q){
   const chips=tfShuffle(q.pairs.map(p=>p.ans));
   const pairs=tfShuffle([...q.pairs]);
   return `<div class="tf-drag-area">
-    <div class="tf-chip-bank" id="tf-chip-bank">${chips.map((a,i)=>`<div class="tf-chip" draggable="true" data-val="${escHtml(a)}">${escHtml(a)}</div>`).join('')}</div>
+    <div class="tf-chip-bank" id="tf-chip-bank">${chips.map((a,i)=>`<div class="tf-chip" draggable="true" data-cid="c${i}" data-val="${escHtml(a)}">${escHtml(a)}</div>`).join('')}</div>
     <div class="tf-drop-rows">${pairs.map((p,i)=>`
       <div class="tf-drop-row">
         <div class="tf-drop-lbl">${escHtml(p.label)}</div>
@@ -4883,16 +4960,23 @@ function attachDrag(q){
     z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('over');});
     z.addEventListener('dragleave',()=>z.classList.remove('over'));
     z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('over');if(dragCur)dropOnZone(z,dragCur);});
+    z.addEventListener('click',()=>{ if(!session.answered&&z.dataset.placed)tfClearZone(z); });
   });
 }
 function dropOnZone(zone,chip){
-  const prev=zone.dataset.placed;
-  if(prev){const old=document.querySelector(`.chip[data-val="${prev}"]`);if(old){old.classList.remove('used');old.style.opacity='';}}
-  // remove chip from other zones
-  document.querySelectorAll('.tf-dz').forEach(z=>{if(z.dataset.placed===chip.dataset.val){z.textContent='Slipp her…';z.classList.remove('filled');delete z.dataset.placed;}});
+  if(!zone||!chip||session.answered)return;
+  var cid=chip.dataset.cid;
+  document.querySelectorAll('.tf-dz').forEach(function(z){ if(z!==zone&&z.dataset.chip===cid)tfClearZone(z); });
+  if(zone.dataset.chip&&zone.dataset.chip!==cid){ var old=document.querySelector('.tf-chip[data-cid="'+zone.dataset.chip+'"]'); if(old){old.classList.remove('used');old.style.opacity='';} }
   zone.textContent=chip.dataset.val;zone.classList.add('filled');zone.classList.remove('over','correct-drop','wrong-drop');
-  zone.dataset.placed=chip.dataset.val;
+  zone.dataset.placed=chip.dataset.val;zone.dataset.chip=cid;
   chip.classList.add('used');chip.style.opacity='';
+}
+function tfClearZone(z){
+  var cid=z.dataset.chip;
+  if(cid){ var c=document.querySelector('.tf-chip[data-cid="'+cid+'"]'); if(c){c.classList.remove('used');c.style.opacity='';} }
+  z.textContent='Slipp her…';z.classList.remove('filled','over','correct-drop','wrong-drop');
+  delete z.dataset.placed;delete z.dataset.chip;
 }
 function answerDrag(){
   if(session.answered)return;
@@ -4993,7 +5077,7 @@ function tfNextQ(){
 }
 function tfSkipQ(){
   const q=session.qs[session.idx];
-  session.wrong.push({q:q.q.replace(/<[^>]+>/g,''),note:q.wrongNote});
+  if(!session.answered)session.wrong.push({q:q.q.replace(/<[^>]+>/g,''),note:q.wrongNote});
   tfNextQ();
 }
 
@@ -5002,12 +5086,13 @@ function endGame(){
   const tot=session.qs.length, sc=session.score;
   const pct=Math.round(sc/tot*100);
   const stars=pct===100?'⭐⭐⭐':pct>=75?'⭐⭐':pct>=50?'⭐':'';
-  const isNewRecord=(pct===100);
+  const _prevStars=((TF_G.topicStars[session.topic]||{})[session.diff])||'';
+  const isNewRecord=(pct===100&&_prevStars!=='⭐⭐⭐');
   var recEl2=document.getElementById('tf-rc-record');
   if(recEl2)recEl2.style.display=isNewRecord?'block':'none';
   // Save progress
-  if(!TF_G.topicDone[session.topic])TF_G.topicDone[session.topic]={};
-  TF_G.topicDone[session.topic][session.diff]=true;
+  if(stars){ if(!TF_G.topicDone[session.topic])TF_G.topicDone[session.topic]={};
+  TF_G.topicDone[session.topic][session.diff]=true; }
   if(!TF_G.topicStars[session.topic])TF_G.topicStars[session.topic]={};
   const prev=TF_G.topicStars[session.topic][session.diff]||'';
   if(stars.length>prev.length)TF_G.topicStars[session.topic][session.diff]=stars;
@@ -5015,6 +5100,7 @@ function endGame(){
   const bonus={easy:0,medium:10,hard:25}[session.diff];
   if(pct===100&&bonus)tfAddXP(bonus,null);
   saveG();
+  try{checkBadges();saveAll();}catch(e){}
   // Show result
   document.getElementById('tf-rc-stars').textContent=stars||'💪';
   document.getElementById('tf-rc-score').textContent=sc+'/'+tot;
@@ -5104,7 +5190,7 @@ function startFromRef(topicId) {
 function openRefModal(topicId) {
   var labels = { uth: '🏃 Utholdenhetstrening', sty: '💪 Styrketrening', bev: '🤸 Bevegelighet', spe: '🦘 Spensttrening', hur: '⚡ Hurtighetstrening' };
   document.getElementById('tf-ref-modal-title').textContent = labels[topicId] || 'Tabell';
-  var src = document.getElementById('ref-' + topicId);
+  var src = document.getElementById('tf-ref-' + topicId) || document.getElementById('ref-' + topicId);
   var body = document.getElementById('tf-ref-modal-body');
   if (src && body) {
     body.innerHTML = src.innerHTML;
@@ -5649,8 +5735,8 @@ function showProgressToast(done, total){ var pct=Math.round(done/total*100); pus
 // SKJELETT-SYSTEM
 // ═══════════════════════════════════════════════
 const BONES = [
-  {id:'hodeskalle', name:'Hodeskallen',      svg:'bone-hodeskalle', badge:'b_read',   crit:'Les ett kapittel',                 icon:'💀'},
-  {id:'nakkebein',  name:'Nakkevirvlene',    svg:'bone-nakkebein',  badge:'b_first',  crit:'Svar på ditt første spørsmål', icon:'🦴'},
+  {id:'hodeskalle', name:'Hodeskallen',      svg:'bone-hodeskalle', badge:'b_read',   crit:'Les gjennom 3 kapitler',                 icon:'💀'},
+  {id:'nakkebein',  name:'Nakkevirvlene',    svg:'bone-nakkebein',  badge:'b_first',  crit:'Svar på 5 spørsmål', icon:'🦴'},
   {id:'brystbein',  name:'Brystbeinet',      svg:'bone-brystbein',  badge:'b_daily',  crit:'Bruk 5 minutter aktivt en dag',    icon:'🦴'},
   {id:'ribbein-v',  name:'Ribbein (venstre)',svg:'bone-ribbein-v',  badge:'b_xp300',  crit:'Nå 300 XP',                       icon:'🦴'},
   {id:'ribbein-h',  name:'Ribbein (høyre)', svg:'bone-ribbein-h',  badge:'b_xp700',  crit:'Nå 700 XP',                       icon:'🦴'},
@@ -6340,13 +6426,13 @@ const OVMED_FINN = [
   {id:'f4',side:338,q:'Slå opp på side 338. Hva står de fem bokstavene i PRICE-prinsippet for?',hint:'Akuttbehandling av idrettsskader – finn PRICE-boksen eller avsnittet',keywords:['protection','rest','ice','compression','elevation'],fasit:'Protection (beskytt), Rest (hvile), Ice (is), Compression (bandasje), Elevation (hev opp)'},
   {id:'f5',side:340,q:'Slå opp på side 340. Hva er den viktigste forskjellen mellom PRICE og POLICE?',hint:'Les avsnittet rett etter PRICE – hva har endret seg i nyere forskning?',keywords:['optimal','loading','belastning','hvile','aktiv'],fasit:'POLICE erstatter «Rest» med «Optimal Loading» – tidlig kontrollert belastning anbefales fremfor komplett hvile'},
   {id:'f6',side:452,q:'Slå opp på side 452. Tegn eller beskriv superkompensasjonskurven med egne ord – hva skjer i de fire fasene?',hint:'Finn figuren eller teksten om superkompensasjon i treningsplanleggingskapittelet',keywords:['trening','utmatting','restitusjon','tilpasning','sterkere','superkompensasjon'],fasit:'1) Trening gir utmatting, 2) Prestasjon faller, 3) Restitusjon: kroppen bygger seg opp igjen, 4) Superkompensasjon: kroppen er sterkere enn før'},
-  {id:'f7',side:63,q:'Finn intensitetstabellen (s. 63). Hvilken I-sone tilsvarer anaerob terskel, og hva er HF-prosenten?',hint:'Se nederst i intensitetstabellen – hvilken sone er «over terskelen»?',keywords:['4','5','i-sone 4','i-sone 5','85','92','95','anaerob'],fasit:'I-sone 4 (anaerob terskel): 85–92 % av HFmaks. Over dette punktet stiger laktat bratt.'},
+  {id:'f7',side:63,q:'Finn intensitetstabellen (s. 63). Hvilken I-sone tilsvarer anaerob terskel, og hva er HF-prosenten?',hint:'Se nederst i intensitetstabellen – hvilken sone er «over terskelen»?',keywords:['i-sone 4','85','92','85-92','anaerob'],fasit:'I-sone 4 (anaerob terskel): 85–92 % av HFmaks. Over dette punktet stiger laktat bratt.'},
   {id:'f8',side:105,q:'Slå opp på metodetabellen (s. 105). Hva er anbefalt pause mellom seriene ved trening for maksimal muskelstyrke?',hint:'Se kolonnen «Pause» i metodetabellen – rad for maks. styrke (>85 % av 1RM)',keywords:['2','5','2-5','2–5','minutter','min'],fasit:'2–5 minutters pause mellom seriene ved maksimal styrketrening (>85 % av 1RM)'},
   {id:'f9',side:73,q:'Finn kapittelet om styrketrening i boken (det starter på side 72). Les avsnittet «Hva er muskelstyrke?» – hva defineres som «styrke»?',hint:'Se avsnittet «Hva er muskelstyrke?» tidlig i styrketreningskapittelet',keywords:['kraft','muskel','kontraksjon','definisjon','styrke'],fasit:'Styrke defineres som muskelens evne til å utvikle kraft gjennom kontraksjon mot en motstand.'},
   {id:'f10',side:63,q:'Slå opp på s. 63. Hvor mange I-soner opererer boken med, og hva er den roligste sonens HF-prosent?',hint:'Tell antall rader i intensitetstabellen',keywords:['5','soner','55','70','55-70','55–70','i-sone 1'],fasit:'Boken opererer med 5 I-soner. I-sone 1 (roligst): 55–70 % av HFmaks.'},
   {id:'f11',side:105,q:'Finn s. 105. Hva er anbefalt antall serier og repetisjoner for muskulær utholdenhet?',hint:'Siste rad i metodetabellen for styrketrening',keywords:['15','20','2','4','utholdenhet','lav'],fasit:'2–4 serier med 15–60+ repetisjoner ved lav belastning (20–60 % av 1RM)'},
   {id:'f12',side:372,q:'Finn avsnittet om søvn og restitusjon i ernæringskapittelet. Hva produseres under dyp søvn som er viktig for muskelvekst?',hint:'Se avsnittet «Søvn og restitusjon» – hvilket hormon nevnes?',keywords:['veksthormon','hormon','søvn','produseres'],fasit:'Veksthormon produseres under dyp søvn og er avgjørende for muskelvekst og reparasjon av vev.'},
-  {id:'f13',side:45,q:'Slå opp på s. 45. Hva er en typisk laktatterskel for en godt trent utøver (% av VO₂maks eller HFmaks)?',hint:'Les setningene etter definisjonen av laktatterskel',keywords:['75','85','80','prosent','godt trent','trent'],fasit:'Godt trente utøvere har laktatterskel ved 75–85 % av VO₂maks – betydelig høyere enn utrente (~50–60 %).'},
+  {id:'f13',side:45,q:'Slå opp på s. 45. Hva er en typisk laktatterskel for en godt trent utøver (% av VO₂maks eller HFmaks)?',hint:'Les setningene etter definisjonen av laktatterskel',keywords:['75','85','75-85'],fasit:'Godt trente utøvere har laktatterskel ved 75–85 % av VO₂maks – betydelig høyere enn utrente (~50–60 %).'},
   {id:'f14',side:340,q:'Finn s. 338 eller 340. Hvilken ny behandlingsfilosofi erstatter komplett hvile ved akutte skader?',hint:'POLICE-prinsippet – hva erstatter R (Rest) fra PRICE?',keywords:['optimal','loading','belastning','ol','aktiv','kontrollert'],fasit:'«Optimal Loading» (OL) – kontrollert og tilpasset belastning tidlig i helingsprosessen gir bedre resultater enn total hvile.'},
   {id:'f15',side:105,q:'Slå opp på metodetabellen (s. 105). Hvilken treningsmetode bruker eksplosivt tempo og 50–80 % av 1RM?',hint:'Se kolonnen «Tempo» og «% av 1RM» i tabellen',keywords:['eksplosiv','eksplosivt','styrke','rfd','50','80'],fasit:'Eksplosiv styrketrening: 50–80 % av 1RM, eksplosivt tempo, 4–8 repetisjoner – trener rate of force development (RFD).'},
 ];
@@ -6499,6 +6585,15 @@ function omFinnTidUt(){
   omFinnVurder(true);
 }
 
+function omNorm(s){return String(s).toLowerCase().replace(/[–—−]/g,'-').replace(/(\d),(?=\d)/g,'$1.').trim();}
+function omScore(svar,kws){
+  var s=omNorm(svar),seen={},list=[];
+  kws.forEach(function(k){var n=omNorm(k);if(!seen[n]){seen[n]=1;list.push(n);}});
+  var treff=list.filter(function(k){return s.indexOf(k)>=0;}).length;
+  var rest=s; list.slice().sort(function(a,b){return b.length-a.length;}).forEach(function(k){ rest=rest.split(k).join(' '); });
+  var nonKw=rest.split(/\s+/).filter(function(t){return t.replace(/[^a-zæøå0-9]/g,'').length>0;}).length;
+  return {treff:treff,n:list.length,pct:list.length?treff/list.length:0,fritekst:nonKw>=3};
+}
 function omFinnSjekk(){
   if(omSess.answered)return;
   omSess.answered=true;
@@ -6511,8 +6606,7 @@ function omFinnVurder(tidUt){
   var svar=document.getElementById('om-finn-svar').value.toLowerCase().trim();
   document.getElementById('om-finn-svar').disabled=true;
   // Keyword matching
-  var treff=q.keywords.filter(function(kw){return svar.includes(kw.toLowerCase());}).length;
-  var pct=treff/q.keywords.length;
+  var sc=omScore(svar,q.keywords);var treff=sc.treff;var pct=sc.pct;
   var ok=pct>=0.5;
   var perfekt=pct>=0.8;
   // Bonus for rask tid
@@ -6536,7 +6630,7 @@ function omFinnVurder(tidUt){
     fb.textContent='✅ Riktig! '+pts+(tidBonus>0?' + '+tidBonus+' tidbonus':'')+' poeng.';
   } else if(ok){
     fb.className='om-feedback delvis';
-    fb.textContent='🟡 Delvis riktig – '+treff+' av '+q.keywords.length+' nøkkelord. '+pts+' poeng.';
+    fb.textContent='🟡 Delvis riktig – '+treff+' av '+sc.n+' nøkkelord. '+pts+' poeng.';
   } else {
     fb.className='om-feedback feil';
     fb.textContent='✗ Ingen nøkkelord truffet. Se fasiten under.';
@@ -6645,9 +6739,8 @@ function omFagsVurder(tidUt){
   var q=omSess.questions[omSess.idx];
   var svar=document.getElementById('om-fags-svar').value.toLowerCase().trim();
   document.getElementById('om-fags-svar').disabled=true;
-  var treff=q.keywords.filter(function(kw){return svar.includes(kw.toLowerCase());}).length;
-  var pct=treff/q.keywords.length;
-  var ok=pct>=0.4;var perfekt=pct>=0.7;
+  var sc=omScore(svar,q.keywords);var treff=sc.treff;var pct=sc.pct;
+  var ok=pct>=0.4;var perfekt=pct>=0.7&&sc.fritekst;
   var pts=tidUt?0:perfekt?15:ok?8:0;
   omSess.score+=pts;
   if(perfekt)omSess.correct++;
@@ -6659,7 +6752,7 @@ function omFagsVurder(tidUt){
     fb.className='om-feedback ok';fb.textContent='✅ Bra svar! '+pts+' poeng.';
   } else if(ok){
     fb.className='om-feedback delvis';
-    fb.textContent='🟡 Delvis – '+treff+' av '+q.keywords.length+' nøkkelord. '+pts+' poeng.';
+    fb.textContent='🟡 Delvis – '+treff+' av '+sc.n+' nøkkelord. '+pts+' poeng.';
   } else {
     fb.className='om-feedback feil';fb.textContent='✗ Mangler nøkkelord. Se fasit under.';
   }
@@ -7197,7 +7290,7 @@ function anaFinish(gaveUp){
 // ═════════ SPILL-LOOK: fliser, skjelettkort, overlay-aksent, feiring, statistikkbilde ═════════
 function renderGameGrid(){
   var g=document.getElementById('game-grid'); if(!g) return;
-  var P={tf:Object.keys(G.tfTopicDone||{}).length, bg:Object.keys(G.bgThemeDone||{}).length, kj:Object.keys(G.kjDone||{}).length,
+  var P={tf:tfTopicsDoneCount(), bg:Object.keys(G.bgThemeDone||{}).length, kj:Object.keys(G.kjDone||{}).length,
          om:Object.keys(G.omFagsDone||{}).length, an:Object.keys(G.anDone||{}).length};
   g.innerHTML='';
   GAMES.forEach(function(gm){
@@ -7326,6 +7419,7 @@ window.addEventListener('pagehide',function(){ try{ saveAll(); }catch(e){} });
 var ST_GAMES=[['tf','Treningsform'],['bg','Begrep'],['kj','Kjeder'],['om','Øv m. boka'],['an','Anatomi']];
 function statsGameDone(k){
   var m={tf:G.tfTopicDone,bg:G.bgThemeDone,kj:G.kjDone,om:G.omFagsDone,an:G.anDone};
+  if(k==='tf') return tfTopicsDoneCount();
   return Object.keys(m[k]||{}).length;
 }
 function statsData(){
@@ -7428,8 +7522,13 @@ function statsText(){
 statsCopyInfo=function(){
   var txt=statsText();
   function done(){ var btn=document.querySelector('.stats-copy-btn'); if(btn){ btn.textContent='✅ Kopiert!'; setTimeout(function(){ btn.textContent='📋 Kopier tekst'; },2000); } }
-  try{ navigator.clipboard.writeText(txt).then(done); }
-  catch(e){ var ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); done(); }catch(x){} document.body.removeChild(ta); }
+  function fallback(){
+    var ta=document.createElement('textarea'); ta.value=txt; ta.setAttribute('readonly',''); ta.style.cssText='position:fixed;top:0;left:0;opacity:0';
+    document.body.appendChild(ta); ta.select(); try{ ta.setSelectionRange(0,txt.length); }catch(x){}
+    var ok=false; try{ ok=document.execCommand('copy'); }catch(x){} document.body.removeChild(ta);
+    if(ok) done(); else { var btn=document.querySelector('.stats-copy-btn'); if(btn){ btn.textContent='Kunne ikke kopiere – ta skjermbilde'; setTimeout(function(){ btn.textContent='📋 Kopier tekst'; },3500); } }
+  }
+  try{ navigator.clipboard.writeText(txt).then(done,fallback); } catch(e){ fallback(); }
 };
 
 // ── Bilde (PNG) ──
@@ -7543,6 +7642,64 @@ function openBoneCloseup(boneId){
 function boneModalClick(e){ if(e.target===e.currentTarget) closeBoneCloseup(); }
 function closeBoneCloseup(){ var m=document.getElementById('bone-modal'); if(m) m.classList.remove('open'); }
 document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ var m=document.getElementById('bone-modal'); if(m&&m.classList.contains('open')){ m.classList.remove('open'); e.stopImmediatePropagation(); } } },true);
+
+
+// ═════════════════ RETTELSER (revisjon) ═════════════════
+function tfTopicsDoneCount(){ var s=(typeof G!=='undefined'&&G.tfTopicStars)||{}; return ['uth','sty','bev','spe','hur'].filter(function(t){ return Object.values(s[t]||{}).some(Boolean); }).length; }
+// Kapitteløving: trykk på en plassert brikke tar den tilbake (før svar er sjekket)
+document.addEventListener('click',function(e){
+  var c=e.target.closest&&e.target.closest('.drop-zone .chip'); if(!c) return;
+  var zone=c.parentElement, m=(zone.id||'').match(/^dz-(.+)-\d+$/); if(!m) return;
+  var qid=m[1], cid=qid.replace(/_ex\d+$/,''); if(CS[cid]&&CS[cid].exAns&&CS[cid].exAns[qid]) return;
+  var val=c.dataset.val; zone.textContent='Slipp her…';
+  var src=[].slice.call(document.querySelectorAll('#bank-'+qid+' .chip.used')).filter(function(x){return x.dataset.val===val;})[0]; if(src){ src.classList.remove('used'); src.style.opacity=''; }
+});
+// Nye spørsmål i treningsformspillet (hentet fra spillets egne tabeller)
+ALL_Q.push(
+ {id:'sp4',topic:'spe',diff:'easy',type:'mc',q:'Hvilket <em>bevegelsestempo</em> brukes ved spensthopp-trening?',opts:['Langsomt og kontrollert','Så hurtig som mulig – maksimal eller tilnærmet maksimal innsats','Moderat og jevnt','Så rolig som mulig'],correct:1,wrongNote:'Spensthopp: så hurtig som mulig – maksimal eller tilnærmet maksimal innsats'},
+ {id:'sp5',topic:'spe',diff:'easy',type:'fill',q:'Spensthopp-trening gjennomføres ___________ økter per uke.',accepted:['2-3','2–3','2 til 3'],answer:'2–3',hint:'Se kolonnen for treningsøkter per uke i spensttabellen',wrongNote:'Spensthopp: 2–3 økter per uke'},
+ {id:'sp6',topic:'spe',diff:'medium',type:'mc',q:'Hvor mange <em>hopp per serie</em> er det ved spensthopp-trening?',opts:['1–10','10–20','20–30','30–50'],correct:0,wrongNote:'Spensthopp: 1–10 hopp per serie'},
+ {id:'sp7',topic:'spe',diff:'medium',type:'mc',q:'Hvor lange er <em>pausene mellom seriene</em> ved spensthopp-trening?',opts:['30–60 sekunder','2–4 minutter','10–15 minutter','Ingen pause'],correct:1,wrongNote:'Spensthopp: pauser mellom seriene 2–4 minutter'},
+ {id:'sp8',topic:'spe',diff:'hard',type:'drag',q:'Dra riktig verdi til riktig parameter for <em>spensthopp-trening</em>:',pairs:[{label:'Hopp per serie',ans:'1–10'},{label:'Serier per øvelse',ans:'4–8'},{label:'Pauser mellom seriene',ans:'2–4 min'},{label:'Treningsøkter per uke',ans:'2–3'}],wrongNote:'Hopp per serie: 1–10 | Serier: 4–8 | Pauser: 2–4 min | Økter per uke: 2–3'},
+ {id:'sp9',topic:'spe',diff:'hard',type:'mc',q:'Hva anbefales i tillegg til spensthopp for å få <em>god spenst</em>?',opts:['Bare utholdenhetstrening','Eksplosiv styrketrening og maksimal styrketrening','Bare tøyning','Kun rolige løpeturer'],correct:1,wrongNote:'For god spenst: driv også eksplosiv styrketrening og maksimal styrketrening'},
+ {id:'h4',topic:'hur',diff:'easy',type:'mc',q:'Hvilken <em>løpsfart</em> brukes ved trening av maksimal løpshurtighet?',opts:['Maksimal','Moderat','Rolig jogg','Så lenge som mulig'],correct:0,wrongNote:'Maksimal løpshurtighet: maksimal løpsfart'},
+ {id:'h5',topic:'hur',diff:'easy',type:'mc',q:'Hvor mange <em>løp per serie</em> er det ved maksimal løpshurtighet?',opts:['2–3','5–10','10–15','20–30'],correct:0,wrongNote:'Maksimal løpshurtighet: 2–3 løp per serie'},
+ {id:'h6',topic:'hur',diff:'medium',type:'fill',q:'Pausene <em>mellom hvert løp</em> ved maksimal løpshurtighet er ___________ minutter.',accepted:['4-8','4–8','4 til 8'],answer:'4–8',hint:'Se tabellen for maksimal løpshurtighet',wrongNote:'Maksimal løpshurtighet: 4–8 minutter mellom hvert løp'},
+ {id:'h7',topic:'hur',diff:'medium',type:'mc',q:'Hvor mange <em>serier</em> gjennomføres ved maksimal løpshurtighet?',opts:['1–2','3–4','5–6','8–10'],correct:0,wrongNote:'Maksimal løpshurtighet: 1–2 serier'},
+ {id:'h8',topic:'hur',diff:'hard',type:'mc',q:'Hvor lang er pausen mellom repetisjoner ved <em>reaksjonshurtighetstrening</em>?',opts:['Ca. 1 minutt','4–8 minutter','12–15 minutter','Ingen pause'],correct:0,wrongNote:'Reaksjonshurtighet: pauser mellom repetisjoner ca. 1 minutt'},
+ {id:'h9',topic:'hur',diff:'hard',type:'drag',q:'Dra riktig verdi til riktig parameter for <em>maksimal løpshurtighet</em>:',pairs:[{label:'Løpslengde',ans:'30–60 meter'},{label:'Løp per serie',ans:'2–3'},{label:'Pauser mellom hvert løp',ans:'4–8 min'},{label:'Pauser mellom seriene',ans:'12–15 min'}],wrongNote:'Løpslengde: 30–60 m | Løp per serie: 2–3 | Pauser mellom løp: 4–8 min | Pauser mellom serier: 12–15 min'},
+ {id:'b5',topic:'bev',diff:'easy',type:'mc',q:'Hvor mange <em>tøyninger per øvelse</em> gjennomfører du i bevegelighetstrening?',opts:['2–6','10–15','1','20–30'],correct:0,wrongNote:'Bevegelighet: 2–6 tøyninger per øvelse'},
+ {id:'b6',topic:'bev',diff:'medium',type:'fill',q:'Pausene mellom tøyningene i bevegelighetstrening er ___________ sekunder.',accepted:['30-60','30–60','30 til 60'],answer:'30–60',hint:'Se tabellen: pauser mellom tøyningene',wrongNote:'Bevegelighet: 30–60 sekunder mellom tøyningene'},
+ {id:'b7',topic:'bev',diff:'medium',type:'mc',q:'Hvor lang er <em>treningstiden per økt</em> i bevegelighetstrening?',opts:['15–60 minutter','5–10 minutter','2 timer','Under 5 minutter'],correct:0,wrongNote:'Bevegelighet: 15–60 minutter per økt'},
+ {id:'b8',topic:'bev',diff:'hard',type:'mc',q:'Hva kjennetegner <em>passiv bevegelighetstrening</em> (metode 2)?',opts:['Du fører leddet ut mot ytterstilling og tøyer rolig og kontrollert, selv eller med partner','Langsomme bevegelser med egen muskelkraft mot leddets ytterstilling','Tøyning, kontraksjon, avspenning og ny tøyning','Raske, rykkvise bevegelser'],correct:0,wrongNote:'Passiv: før leddet ut mot ytterstilling og tøy rolig og kontrollert – selv eller med partner'},
+ {id:'b9',topic:'bev',diff:'hard',type:'sort',q:'Sorter fasene i <em>metode 3</em> i riktig rekkefølge:',items:['Avspenningsfase','Andre tøyefase','Første tøyefase','Kontraksjonsfase (statisk muskelarbeid)'],correct:['Første tøyefase','Kontraksjonsfase (statisk muskelarbeid)','Avspenningsfase','Andre tøyefase'],wrongNote:'Riktig rekkefølge: tøyefase → kontraksjon → avspenning → tøyefase'}
+);
+// Tilgjengelighet: tastatur, roller og kunngjøringer
+(function(){
+  var SEL='.chap-card,.topic-card,.theme-card,.kj-card,.xp-compact,#timer-pill', timer=null;
+  var DIAL={'teacher-modal':'Innstillinger','badges-modal':'Badges og XP','timer-modal':'Lynrask-utfordring','skel-overlay':'Bygg skjelettet','stats-overlay':'Min statistikk','tf-ref-modal':'Referansetabell','reset-confirm-overlay':'Bekreft tilbakestilling'};
+  function enhance(){
+    document.querySelectorAll(SEL).forEach(function(e){ if(!e.getAttribute('role'))e.setAttribute('role','button'); if(e.getAttribute('tabindex')===null)e.setAttribute('tabindex','0'); });
+    document.querySelectorAll('.fagbegrep').forEach(function(e){ if(!e.getAttribute('aria-label')&&e.dataset.tip)e.setAttribute('aria-label',e.textContent.trim()+': '+e.dataset.tip); });
+    document.querySelectorAll('.fb,.tf-fb-cls,.om-feedback').forEach(function(e){ if(!e.getAttribute('aria-live'))e.setAttribute('aria-live','polite'); });
+    Object.keys(DIAL).forEach(function(k){ var e=document.getElementById(k); if(e&&!e.getAttribute('role')){ e.setAttribute('role','dialog'); e.setAttribute('aria-modal','true'); e.setAttribute('aria-label',DIAL[k]); } });
+  }
+  function later(){ if(timer)return; timer=setTimeout(function(){ timer=null; enhance(); },250); }
+  enhance(); new MutationObserver(later).observe(document.body,{childList:true,subtree:true});
+  document.addEventListener('keydown',function(e){
+    if((e.key==='Enter'||e.key===' ')&&e.target&&e.target.matches&&e.target.matches(SEL)){ e.preventDefault(); e.target.click(); }
+    if(e.key==='Escape'){ var so=document.getElementById('stats-overlay'); if(so&&getComputedStyle(so).display!=='none'){ closeStats(); } }
+  });
+})();
+// Redusert bevegelse: ingen konfetti
+['confetti','tfConfetti','bgConfetti'].forEach(function(n){ var f=window[n]; if(typeof f==='function'){ window[n]=function(){ if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return; return f.apply(this,arguments); }; } });
+// Lagring blokkert: si fra
+(function(){
+  var bad=false; try{ localStorage.setItem('__t','1'); localStorage.removeItem('__t'); }catch(e){ bad=true; }
+  if(bad){ var d=document.createElement('div'); d.className='storage-warn'; d.setAttribute('role','alert'); d.innerHTML='⚠️ Nettleseren lar ikke appen lagre fremgangen din (privat modus?). Fremgang og XP forsvinner når du lukker siden. <button onclick="this.parentNode.remove()">OK</button>'; document.body.appendChild(d); }
+})();
+// Antall fullførte øvinger = antall ulike kapitler
+try{ G.exDone=CHAPTERS.filter(function(c){return CS[c.id]&&CS[c.id].phase==='done';}).length; }catch(e){}
 
 </script>
 
