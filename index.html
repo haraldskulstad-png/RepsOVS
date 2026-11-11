@@ -2725,6 +2725,15 @@ button{min-height:36px;}
 .nx-dlg-btns button{min-height:44px;min-width:96px;border-radius:12px;font-family:inherit;font-weight:700;font-size:.95rem;cursor:pointer;padding:0 18px;}
 .nx-dlg-ok{background:var(--navy);color:#fff;border:none;}.nx-dlg-no{background:#fff;color:var(--navy);border:1.5px solid var(--border);}
 
+
+/* ═══ MESTRING OG XP ═══ */
+.pc-mast{margin:2px 0 14px;}.pc-mast-top{display:flex;justify-content:space-between;align-items:baseline;}.pc-mast-top b{font-size:1.6rem;font-weight:900;color:#2DD4BF;letter-spacing:-.02em;}
+.pc-mast-bar{height:9px;border-radius:99px;background:rgba(255,255,255,.14);overflow:hidden;margin:4px 0 5px;}.pc-mast-bar i{display:block;height:100%;background:linear-gradient(90deg,#2DD4BF,#4FC3F7);border-radius:99px;transition:width .4s;}
+.pc-mast-sub{font-size:.72rem;color:rgba(255,255,255,.6);}
+.pc-xp #st-xp{font-size:1.35rem !important;}.pc-level-name{font-size:1.2rem !important;}
+.cc-mast{display:block;font-size:.66rem;color:var(--muted);margin-top:3px;line-height:1.3;}.cc-mast:empty{display:none;}.cc-mast b{color:#0F766E;font-weight:800;}
+.xp-help{grid-column:1/-1;font-size:.78rem;line-height:1.5;color:var(--text);background:#F1F5F9;border-left:4px solid #2DD4BF;border-radius:10px;padding:9px 12px;margin-bottom:10px;}
+
 </style>
 </head>
 <body>
@@ -2868,7 +2877,8 @@ button{min-height:36px;}
   <div class="hero-inner">
     <div class="pc-gline"><div class="pc-greet" id="hero-title">Klar for neste runde?</div><span id="timer-pill" class="timer-pill pc-timer" onclick="openTimer()" title="Dagsmål – trykk for detaljer">⏱ 5:00</span></div>
     <button class="pc-name-add" id="hero-name-add" onclick="openStats()" style="display:none">✎ Legg til navnet ditt</button>
-    <div class="pc-top">
+    <div class="pc-mast" id="pc-mast"><div class="pc-mast-top"><span class="pc-kicker">DIN MESTRING</span><b id="mast-pct">0 %</b></div><div class="pc-mast-bar"><i id="mast-fill" style="width:0%"></i></div><div class="pc-mast-sub" id="mast-sub">Svar på spørsmål for å bygge mestring</div></div>
+      <div class="pc-top">
       <div class="pc-level">
         <div class="pc-level-ico"><svg class="ic" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h10v4a5 5 0 0 1-10 0V4zM7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7"/></svg></div>
         <div><div class="pc-kicker">DITT NIVÅ</div><div class="pc-level-name" id="pc-level-name">Nybegynner</div></div>
@@ -3100,8 +3110,9 @@ const XP_CORRECT  = 10;
 const XP_CTRL     = 10;
 const XP_EX       = 8;
 const LEVELS = [
-  {name:'Nybegynner',min:0},{name:'Lærling',min:100},
-  {name:'Utøver',min:300},{name:'Ekspert',min:700},{name:'Mester',min:1200}
+  {name:'Nybegynner',min:0},{name:'Lærling',min:100},{name:'Utøver',min:250},
+  {name:'Atlet',min:500},{name:'Ekspert',min:900},{name:'Veteran',min:1500},
+  {name:'Mester',min:2300},{name:'Stormester',min:3200},{name:'Legende',min:4200}
 ];
 const BADGES = [
   {id:'b_first',  e:'⚡',n:'Første fem',    d:'Svar på 5 spørsmål',     c:s=>s.totalAns>=5},
@@ -3732,7 +3743,7 @@ CHAPTERS = [
 // ═══════════════════════════════════════════════
 let G={}, CS={}, dragCur=null, dragSortEl=null, dailyInt=null, tc=null;
 
-function defG(){return{xp:0,streak:0,maxStreak:0,totalAns:0,chapRead:0,perfectCtrl:0,dailyDone:0,chapDone:0,timerWins:0,earned:[],dailySec:0,dailyDate:'',tfTopicDone:{},tfTopicStars:{},bgThemeDone:{},exDone:0,kjDone:{},omBest:{},omFagsDone:{},anBest:{},anDone:{},srs:{},srsMastered:0,mythOk:{},caseOk:{},byBest:{},byStars:{},labDone:{},proveBest:0,proveN:0,sec:{read:0,tasks:0,game:0,other:0},days:{},opened:{},rounds:{},retries:0}}
+function defG(){return{xp:0,streak:0,maxStreak:0,totalAns:0,chapRead:0,perfectCtrl:0,dailyDone:0,chapDone:0,timerWins:0,earned:[],dailySec:0,dailyDate:'',tfTopicDone:{},tfTopicStars:{},bgThemeDone:{},exDone:0,kjDone:{},omBest:{},omFagsDone:{},anBest:{},anDone:{},xpSeen:{},xpRep:{d:'',n:0},mast:{},xpv2:0,srsBonusDay:'',srs:{},srsMastered:0,mythOk:{},caseOk:{},byBest:{},byStars:{},labDone:{},proveBest:0,proveN:0,sec:{read:0,tasks:0,game:0,other:0},days:{},opened:{},rounds:{},retries:0}}
 function defCS(){return{phase:'reading',ctrlAns:{},ctrlScore:0,exAns:{},exScore:0};}
 
 function loadAll(){
@@ -3946,7 +3957,7 @@ function renderChapGrid(){
       <div class="cc-num">${chapShort(ch)}</div>
       <div class="cc-title">${ch.title}</div>
       <div class="cc-prog"><div class="cc-prog-fill" style="width:${locked?0:pct}%"></div></div>
-      <span class="cc-prog-lbl">${locked?'Låst':done?'Fullført ✓':inProg?pct+'% gjort':'Ikke startet'}</span>`;
+      <span class="cc-prog-lbl">${locked?'Låst':done?'Fullført ✓':inProg?pct+'% gjort':'Ikke startet'}</span><span class="cc-mast" id="cc-mast-${ch.id}"></span>`;
     if(!locked)card.onclick=()=>switchTab(ch.id);
     wrap.appendChild(card);
   });
@@ -4093,7 +4104,7 @@ function finishReading(cid){
       pill.textContent='⏱ '+m+':'+s.toString().padStart(2,'0');
     }
   })();saveAll();refreshPanel(cid);
-  addXP(15, id('panel-'+cid));
+  xpAward('r:'+cid,40,id('panel-'+cid));
   setTimeout(function(){
     var p=id('panel-'+cid);
     if(p){var hh=(document.querySelector('header')||{}).offsetHeight||52;
@@ -4236,7 +4247,7 @@ function renderExQ(q,qid,cid,num,total){
   h+=`<div class="fb" id="fb-${qid}"></div></div>`;
   return h;
 }
-function showHint(qid){const hb=id('hbox-'+qid);if(hb){hb.classList.toggle('show');}}
+function showHint(qid){const hb=id('hbox-'+qid);if(hb){hb.classList.toggle('show');if(hb.classList.contains('show')){window._hintUsed=window._hintUsed||{};window._hintUsed[qid]=1;}}}
 
 // ═══════════════════════════════════════════════
 // ANSWER HANDLERS
@@ -4260,8 +4271,9 @@ document.addEventListener('click',e=>{
     if(!ok)(function(){var _d=id(`cb-${qid}-${q.correct}`);if(_d)_d.classList.add('show-c');})();
     const fb=id('cfb-'+qid);if(fb){fb.className='ctrl-fb '+(ok?'ok':'err')+' show';fb.textContent=ok?q.okMsg:q.errMsg;}
     cs.ctrlAns[qid]={correct:ok,chosen:ci};
+    try{ nxRec(nxIdC(cid,q),ok); }catch(e){}
     if(!ok){ try{ srsMiss(nxIdC(cid,q)); }catch(e){} }
-    if(ok){cs.ctrlScore=(cs.ctrlScore||0)+1;addXP(XP_CTRL,cb);}
+    if(ok){cs.ctrlScore=(cs.ctrlScore||0)+1;xpAward(nxIdC(cid,q),XP_CTRL,cb);}
     incStreak(ok);G.totalAns++;if(!ok)shake('cfb-'+qid);
     if(Object.keys(cs.ctrlAns).length>=ch.readingQuestions.length)showCtrlResult(cid,true);
     checkBadges();saveAll();updateGlobalStats();return;
@@ -4277,8 +4289,9 @@ document.addEventListener('click',e=>{
     if(!ok)(function(){var _d=id(`mc-${qid}-${q.correct}`);if(_d)_d.classList.add('show-correct');})();
     showFb(qid,ok,ok?q.okMsg:q.errMsg);markCard(qid,ok);
     cs.exAns[qid]={correct:ok,chosen:i};
+     try{ nxRec(nxIdE(cid,q),ok); }catch(e){}
      if(!ok){ try{ srsMiss(nxIdE(cid,q)); }catch(e){} }
-    if(ok){cs.exScore=(cs.exScore||0)+1;addXP(XP_EX,mb);pulse('card-'+qid);}
+    if(ok){cs.exScore=(cs.exScore||0)+1;xpAward(nxIdE(cid,q),xpTier(qid,XP_EX),mb);pulse('card-'+qid);}
     else shake('card-'+qid);
     incStreak(ok);G.totalAns++;
     updateExProg(cid);checkBadges();saveAll();updateGlobalStats();
@@ -4348,8 +4361,8 @@ function checkFill(qid,cid){
   inp.disabled=true;id('fib-'+qid).disabled=true;inp.classList.add(ok?'correct':'wrong');
   (function(){var _h=id('hbtn-'+qid);if(_h)_h.style.display='none';})();
   showFb(qid,ok,ok?q.okMsg:`${q.errMsg} Fasit: «${q.answer}».`);markCard(qid,ok);
-  cs.exAns[qid]={correct:ok,val};
-  if(ok){cs.exScore=(cs.exScore||0)+1;addXP(XP_CORRECT,inp);pulse('card-'+qid);}else shake('card-'+qid);
+  cs.exAns[qid]={correct:ok,val}; try{ nxRec(nxIdE(cid,findExQ(cid,qid)),ok); }catch(e){}
+  if(ok){cs.exScore=(cs.exScore||0)+1;xpAward(nxIdE(cid,findExQ(cid,qid)),xpTier(qid,XP_CORRECT),inp);pulse('card-'+qid);}else shake('card-'+qid);
   incStreak(ok);G.totalAns++;updateExProg(cid);checkBadges();saveAll();updateGlobalStats();
 }
 function checkDrag(qid,cid){
@@ -4363,8 +4376,8 @@ function checkDrag(qid,cid){
   const ok=cor===q.pairs.length;
   showFb(qid,ok,ok?q.okMsg:`${q.errMsg} (${cor}/${q.pairs.length} riktig)`);markCard(qid,ok);
   const _map={};zones.forEach(z=>{const c=z.querySelector('.chip');const l=z.parentElement.querySelector('.drop-lbl');if(l)_map[l.textContent]=c?c.dataset.val:null;});
-  cs.exAns[qid]={correct:ok,placements,map:_map};
-  if(ok){cs.exScore=(cs.exScore||0)+1;addXP(XP_CORRECT);pulse('card-'+qid);}else shake('card-'+qid);
+  cs.exAns[qid]={correct:ok,placements,map:_map}; try{ nxRec(nxIdE(cid,findExQ(cid,qid)),ok); }catch(e){}
+  if(ok){cs.exScore=(cs.exScore||0)+1;xpAward(nxIdE(cid,findExQ(cid,qid)),xpTier(qid,XP_CORRECT));pulse('card-'+qid);}else shake('card-'+qid);
   incStreak(ok);G.totalAns++;updateExProg(cid);checkBadges();saveAll();updateGlobalStats();
 }
 function checkSort(qid,cid){
@@ -4375,8 +4388,8 @@ function checkSort(qid,cid){
   showFb(qid,ok,ok?q.okMsg:q.errMsg);markCard(qid,ok);
   document.querySelectorAll(`#sort-${qid} .sort-item`).forEach(i=>i.draggable=false);
   id('schk-'+qid).disabled=true;
-  cs.exAns[qid]={correct:ok,userOrder:items};
-  if(ok){cs.exScore=(cs.exScore||0)+1;addXP(XP_CORRECT);pulse('card-'+qid);}else shake('card-'+qid);
+  cs.exAns[qid]={correct:ok,userOrder:items}; try{ nxRec(nxIdE(cid,findExQ(cid,qid)),ok); }catch(e){}
+  if(ok){cs.exScore=(cs.exScore||0)+1;xpAward(nxIdE(cid,findExQ(cid,qid)),xpTier(qid,XP_CORRECT));pulse('card-'+qid);}else shake('card-'+qid);
   incStreak(ok);G.totalAns++;updateExProg(cid);checkBadges();saveAll();updateGlobalStats();
 }
 
@@ -4711,13 +4724,14 @@ function qzPick(pos){
   if(!QZ||QZ.answered) return; QZ.answered=true;
   var it=QZ.items[QZ.idx], oi=it.perm[pos], ok=oi===it.correct;
   QZ.res.push({id:it.id,kap:it.kap,ok:ok,oi:oi,q:it.q}); if(ok) QZ.score++;
+  try{ nxRec(it.id,ok); }catch(e){}
   var btns=document.querySelectorAll('#qz-body .nx-opt');
   btns.forEach(function(bt,p){ bt.disabled=true; if(QZ.exam){ if(p===pos) bt.classList.add('nx-picked'); } else { if(it.perm[p]===it.correct) bt.classList.add('correct'); else if(p===pos) bt.classList.add('wrong'); } });
-  if(QZ.mode==='srs'){ srsAnswer(it.id,ok); if(ok){ addXP(3,null); QZ.xp+=3; } }
+  if(QZ.mode==='srs'){ srsAnswer(it.id,ok); if(ok){ addXP(6,null); QZ.xp+=6; } }
   else {
     if(!ok) srsMiss(it.id);
-    if(ok&&it.kind==='myte'){ var mid=it.id.split(':')[1]; if(!(G.mythOk||(G.mythOk={}))[mid]){ G.mythOk[mid]=1; addXP(4,null); QZ.xp+=4; } }
-    if(ok&&it.kind==='case'){ var cid=it.id.split(':')[1]; if(!(G.caseOk||(G.caseOk={}))[cid]){ G.caseOk[cid]=1; addXP(6,null); QZ.xp+=6; } }
+    if(ok&&it.kind==='myte'){ var mid=it.id.split(':')[1]; if(!(G.mythOk||(G.mythOk={}))[mid]){ G.mythOk[mid]=1; addXP(5,null); QZ.xp+=5; } }
+    if(ok&&it.kind==='case'){ var cid=it.id.split(':')[1]; if(!(G.caseOk||(G.caseOk={}))[cid]){ G.caseOk[cid]=1; addXP(10,null); QZ.xp+=10; } }
     try{ checkBadges(); }catch(e){}
   }
   saveAll();
@@ -4734,11 +4748,12 @@ function qzFinish(){
   var star=['💪','⭐','⭐⭐','⭐⭐⭐'][stars], h='';
   var wrong=QZ.res.filter(function(r){return !r.ok;});
   if(QZ.mode==='pr'){
-    var prev=G.proveBest||0; if(sc>prev){ var gain=(sc-prev)*2; addXP(gain,null); QZ.xp+=gain; G.proveBest=sc; }
+    var prev=G.proveBest||0; if(sc>prev){ var gain=(sc-prev)*3; addXP(gain,null); QZ.xp+=gain; G.proveBest=sc; }
     G.proveN=(G.proveN||0)+1; try{ checkBadges(); }catch(e){} saveAll();
   }
+  if(QZ.mode==='srs'&&QZ.items.length){ var td=nxDay(); if(G.srsBonusDay!==td){ G.srsBonusDay=td; addXP(10,null); QZ.xp+=10; QZ.bonus=10; } }
   saveAll(); try{ renderGameGrid(); srsRender(); updateGlobalStats(); }catch(e){}
-  h+='<div class="nx-res"><div class="nx-res-star">'+star+'</div><div class="nx-res-big">'+sc+'/'+n+'</div><div class="nx-res-sub">'+pct+' % riktig'+(QZ.xp?' · +'+QZ.xp+' XP':'')+'</div></div>';
+  h+='<div class="nx-res"><div class="nx-res-star">'+star+'</div><div class="nx-res-big">'+sc+'/'+n+'</div><div class="nx-res-sub">'+pct+' % riktig'+(QZ.xp?' · +'+QZ.xp+' XP'+(QZ.bonus?' (inkl. dagsbonus)':''):'')+'</div></div>';
   if(QZ.mode==='pr'){
     var by={}; QZ.res.forEach(function(r){ var o=by[r.kap]||(by[r.kap]={n:0,ok:0}); o.n++; if(r.ok)o.ok++; });
     h+='<div class="nx-sec">Per kapittel</div>'+Object.keys(by).sort(function(a,b){return by[a].ok/by[a].n-by[b].ok/by[b].n;}).map(function(k){ var o=by[k]; return '<div class="nx-chrow"><span>'+nxKap(k)+'</span><div class="nx-bar"><i style="width:'+Math.round(o.ok/o.n*100)+'%"></i></div><b>'+o.ok+'/'+o.n+'</b><button class="nx-mini" onclick="nxReadKap(\''+k+'\')">Les</button></div>'; }).join('');
@@ -4824,7 +4839,7 @@ function byPick(pi,oi){
 }
 function byScore(id,correct,n){
   var r=correct/n, stars=r>=1?3:r>=0.8?2:r>=0.6?1:0; G.byBest=G.byBest||{}; G.byStars=G.byStars||{};
-  var pb=G.byBest[id]||0, ps=G.byStars[id]||0, gain=Math.max(0,correct-pb)*3+(stars===3&&ps<3?10:0);
+  var pb=G.byBest[id]||0, ps=G.byStars[id]||0, gain=Math.max(0,correct-pb)*3+(stars===3&&ps<3?15:0);
   G.byBest[id]=Math.max(pb,correct); G.byStars[id]=Math.max(ps,stars);
   if(gain>0) addXP(gain,null);
   try{ checkBadges(); }catch(e){} saveAll(); try{ renderGameGrid(); }catch(e){}
@@ -4884,7 +4899,7 @@ function lbList(){
   var d=G.labDone||{}, labs=[['lab1','Intensitetssoner','Dra i pulsen og se hvilken I-sone du er i, og hvor laktatterskelen ligger.','kap4'],['lab2','Superkompensasjon','Når bør neste harde økt komme? Utforsk for tidlig, på toppen og for sent.','kap12'],['lab3','Belastningskalkulator','Skriv inn 1 RM og se riktig vekt for hver styrketreningsform.','kap5']];
   lbBody('Lab','<p class="nx-lead">Utforsk sammenhengene i pensum. Løs utfordringene for å fullføre hver lab.</p><div class="nx-mlist nx-mlist-1">'+labs.map(function(l){ return '<button class="nx-mcard nx-mcard-w" onclick="'+({lab1:'lb1',lab2:'lb2',lab3:'lb3'})[l[0]]+'()"><div class="nx-mc-t">'+l[1]+(d[l[0]]?' ✓':'')+'</div><div class="nx-mc-s">'+l[2]+' · '+nxKap(l[3])+'</div></button>'; }).join('')+'</div>');
 }
-function lbDone(key){ G.labDone=G.labDone||{}; if(!G.labDone[key]){ G.labDone[key]=true; addXP(15,null); try{ checkBadges(); }catch(e){} saveAll(); try{ renderGameGrid(); }catch(e){} return true; } return false; }
+function lbDone(key){ G.labDone=G.labDone||{}; if(!G.labDone[key]){ G.labDone[key]=true; addXP(20,null); try{ checkBadges(); }catch(e){} saveAll(); try{ renderGameGrid(); }catch(e){} return true; } return false; }
 // Lab 1: I-soner og laktatterskel
 function lb1(){
   LB.l1={hf:200,pct:70,lt:'god'};
@@ -5060,6 +5075,86 @@ function nxLabelFix(){
 })();
 
 
+// ═════════════════════════════════════════════════════════════
+// XP v2: full pott første gang, 1 XP for gjentakelser (tak per dag),
+// mestring som hovedmål, og samme prinsipp i alle spill.
+// ═════════════════════════════════════════════════════════════
+var XP_REPEAT=1, XP_REPEAT_CAP=15;
+window._hintUsed={};
+function xpRepLeft(){
+  var r=G.xpRep; if(!r||typeof r!=='object') r=G.xpRep={d:'',n:0};
+  var t=nxDay(); if(r.d!==t){ r.d=t; r.n=0; }
+  return Math.max(0,XP_REPEAT_CAP-r.n);
+}
+// Regner ut hva som skal betales for en nøkkel: forbedring over tidligere betalt beløp, ellers 1 XP (daglig tak).
+function xpCalc(key,amount){
+  G.xpSeen=G.xpSeen||{};
+  var prev=G.xpSeen[key]||0, pay=0;
+  if(amount>prev){ pay=amount-prev; G.xpSeen[key]=amount; }
+  else if(amount>0&&xpRepLeft()>0){ pay=XP_REPEAT; G.xpRep.n+=pay; }
+  return pay;
+}
+function xpAward(key,amount,el){ var p=xpCalc(key,amount); if(p>0) addXP(p,el||null); return p; }
+function xpTier(qid,base){ return window._hintUsed&&window._hintUsed[qid]?Math.round(base*0.6):base; }
+function bgPayXP(pts,el){
+  var q=(typeof bgSess!=='undefined'&&bgSess&&bgSess.qs&&bgSess.qs[bgSess.idx])||{};
+  var p=xpCalc('b:'+(q.type||'x')+':'+((q.c&&q.c.id)||q.id||bgSess.idx),pts); if(p>0) bgAddXP(p,el);
+}
+
+// ── Mestring ──
+var MK_CACHE={};
+function nxRec(key,ok){
+  G.mast=G.mast||{}; var m=G.mast[key];
+  if(!m) G.mast[key]={f:ok?1:0,l:ok?1:0}; else m.l=ok?1:0;
+  try{ masteryRender(); }catch(e){}
+}
+function masteryKeys(cid){
+  if(MK_CACHE[cid]) return MK_CACHE[cid];
+  var ch=CHAPTERS.find(function(c){return c.id===cid;}); if(!ch) return [];
+  var ks=[]; (ch.readingQuestions||[]).forEach(function(q){ if(q.opts) ks.push(nxIdC(cid,q)); });
+  ch.sections.forEach(function(s){ s.qs.forEach(function(q){ ks.push(nxIdE(cid,q)); }); });
+  NX.myter.forEach(function(m){ if(m.kap===cid) ks.push('m:'+m.id); });
+  NX.caser.forEach(function(c){ if(c.kap===cid) ks.push('k:'+c.id); });
+  return (MK_CACHE[cid]=ks);
+}
+function masteryOf(cid){
+  var ks=masteryKeys(cid), n=ks.length, f=0,l=0,a=0, M=G.mast||{};
+  ks.forEach(function(k){ var m=M[k]; if(m){ a++; f+=m.f; l+=m.l; } });
+  return {n:n,answered:a,first:n?Math.round(f/n*100):0,last:n?Math.round(l/n*100):0,f:f,l:l};
+}
+function masteryAll(){
+  var n=0,f=0,l=0,a=0; CHAPTERS.forEach(function(c){ var m=masteryOf(c.id); n+=m.n; a+=m.answered; f+=m.f; l+=m.l; });
+  return {n:n,answered:a,first:n?Math.round(f/n*100):0,last:n?Math.round(l/n*100):0};
+}
+function masteryRender(){
+  var e=document.getElementById('mast-pct'); if(!e) return; var m=masteryAll();
+  e.textContent=m.last+' %'; var fl=document.getElementById('mast-fill'); if(fl) fl.style.width=m.last+'%';
+  var s=document.getElementById('mast-sub');
+  if(s) s.textContent=m.answered?('Riktig første gang: '+m.first+' % · '+m.answered+' av '+m.n+' spørsmål besvart'):'Svar på spørsmål for å bygge mestring';
+  CHAPTERS.forEach(function(c){ var el=document.getElementById('cc-mast-'+c.id); if(el){ var x=masteryOf(c.id); el.innerHTML=x.answered?('<b>'+x.last+' %</b> mestret · '+x.first+' % første gang'):''; } });
+}
+// Eksisterende fremgang: ikke betal på nytt for det som allerede er besvart riktig
+function xpMigrate(){
+  if(G.xpv2) return; G.xpSeen=G.xpSeen||{}; G.mast=G.mast||{};
+  CHAPTERS.forEach(function(ch){
+    var cs=CS[ch.id]; if(!cs) return;
+    Object.keys(cs.ctrlAns||{}).forEach(function(qid){ var q=(ch.readingQuestions||[])[parseInt(qid.split('_').pop())]; if(!q) return; var a=cs.ctrlAns[qid], k=nxIdC(ch.id,q); G.mast[k]={f:a.correct?1:0,l:a.correct?1:0}; if(a.correct) G.xpSeen[k]=XP_CTRL; });
+    Object.keys(cs.exAns||{}).forEach(function(qid){ var q=findExQ(ch.id,qid); if(!q) return; var a=cs.exAns[qid], k=nxIdE(ch.id,q); G.mast[k]={f:a.correct?1:0,l:a.correct?1:0}; if(a.correct) G.xpSeen[k]=(q.type==='mc')?XP_EX:XP_CORRECT; });
+    if(cs.phase&&cs.phase!=='reading') G.xpSeen['r:'+ch.id]=40;
+  });
+  Object.keys(G.kjDone||{}).forEach(function(id){ G.xpSeen['k:'+id]=(G.kjDone[id]&&G.kjDone[id].firstTry)?20:12; });
+  Object.keys(G.mythOk||{}).forEach(function(id){ G.mast['m:'+id]={f:1,l:1}; });
+  Object.keys(G.caseOk||{}).forEach(function(id){ G.mast['k:'+id]={f:1,l:1}; });
+  G.xpv2=1; try{ saveAll(); }catch(e){}
+}
+(function(){
+  var rg=renderChapGrid; renderChapGrid=function(){ var r=rg.apply(this,arguments); try{ masteryRender(); }catch(e){} return r; };
+  var ob=openBadges; openBadges=function(){ var r=ob.apply(this,arguments);
+    try{ var g=document.getElementById('badges-grid'); if(g&&!g.querySelector('.xp-help')){ var d=document.createElement('div'); d.className='xp-help'; d.innerHTML='<b>Slik gir du XP:</b> full pott første gang du svarer riktig (litt mindre hvis du brukte hint). Å gjenta det du allerede har klart gir 1 XP, maks 15 om dagen. <b>Mestring</b> viser hva du faktisk kan.'; g.insertBefore(d,g.firstChild); } }catch(e){}
+    return r; };
+})();
+
+
 // ═══════════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════════
@@ -5067,7 +5162,7 @@ loadAll();
 renderAll();
 showOnboarding();
 updateXPBar();
-try{ srsMigrate(); srsRender(); }catch(e){}
+try{ srsMigrate(); xpMigrate(); srsRender(); masteryRender(); }catch(e){}
 // Dynamic header height for sticky nav offset
 (function setHdrH(){
   const hdr=document.getElementById('main-header');
@@ -5624,7 +5719,7 @@ function handleAnswer(ok, q, el, extraMsg){
   if(ok){
     session.score++;
     tfIncStreak(true);
-    tfAddXP(xpPer[q.diff], el);
+    {var _p=xpCalc('t:'+q.id,xpPer[q.diff]); if(_p>0) tfAddXP(_p, el);}
     tfShowFb(extraMsg||'✓ Riktig! '+(q.wrongNote.split('|')[0]||''), true);
     const card=document.getElementById('qcard');
     if(card){card.classList.add('pulse-ok');}
@@ -5692,7 +5787,7 @@ function endGame(){
   if(stars.length>prev.length)TF_G.topicStars[session.topic][session.diff]=stars;
   // Bonus XP for difficulty
   const bonus={easy:0,medium:10,hard:25}[session.diff];
-  if(pct===100&&bonus)tfAddXP(bonus,null);
+  if(pct===100&&bonus){var _pb=xpCalc('tfp:'+session.topic+':'+session.diff,bonus); if(_pb>0) tfAddXP(_pb,null);}
   saveG();
   try{checkBadges();saveAll();}catch(e){}
   // Show result
@@ -6218,7 +6313,7 @@ function bgHandle(ok,c,el,extra){
   const xpMap={mc:5,fill:9,drag:8};
   const pts=xpMap[bgSess.qs[bgSess.idx].type]||6;
   if(ok){
-    bgSess.score++;bgIncStreak(true);bgAddXP(pts,el);
+    bgSess.score++;bgIncStreak(true);bgPayXP(pts,el);
     bgShowFb("&#10003; Riktig! "+(extra||""),true);
     // Auto-progress etter 1.1 sek
     var _nb=document.getElementById("bg-btn-next");
@@ -6268,7 +6363,7 @@ function bgEndGame(){
   const tot=bgSess.qs.length,sc=bgSess.score,pct=Math.round(sc/tot*100);
   const stars=pct===100?"&#11088;&#11088;&#11088;":pct>=75?"&#11088;&#11088;":pct>=50?"&#11088;":"";
   if(pct>=60&&bgSess.theme&&bgSess.theme!=="all"){if(!BG_G.themeDone)BG_G.themeDone={};BG_G.themeDone[bgSess.theme]=true;bgSave();}
-  if(pct===100)bgAddXP(20,null);
+  if(pct===100){var _pq=xpCalc('bgp:'+bgSess.theme+':'+(bgSess.mode||''),20); if(_pq>0) bgAddXP(_pq,null);}
   document.getElementById("bg-rc-stars").innerHTML=stars||"&#128170;";
   document.getElementById("bg-rc-big").textContent=sc+"/"+tot;
   document.getElementById("bg-rc-sub").textContent=pct+"% riktig";
@@ -6871,7 +6966,7 @@ function kjSjekk(){
     if(!G.kjDone) G.kjDone = {};
     G.kjDone[k.id] = {firstTry: firstTry};
     var xpGain = firstTry ? 20 : kjSess.hintShown ? 8 : 12;
-    addXP(xpGain, document.getElementById('kj-game-view'));
+    xpAward('k:'+k.id,xpGain,document.getElementById('kj-game-view'));
     saveAll();
     // Mark ledd green
     document.querySelectorAll('.kj-ledd').forEach(function(el){
@@ -8108,7 +8203,7 @@ openStats=function(){
 function statsText(){
   var d=statsData(), n=d.now, dt=n.getDate()+'.'+(n.getMonth()+1)+'.'+n.getFullYear()+' kl. '+String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');
   return ['REPS – Treningslære 1 · '+dt,'Elev: '+(d.name||'(navn mangler)')+(d.klasse?' · Klasse: '+d.klasse:'')+' · Kode: '+d.code,'─────────────────────',
-   'TID (min): totalt '+stMin(d.sec.total)+' · lest '+stMin(d.sec.read)+' · oppgaver '+stMin(d.sec.tasks)+' · spill '+stMin(d.sec.game),
+   'MESTRING: '+masteryAll().last+' % (riktig første gang '+masteryAll().first+' %) · XP '+G.xp+' (nivå '+getLevel().name+')',    'TID (min): totalt '+stMin(d.sec.total)+' · lest '+stMin(d.sec.read)+' · oppgaver '+stMin(d.sec.tasks)+' · spill '+stMin(d.sec.game),
    'I dag: '+stMin(d.todaySec)+' min · aktive dager: '+d.activeDays+' · dager på rad: '+d.dayStreak,
    'KAPITLER: startet '+d.chStarted+'/14 · lest ferdig '+d.chRead+'/14 · fullført '+d.chDone+'/14',
    'OPPGAVER: besvart '+d.tasks.n+' · riktige '+d.tasks.pct+' % · kontroll '+d.ctrl.ok+'/'+d.ctrl.n+' · øving '+d.ex.ok+'/'+d.ex.n,
