@@ -5156,6 +5156,61 @@ function xpMigrate(){
 
 
 // ═══════════════════════════════════════════════
+// ===== v27: tilbakemelding fra elev – formatlapper, fasit, Svar-bekreftelse =====
+var TF_FMT=(function(){
+  function R(unit,ex,rt){return {ph:'fra–til, f.eks. '+ex,line:'Svar som et <b>område med to tall</b> (fra–til). Enhet: <b>'+unit+'</b>.',rt:rt};}
+  return {
+    u2:R('sekunder','5–20'), u6:R('antall repetisjoner','1–4'), u9:{ph:'tall i minutter',line:'Svar med <b>ett tall eller en brøk</b>. Enhet: <b>minutter</b> (f.eks. ¼).',rt:'½ minutt (= 30 sekunder)'},
+    s2:R('repetisjoner','3–9'), s5:R('% av 1 RM','60–90','80–100 % av 1 RM'), s9:R('serier','2–6'),
+    b2:R('sekunder','10–30'), sp2:R('serier','1–3'), h2:R('minutter','5–8'), sp5:R('økter per uke','1–2'),
+    h6:R('minutter','2–6'), b6:R('sekunder','10–20')
+  };
+})();
+function tfFillRt(q){ var f=TF_FMT[q.id]; if(!f) return q.answer; if(f.rt) return f.rt; var u=f.line.match(/Enhet: <b>([^<]+)<\/b>/); return q.answer+(u?' '+u[1]:''); }
+function tfRight(q){ if(!q) return ''; if(q.type==='mc') return q.opts[q.correct]; if(q.type==='fill') return tfFillRt(q); return ''; }
+function tfRangeNote(q){ var m=String(q.answer||'').match(/^(\d+)\s*[–-]\s*(\d+)/); return m?' <small>(et område: alt fra '+m[1]+' til '+m[2]+')</small>':''; }
+function tfNoteHtml(n,lbl){
+  n=n||''; var p=n.split(/\s*\|\s*/).filter(Boolean);
+  if(p.length>1) return '<ul class="fb-ul">'+p.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul>';
+  return n?'<div class="fb-note">'+(lbl?'📖 ':'')+n+'</div>':'';
+}
+function tfWrongHtml(q,mine){
+  var r=tfRight(q), h='<b>✗ Feil.</b>';
+  if(mine) h+='<div class="fb-line">Du svarte: <b>'+escHtml(String(mine))+'</b></div>';
+  if(r) h+='<div class="fb-line">Riktig svar: <b>'+r+'</b>'+tfRangeNote(q)+'</div>';
+  return h+tfNoteHtml(q.wrongNote,!!r);
+}
+(function(){
+  var st=document.createElement('style');
+  st.textContent='.mc-btn.nx-sel{border-color:var(--mid);background:#E8F0FE;box-shadow:inset 0 0 0 1.5px var(--mid)}.nx-svar{width:100%;margin-top:10px}.nx-svar:disabled{opacity:.55}.fill-fmt{font-size:.85em;margin:6px 2px 0;opacity:.85}.fb-line{margin-top:5px}.fb-ul{margin:6px 0 0 18px;padding:0}.fb-note{margin-top:6px}';
+  document.head.appendChild(st);
+  function setup(){
+    document.querySelectorAll('.mc-opts:not([data-nxs])').forEach(function(box){
+      var btns=box.querySelectorAll('.mc-btn'); if(!btns.length) return;
+      box.setAttribute('data-nxs','1');
+      if(btns[0].disabled) return;
+      var b=document.createElement('button'); b.type='button'; b.className='chk-btn nx-svar'; b.textContent='Velg et svar'; b.disabled=true;
+      box.insertAdjacentElement('afterend',b); box._nxSvar=b;
+      b.addEventListener('click',function(){
+        var s=box.querySelector('.mc-btn.nx-sel'); if(!s||s.disabled) return;
+        s._nxGo=true; b.style.display='none'; try{ s.click(); }finally{ s._nxGo=false; }
+      });
+    });
+  }
+  document.addEventListener('click',function(e){
+    var btn=e.target.closest&&e.target.closest('.mc-btn'); if(!btn) return;
+    var box=btn.closest('.mc-opts'); if(!box||!box._nxSvar||btn._nxGo) return;
+    e.stopPropagation(); e.preventDefault();
+    if(btn.disabled) return;
+    box.querySelectorAll('.mc-btn').forEach(function(x){x.classList.remove('nx-sel');x.setAttribute('aria-pressed','false');});
+    btn.classList.add('nx-sel'); btn.setAttribute('aria-pressed','true');
+    box._nxSvar.disabled=false; box._nxSvar.textContent='Svar ✓';
+  },true);
+  new MutationObserver(setup).observe(document.body,{childList:true,subtree:true});
+  setup();
+})();
+
+
 // INIT
 // ═══════════════════════════════════════════════
 loadAll();
@@ -5267,8 +5322,8 @@ const ALL_Q = [
  ], wrongNote:'Langkjøring=1–2 | Lang-intervall=3–5 | Kortintervall=4–5 | Progressiv=1–5 stigende'},
 
 {id:'u9', topic:'uth', diff:'hard', type:'fill',
- q:'<em>Pyramideintervall</em> har pauser mellom dragene på ___________ til 2 minutter.',
- accepted:['1/2','0.5','½','en halv'],
+ q:'<em>Pyramideintervall</em> har pauser mellom dragene fra ___________ minutt til 2 minutter.',
+ accepted:['1/2','0.5','½','en halv','1/2 min','½ min','et halvt','halvt'],
  answer:'½', hint:'Tenk halvparten av et minutt',
  wrongNote:'Pyramideintervall: pauser ½ til 2 minutter'},
 
@@ -5596,17 +5651,19 @@ function answerMC(i){
     if(oi===q.correct)b.classList.add('correct');
     if(oi===i&&!ok)b.classList.add('wrong');
   });
-  handleAnswer(ok, q, document.querySelector('.mc-btn'));
+  handleAnswer(ok, q, document.querySelector('.mc-btn'), undefined, q.opts[i]);
 }
 
 // ── FILL ─────────────────────────────────────────────────────
 function renderFill(q){
+  var f=(window.TF_FMT&&TF_FMT[q.id])||{};
   return `<div class="fill-row">
-    <input class="fill-in" id="fill-inp" type="text" placeholder="Skriv svaret her…" autocomplete="off"
+    <input class="fill-in" id="fill-inp" type="text" placeholder="${f.ph||'Skriv svaret her…'}" autocomplete="off"
       onkeydown="if(event.key==='Enter')answerFill()">
     <button class="chk-btn" id="fill-btn" onclick="answerFill()">Sjekk</button>
     <button class="hint-btn" onclick="tfShowHint()">💡 Hint</button>
   </div>
+  ${f.line?`<div class="fill-fmt" id="fill-fmt">✍️ ${f.line}</div>`:''}
   <div class="hint-box" id="hint-box">${q.hint||''}</div>`;
 }
 function tfShowHint(){document.getElementById('hint-box').classList.toggle('show');}
@@ -5620,7 +5677,7 @@ function answerFill(){
   const inp=document.getElementById('fill-inp');
   inp.disabled=true;inp.classList.add(ok?'correct':'wrong');
   document.getElementById('fill-btn').disabled=true;
-  handleAnswer(ok, q, inp);
+  handleAnswer(ok, q, inp, undefined, val);
 }
 
 // ── DRAG ─────────────────────────────────────────────────────
@@ -5713,7 +5770,7 @@ function answerSort(){
 }
 
 // ── HANDLE ANSWER ─────────────────────────────────────────────
-function handleAnswer(ok, q, el, extraMsg){
+function handleAnswer(ok, q, el, extraMsg, mine){
   const xpPer={easy:5, medium:8, hard:12};
   if(!ok&&q&&q.type==='mc'){ try{ srsMiss('t:'+q.id); }catch(e){} }
   if(ok){
@@ -5725,10 +5782,10 @@ function handleAnswer(ok, q, el, extraMsg){
     if(card){card.classList.add('pulse-ok');}
   } else {
     tfIncStreak(false);
-    tfShowFb('✗ Feil. ' + q.wrongNote, false);
+    tfShowFb(tfWrongHtml(q,mine), false);
     const card=document.getElementById('qcard');
     if(card){card.classList.add('shake');setTimeout(()=>card.classList.remove('shake'),380);}
-    session.wrong.push({q:q.q.replace(/<[^>]+>/g,''), note:q.wrongNote});
+    session.wrong.push({q:q.q.replace(/<[^>]+>/g,''), note:q.wrongNote, mine:mine||'', right:tfRight(q)});
   }
   TF_G.streak=TF_G.streak; saveG();
   document.getElementById('tf-btn-next').disabled=false;
@@ -5799,7 +5856,7 @@ function endGame(){
   const wrong=session.wrong;
   if(wrong.length){
     const wl=document.getElementById('tf-rc-wrong');
-    document.getElementById('tf-rc-wrong-items').innerHTML=wrong.map(w=>`<div class="rc-wrong-item"><strong>${w.q}</strong><br>${w.note}</div>`).join('');
+    document.getElementById('tf-rc-wrong-items').innerHTML=wrong.map(w=>`<div class="rc-wrong-item"><strong>${w.q}</strong>${w.mine?'<div class="fb-line">Du svarte: <b>'+escHtml(w.mine)+'</b></div>':''}${w.right?'<div class="fb-line">Riktig svar: <b>'+w.right+'</b>'+tfRangeNote(w.rq||{answer:w.right})+'</div>':''}${tfNoteHtml(w.note,!!w.right)}</div>`).join('');
     wl.style.display='block';
   } else {
     document.getElementById('tf-rc-wrong').style.display='none';
@@ -6213,10 +6270,10 @@ function bgAnsMC(btn,ok,cid){
 // FILL IN
 function bgBuildFill(c){
   const askTerm=Math.random()>0.4;
-  const q=askTerm?`Skriv begrepet som passer til definisjonen:<br><br><em>&#171;${bgEsc(c.def)}&#187;</em>`:`Fyll inn: Hva definerer <em>${bgEsc(c.term)}</em>? (noen nøkkelord er nok)`;
+  const q=askTerm?`Skriv begrepet som passer til definisjonen:<br><br><em>&#171;${bgEsc(c.def)}&#187;</em><br><small class="fill-fmt">Skriv ett begrep (ett eller noen få ord).</small>`:`Forklar med egne ord: Hva er <em>${bgEsc(c.term)}</em>?<br><small class="fill-fmt">Skriv 2–3 nøkkelord – ikke hele setninger.</small>`;
   return `<div class="q-text">${q}</div>
     <div class="fill-wrap">
-      <input class="fill-inp" id="bginp" type="text" placeholder="Skriv her..." autocomplete="off" onkeydown="if(event.key==='Enter')bgCheckFill()">
+      <input class="fill-inp" id="bginp" type="text" placeholder="${askTerm?'Skriv begrepet…':'2–3 nøkkelord…'}" autocomplete="off" onkeydown="if(event.key==='Enter')bgCheckFill()">
       <button class="chk-btn" id="bgchk" onclick="bgCheckFill()">Sjekk</button>
     </div>
     <button class="hint-btn" onclick="bgShowHint()">&#128161; Hint</button>
@@ -6236,12 +6293,11 @@ function bgCheckFill(){
   const nv=norm(val),na=norm(ans);
   let ok;
   if(askTerm){ok=nv===na||bgLev(nv,na)<=Math.max(1,Math.floor(na.length*.22));}
-  else{const kw=ans.split(/\s+/).filter(w=>w.length>4).map(norm);const hits=kw.filter(k=>nv.includes(k)||bgLev(nv,k)<=2);ok=hits.length>=Math.max(2,Math.floor(kw.length*.35));}
+  else{const kw=ans.split(/\s+/).filter(w=>w.length>4).map(norm);const hits=kw.filter(k=>nv.includes(k)||bgLev(nv,k)<=2);const need=Math.min(kw.length,Math.max(2,Math.floor(kw.length*.35)));ok=kw.length>0&&hits.length>=need;}
   bgSess.answered=true;
   const inp=document.getElementById("bginp");inp.disabled=true;document.getElementById("bgchk").disabled=true;
   inp.classList.add(ok?"fi-correct":"fi-wrong");
-  if(!ok)inp.value+=" (riktig: "+ans.slice(0,60)+")";
-  bgHandle(ok,c,inp);
+    bgHandle(ok,c,inp);
 }
 
 // DRAG MATCH
@@ -6326,7 +6382,7 @@ function bgHandle(ok,c,el,extra){
       },1100);
     }
   }
-  else{bgIncStreak(false);bgShowFb("&#10007; Feil. Riktig: "+c.term+" &#8211; "+c.def.slice(0,80),false);bgSess.wrong.push({term:c.term,def:c.def});}
+  else{bgIncStreak(false);bgShowFb("&#10007; Feil."+((document.getElementById("bginp")&&document.getElementById("bginp").value)?'<div class="fb-line">Du svarte: <b>'+bgEsc(document.getElementById("bginp").value)+'</b></div>':'')+'<div class="fb-line">Riktig: <b>'+bgEsc(c.term)+'</b> &#8211; '+bgEsc(c.def)+'</div>',false);bgSess.wrong.push({term:c.term,def:c.def});}
   const card=document.getElementById("bgcard");
   if(card)card.classList.add(ok?"pok":"shk");
   if(!ok)setTimeout(()=>card && card.classList.remove("shk"),350);
